@@ -36,7 +36,16 @@ export default defineConfig({
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     nav: [
-      { text: 'Whitepaper', link: '/learn/whitepaper' }
+      { text: 'Whitepaper', link: '/learn/whitepaper' },
+      {
+        text: 'Codex',
+        items: [
+          { text: 'About', link: '/codex/about' },
+          { text: 'Security', link: '/codex/security' },
+          { text: 'Privacy Policy', link: '/codex/privacy-policy' },
+          { text: 'Terms of Use', link: '/codex/terms-of-use' }
+        ]
+      }
     ],
 
     search: {
@@ -86,6 +95,16 @@ export default defineConfig({
         collapsed: false,
         items: [
           { text: 'API', link: '/developers/api' }
+        ]
+      },
+      {
+        text: 'Codex',
+        collapsed: false,
+        items: [
+          { text: 'About', link: '/codex/about' },
+          { text: 'Security', link: '/codex/security' },
+          { text: 'Privacy Policy', link: '/codex/privacy-policy' },
+          { text: 'Terms of Use', link: '/codex/terms-of-use' }
         ]
       }
     ],
