@@ -1,6 +1,6 @@
 # Quick start
 
- To start using Codex we would need to perform the following steps:
+ To join the Codex testnet we would need to perform the following steps:
  - [Review the disclaimer](/codex/disclaimer)
  - [Get Codex binary](#get-codex-binary)
  - [Run Codex](#run-codex)
@@ -25,27 +25,74 @@
     curl -LO https://github.com/codex-storage/nim-codex/releases/download/${version}/codex-${version}-${platform}-${architecture}.tar.gz.sha256
     ```
 
- 2. Verify checksum
-    ```shell
-    # Linux
-    sha256sum -c codex-${version}-${platform}-${architecture}.tar.gz.sha256
+    **Windows**
+    ::: warning
+    For Windows, only amd64 architecture is supported now.
+    :::
+    ```batch
+    set version=v0.1.3
+    set platform=windows
+    if %PROCESSOR_ARCHITECTURE%==AMD64 (set architecture=amd64) else (set architecture=arm64)
 
-    # macOS
+    :: Binary
+    curl -LO https://github.com/codex-storage/nim-codex/releases/download/%version%/codex-%version%-%platform%-%architecture%-libs.zip
+
+    :: Checksum
+    curl -LO https://github.com/codex-storage/nim-codex/releases/download/%version%/codex-%version%-%platform%-%architecture%-libs.zip.sha256
+    ```
+
+ 2. Verify checksum
+
+    **Linux**
+    ```shell
+    sha256sum -c codex-${version}-${platform}-${architecture}.tar.gz.sha256
+    ```
+
+    **macOS**
+    ```shell
     shasum -a 256 -c codex-${version}-${platform}-${architecture}.tar.gz.sha256
     ```
+
+    **Windows**
+    ```batch
+    for /f "delims=" %a in ('certUtil -hashfile codex-%version%-%platform%-%architecture%-libs.zip SHA256 ^| findstr -vrc:"[^0123-9aAb-Cd-EfF ]"') do @set ACTUAL_HASH=%a
+    for /f "tokens=1" %a in (codex-%version%-%platform%-%architecture%-libs.zip.sha256) do set EXPECTED_HASH=%a
+    if %ACTUAL_HASH% == %EXPECTED_HASH% (echo. && echo codex-%version%-%platform%-%architecture%-libs.zip: OK) else (echo. && echo codex-%version%-%platform%-%architecture%-libs.zip: FAILED)
+    ```
+
     Make sure you get `OK` in the result
     ```
     codex-v0.1.3-linux-amd64.tar.gz: OK
     ```
 
  3. Extract binary
+
+    **Linux/macOS**
     ```shell
     tar -zxvf codex-${version}-${platform}-${architecture}.tar.gz
     ```
 
  4. Copy binary to the appropriate folder
+
+    **Linux/macOS**
     ```shell
     sudo install codex-${version}-${platform}-${architecture} /usr/local/bin/codex
+    ```
+
+    **Windows**
+    ```batch
+    :: Extract binary and libraries to the appropriate folder
+    if not exist %LOCALAPPDATA%\Codex mkdir %LOCALAPPDATA%\Codex
+    tar -xvf codex-%version%-%platform%-%architecture%-libs.zip -C %LOCALAPPDATA%\Codex
+
+    :: Rename binary
+    move /Y %LOCALAPPDATA%\Codex\codex-%version%-%platform%-%architecture%.exe %LOCALAPPDATA%\Codex\codex.exe
+
+    :: Add folder to the path permanently
+    setx PATH %PATH%%LOCALAPPDATA%\Codex;
+
+    :: Add folder to the path for the current session
+    PATH %PATH%%LOCALAPPDATA%\Codex;
     ```
 
  5. Install dependencies
@@ -65,6 +112,8 @@
     ```
 
  7. Cleanup
+
+    **Linux/macOS**
     ```shell
     rm -f \
       codex-${version}-${platform}-${architecture} \
@@ -72,72 +121,24 @@
       codex-${version}-${platform}-${architecture}.tar.gz.sha256
     ```
 
+    **Windows**
+    ```batch
+    del codex-%version%-%platform%-%architecture%-libs.zip ^
+      codex-%version%-%platform%-%architecture%-libs.zip.sha256
+    ```
 
 ### Run Codex
 
- Currently, we can run Codex in two modes:
- - **Client node** - you can upload/download files and purchase storage
- - **Storage node** - you can sell your local storage
+ To run your Codex node and join the testnet, follow the steps in the [codex-testnet-starter](https://github.com/codex-storage/codex-testnet-starter/blob/master/SETUP_HOME.md).
 
- For quick start we will run a Codex client node as an easy way to get started. If you would like to run a storage node please follow [Run Codex](/learn/run) and [Codex Testnet](/networks/testnet) guides.
-
- 1. Run Codex client node
-    ```shell
-    codex \
-      --data-dir=./data \
-      --api-cors-origin="*" \
-      --nat=`curl -s https://ip.codex.storage` \
-      --disc-port=8090 \
-      --listen-addrs=/ip4/0.0.0.0/tcp/8070 \
-      --bootstrap-node=spr:CiUIAhIhAiJvIcA_ZwPZ9ugVKDbmqwhJZaig5zKyLiuaicRcCGqLEgIDARo8CicAJQgCEiECIm8hwD9nA9n26BUoNuarCEllqKDnMrIuK5qJxFwIaosQ3d6esAYaCwoJBJ_f8zKRAnU6KkYwRAIgM0MvWNJL296kJ9gWvfatfmVvT-A7O2s8Mxp8l9c8EW0CIC-h-H-jBVSgFjg3Eny2u33qF7BDnWFzo7fGfZ7_qc9P
-    ```
-    ::: tip
-    In the example above we use [Codex Testnet](/networks/testnet#bootstrap-nodes) bootstrap nodes and thus we join Testnet. If you would like to join a different network, please use [appropriate value](/networks/networks).
-    :::
-
- 2. Configure port-forwarding for the TCP/UDP ports on your Internet router
-    | Protocol | Service   | Port   |
-    | -------- | --------- | ------ |
-    | UDP      | Discovery | `8090` |
-    | TCP      | Transport | `8070` |
+ If you want to run Codex locally without joining the testnet, consider trying the [two-client-test](https://github.com/codex-storage/nim-codex/blob/master/docs/TwoClientTest.md) or the [marketplace-test](https://github.com/codex-storage/nim-codex/blob/master/docs/Marketplace.md).
 
 ### Interact with Codex
 
- After we performed the steps above, we have a Codex client node up and running and can interact with it using [Codex API](/developers/api).
+ When your Codex node is up and running you can interact with it using [Codex API](/developers/api).
 
- We can perform basic tasks:
+ For a walk-through of the API, consider following the [using-codex](https://github.com/codex-storage/codex-testnet-starter/blob/master/USINGCODEX.md) guide.
 
- **Check node information**
- ```shell
- curl http://localhost:8080/api/codex/v1/debug/info \
-  --write-out '\n'
- ```
+### Stay in touch
 
- **Upload file**
- ::: warning
- Once you upload a file to Codex, other nodes in the network can download it.
- :::
- ```shell
- curl --request POST \
-  http://localhost:8080/api/codex/v1/data \
-  --header 'Content-Type: application/octet-stream' \
-  --write-out '\n' \
-  -T <FILE>
- ```
- You will get CID when upload will be finished.
-
- **Download file**
- ```shell
- CID="..." # paste your CID from the previous step here between the quotes.
- ```
- ```shell
- curl http://localhost:8080/api/codex/v1/data/${CID}/network -o ${CID}
- ```
-
-### Next steps
-
- Now we have a Codex node up and running and know how to interact with it.
-
- For more advanced use cases, please check the following guides:
- - [Run Codex](/learn/run)
- - [Codex Testnet](/networks/testnet)
+ Want to stay up-date, or looking for further assistence? Try our [discord-server](https://discord.gg/codex-storage).
