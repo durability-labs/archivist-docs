@@ -30,6 +30,14 @@ enode://6eeb3b3af8bef5634b47b573a17477ea2c4129ab3964210afe3b93774ce57da832eb110f
 enode://6ba0e8b5d968ca8eb2650dd984cdcf50acc01e4ea182350e990191aadd79897801b79455a1186060aa3818a6bc4496af07f0912f7af53995a5ddb1e53d6f31b5@209.38.160.40:40070
 ```
 
+#### Marketplace
+
+| Contract    | Address                                                                                                                                   |
+| ----------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| Token       | [`0x34a22f3911De437307c6f4485931779670f78764`](https://explorer.testnet.codex.storage/address/0x34a22f3911De437307c6f4485931779670f78764) |
+| Verifier    | [`0x02dd582726F7507D7d0F8bD8bf8053d3006F9092`](https://explorer.testnet.codex.storage/address/0x02dd582726F7507D7d0F8bD8bf8053d3006F9092) |
+| Marketplace | [`0xCDef8d6884557be4F68dC265b6bB2E3e52a6C9d6`](https://explorer.testnet.codex.storage/address/0xCDef8d6884557be4F68dC265b6bB2E3e52a6C9d6) |
+
 #### Endpoints
 
 | # | Service         | URL                                                                          |
