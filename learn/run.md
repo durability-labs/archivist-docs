@@ -1,5 +1,9 @@
 # Run Codex
 
+[[TOC]]
+
+<hr>
+
 As for now, Codex is implemented only in [Nim](https://nim-lang.org) and can be found in [nim-codex](https://github.com/codex-storage/nim-codex) repository.
 
 It is a command-line application which may be run in a different ways:
@@ -29,11 +33,11 @@ The order of priority is the same as above:
 
 For some configuration options, we can pass values in common units like:
 ```shell
+--cache-size=1m/1M/1mb/1MB
 --storage-quota=2m/2M/2mb/2MB
---cache-size
 
+--block-mi=1s/1S/1m/1M/1h/1H/1d/1D/1w/1W
 --block-ttl=2s/2S/2m/2M/2h/2H/2d/2D/2w/2W
---block-mi
 ```
 
 #### Logging
@@ -147,19 +151,24 @@ log-level = "trace"
 For option, like `bootstrap-node` and `listen-addrs` which accept multiple values we can specify data as an array
 ```toml
 listen-addrs = [
-  "/ip4/0.0.0.0/tcp/7777",
-  "/ip4/0.0.0.0/tcp/8888"
+  "/ip4/0.0.0.0/tcp/1234",
+  "/ip4/0.0.0.0/tcp/5678"
 ]
 ```
 
-The Codex node can then read the configuration from this file using the `--config-file` CLI parameter, like `codex --config-file=/path/to/your/config.toml`.
+The Codex node can then read the configuration from this file using the `--config-file` CLI parameter, like:
+```shell
+codex --config-file=/path/to/your/config.toml
+```
 
 ## Run
 
-Basically, we can run Codex in three different modes
- - [Codex node](#codex-node) - useful for local testing/development and basic/files sharing
- - [Codex node with marketplace support](#codex-node-with-marketplace-support) - main mode and should be used by the end users
- - [Codex storage node](#codex-storage-node) - should be used by storage providers or if you would like to sell your local storage
+Basically, we can run Codex in three different modes:
+ - [Codex node](#codex-node) - useful for local testing/development and basic/files sharing.
+ - [Codex node with marketplace support](#codex-node-with-marketplace-support) - you can share files and buy the storage, this is the main mode and should be used by the end users.
+ - [Codex storage node](#codex-storage-node) - should be used by storage providers or if you would like to sell your local storage.
+
+ We also will touch in some words [Codex bootstrap node](#codex-bootstrap-node).
 
 ### Using binary
 
@@ -169,16 +178,18 @@ We can run Codex in a simple way like following:
 ```shell
 codex
 ```
+> [!WARNING]
+> This command may not work properly when we use GitHub releases, please read [Known issues](#known-issues) for more details.
 
 But, it will use a default `data-dir` value and we can pass a custom one:
 ```shell
-codex --data-dir=./datadir
+codex --data-dir=datadir
 ```
 
 This will run Codex as an isolated instance, and if we would like to join an existing network, it is required to pass a [bootstrap node](architecture#network-architecture). We can pass multiple nodes as well:
 ```shell
 codex \
-  --data-dir=./datadir \
+  --data-dir=datadir \
   --bootstrap-node=spr:CiUIAhIhAiJvIcA_ZwPZ9ugVKDbmqwhJZaig5zKyLiuaicRcCGqLEgIDARo8CicAJQgCEiECIm8hwD9nA9n26BUoNuarCEllqKDnMrIuK5qJxFwIaosQ3d6esAYaCwoJBJ_f8zKRAnU6KkYwRAIgM0MvWNJL296kJ9gWvfatfmVvT-A7O2s8Mxp8l9c8EW0CIC-h-H-jBVSgFjg3Eny2u33qF7BDnWFzo7fGfZ7_qc9P \
   --bootstrap-node=spr:CiUIAhIhAyUvcPkKoGE7-gh84RmKIPHJPdsX5Ugm_IHVJgF-Mmu_EgIDARo8CicAJQgCEiEDJS9w-QqgYTv6CHzhGYog8ck92xflSCb8gdUmAX4ya78QoemesAYaCwoJBES39Q2RAnVOKkYwRAIgLi3rouyaZFS_Uilx8k99ySdQCP1tsmLR21tDb9p8LcgCIG30o5YnEooQ1n6tgm9fCT7s53k6XlxyeSkD_uIO9mb3
 ```
@@ -189,7 +200,7 @@ codex \
 Also, to make your Codex node accessible for other network participants, it is required to specify a public IP address which can be used to access your node:
 ```shell
 codex \
-  --data-dir=./datadir \
+  --data-dir=datadir \
   --bootstrap-node=spr:CiUIAhIhAiJvIcA_ZwPZ9ugVKDbmqwhJZaig5zKyLiuaicRcCGqLEgIDARo8CicAJQgCEiECIm8hwD9nA9n26BUoNuarCEllqKDnMrIuK5qJxFwIaosQ3d6esAYaCwoJBJ_f8zKRAnU6KkYwRAIgM0MvWNJL296kJ9gWvfatfmVvT-A7O2s8Mxp8l9c8EW0CIC-h-H-jBVSgFjg3Eny2u33qF7BDnWFzo7fGfZ7_qc9P \
   --nat=<your public IP>
 ```
@@ -200,17 +211,13 @@ codex \
 After that, node will announce itself using your public IP and dynamic TCP port for [libp2p transport](https://docs.libp2p.io/concepts/transports/overview/) (data transfer), which can be adjusted in the following way:
 ```shell
 codex \
-  --data-dir=./datadir \
+  --data-dir=datadir \
   --bootstrap-node=spr:CiUIAhIhAiJvIcA_ZwPZ9ugVKDbmqwhJZaig5zKyLiuaicRcCGqLEgIDARo8CicAJQgCEiECIm8hwD9nA9n26BUoNuarCEllqKDnMrIuK5qJxFwIaosQ3d6esAYaCwoJBJ_f8zKRAnU6KkYwRAIgM0MvWNJL296kJ9gWvfatfmVvT-A7O2s8Mxp8l9c8EW0CIC-h-H-jBVSgFjg3Eny2u33qF7BDnWFzo7fGfZ7_qc9P \
   --nat=`curl -s https://ip.codex.storage` \
   --listen-addrs=/ip4/0.0.0.0/tcp/8070
 ```
 
-In that way, node will announce itself using the following [multiaddress](https://docs.libp2p.io/concepts/fundamentals/addressing/):
-
-`/ip4/<your public IP>/tcp/8070`
-
-and we can check that via [API](https://api.codex.storage/#tag/Debug/operation/getDebugInfo) call:
+In that way, node will announce itself using specified [multiaddress](https://docs.libp2p.io/concepts/fundamentals/addressing/) and we can check that via [API](https://api.codex.storage/#tag/Debug/operation/getDebugInfo) call:
 ```shell
 curl -s localhost:8080/api/codex/v1/debug/info | jq -r '.announceAddresses'
 ```
@@ -219,34 +226,39 @@ curl -s localhost:8080/api/codex/v1/debug/info | jq -r '.announceAddresses'
   "/ip4/<your public IP>/tcp/8070"
 ]
 ```
-Basically, for P2P communication we should set/adjust two ports:
+Basically, for P2P communication we should specify and adjust two ports:
 | # | Protocol function                                                        | CLI option       | Example                                |
 | - | ------------------------------------------------------------------------ | ---------------- | -------------------------------------- |
 | 1 | [Discovery](https://docs.libp2p.io/concepts/discovery-routing/overview/) | `--disc-port`    | `--disc-port=8090`                     |
 | 2 | [Transport](https://docs.libp2p.io/concepts/transports/overview/)        | `--listen-addrs` | `--listen-addrs=/ip4/0.0.0.0/tcp/8070` |
 
-And, also it is required to setup port-forwarding on your Internet device, please read [Known issues](#known-issues) for more details.
+And, also it is required to setup port-forwarding on your Internet device, to make your node accessible for participants. Please read [Known issues](#known-issues) for more details.
 
 So, a fully working basic configuration will looks like following:
 ```shell
 codex \
-  --data-dir=./datadir \
+  --data-dir=datadir \
   --bootstrap-node=spr:CiUIAhIhAiJvIcA_ZwPZ9ugVKDbmqwhJZaig5zKyLiuaicRcCGqLEgIDARo8CicAJQgCEiECIm8hwD9nA9n26BUoNuarCEllqKDnMrIuK5qJxFwIaosQ3d6esAYaCwoJBJ_f8zKRAnU6KkYwRAIgM0MvWNJL296kJ9gWvfatfmVvT-A7O2s8Mxp8l9c8EW0CIC-h-H-jBVSgFjg3Eny2u33qF7BDnWFzo7fGfZ7_qc9P \
   --nat=`curl -s https://ip.codex.storage` \
   --disc-port=8090 \
-  --listen-addrs=/ip4/0.0.0.0/tcp/8070
+  --listen-addrs=/ip4/0.0.0.0/tcp/8070 \
+  --api-cors-origin="*"
 ```
 
-After node is up and running and port-forwarding configurations was done, we should be able to [Upload a file](https://github.com/codex-storage/codex-testnet-starter/blob/master/USINGCODEX.md#upload-a-file)/[Download a file](https://github.com/codex-storage/codex-testnet-starter/blob/master/USINGCODEX.md#download-a-file) in the network. And to be able to purchase storage, we should run [Codex node with marketplace support](#codex-node-with-marketplace-support).
+After node is up and running and port-forwarding configurations was done, we should be able to [Upload a file](/learn/using#upload-a-file)/[Download a file](/learn/using#download-a-file) in the network.
+
+You also can use [Codex Marketplace UI](https://marketplace.codex.storage) for files upload/download.
+
+And to be able to purchase storage, we should run [Codex node with marketplace support](#codex-node-with-marketplace-support).
 
 #### Codex node with marketplace support
 
 [Marketplace](/learn/architecture.md#marketplace-architecture) support permits to purchase the storage in Codex network. Basically, we should add just a `persistence` sub-command and required CLI options to the [previous run](#codex-node).
 
 > [!NOTE]
-> Please ignore `--eth-account` CLI option, read [Known issues](#known-issues) for more details.
+> Please ignore `--eth-account` CLI option, as it is obsolete. Please read [Known issues](#known-issues) for more details.
 
-1. For a daily use, we should consider to run a local blockchain node based on the [network](/networks/networks) you would like to join. That process is described in the [Join Testnet](/networks/testnet)(:construction:), but for quick start we can use a public RPC endpoint.
+1. For a daily use, we should consider to run a local blockchain node based on the [network](/networks/networks) you would like to join. That process is described in the [Join Testnet](/networks/testnet) guide, but for quick start we can use a public RPC endpoint.
 
 2. Create a file with ethereum private key and set a proper permissions.
    ```shell
@@ -255,70 +267,107 @@ After node is up and running and port-forwarding configurations was done, we sho
    echo $key | awk -F ':' '/private/ {print $2}' >eth.key
    chmod 600 eth.key
    ```
+   Show your ethereum address
+   ```shell
+   cat eth.address
+
+   0x412665aFAb17768cd9aACE6E00537Cc6D5524Da9
+   ```
    > [!CAUTION]
    > Please use mentioned key generation service for demo purpose only.
 
-3. Specify bootstrap nodes and marketplace address based on the [network](/networks/networks) you would like to join.
+3. Fill-up your ethereum address with ETH and Tokens based on the the [network](/networks/networks) you would like to join.
 
-4. Run the node
+4. Specify bootstrap nodes and marketplace address based on the [network](/networks/networks) you would like to join.
+
+5. Run the node
    ```shell
    codex \
      persistence \
-     --data-dir=./datadir \
+     --data-dir=datadir \
      --bootstrap-node=spr:CiUIAhIhAiJvIcA_ZwPZ9ugVKDbmqwhJZaig5zKyLiuaicRcCGqLEgIDARo8CicAJQgCEiECIm8hwD9nA9n26BUoNuarCEllqKDnMrIuK5qJxFwIaosQ3d6esAYaCwoJBJ_f8zKRAnU6KkYwRAIgM0MvWNJL296kJ9gWvfatfmVvT-A7O2s8Mxp8l9c8EW0CIC-h-H-jBVSgFjg3Eny2u33qF7BDnWFzo7fGfZ7_qc9P \
      --nat=`curl -s https://ip.codex.storage` \
      --disc-port=8090 \
      --listen-addrs=/ip4/0.0.0.0/tcp/8070 \
      --eth-provider=https://rpc.testnet.codex.storage \
      --eth-private-key=eth.key \
-     --marketplace-address=0xB119d28d3A1bFD281b23A0890B4c1B626EE8F6F0
+     --marketplace-address=0xB119d28d3A1bFD281b23A0890B4c1B626EE8F6F0 \
+     --api-cors-origin="*"
    ```
 
-After node is up and running, you just need to fill-up your ethereum address (`cat eth.address`) with the tokens and then you should be able to [Purchase storage](https://github.com/codex-storage/codex-testnet-starter/blob/master/USINGCODEX.md#purchase-storage).
+After node is up and running, and your address has founds, you should be able to [Purchase storage](/learn/using#purchase-storage).
 
 #### Codex storage node
 
-Codex [storage node](architecture#network-architecture) should be run by storage providers or in case you would like to sell your local storage. For that, we should use configuration for [Codex node with marketplace support](#codex-node-with-marketplace-support) and additionally use `prover` sub-command and required CLI options.
+Codex [storage node](architecture#network-architecture) should be run by storage providers or in case you would like to sell your local storage.
+
+For that, additionally to the [Codex node with marketplace support](#codex-node-with-marketplace-support) we should use `prover` sub-command and required CLI options.
 
 That sub-command will make Codex to listen for a proof request on the blockchain and answer them. To compute an answer for the proof request, Codex will use stored data and circuit files generated by the code in the [codex-storage-proofs-circuits](https://github.com/codex-storage/codex-storage-proofs-circuits) repository.
 
-Every [network](/networks/networks) uses its own generated set of the files which are stored in the [codex-contracts-eth](https://github.com/codex-storage/codex-contracts-eth/tree/master/verifier/networks) repository and also uploaded to the CDN. Hash of the set is also known by the marketplace smart contract.
+Every [network](/networks/networks) uses its own generated set of the files which are stored in the [codex-contracts-eth](https://github.com/codex-storage/codex-contracts-eth/tree/master/verifier/networks) repository and also uploaded to the CDN. Hash of the files set is also known by the [marketplace smart contract](/learn/architecture#smart-contract).
 
-To download circuit files and make them available to Codex app, we have a stand-alone utility - `cirdl`. It can be compiled from the sources (`make cirdl`) or downloaded from the [GitHub release page](https://github.com/codex-storage/nim-codex/releases) (work in progress - [Rework circuit downloader #882](https://github.com/codex-storage/nim-codex/pull/882)).
+To download circuit files and make them available to Codex app, we have a stand-alone utility - `cirdl`. It can be compiled from the sources (`make cirdl`) or downloaded from the [GitHub release page](https://github.com/codex-storage/nim-codex/releases).
 
 You would need to pass a bootstrap nodes, blockchain RPC endpoint and marketplace address based on the [network](/networks/networks) you would like to join.
 
-1. Download circuit files
+1. To download circuit files, we should pass directory, RPC endpoint and marketplace address
    ```shell
    # Create circuit files folder
-   mkdir -p ./datadir/circuit
+   mkdir -p datadir/circuit
 
    # Download circuit files
    cirdl \
-     ./datadir/circuit \
+     datadir/circuit \
      https://rpc.testnet.codex.storage \
      0xB119d28d3A1bFD281b23A0890B4c1B626EE8F6F0
    ```
 
 2. Start Codex storage node
    ```shell
-     codex \
-       persistence \
-       prover \
-       --data-dir=./datadir \
-       --bootstrap-node=spr:CiUIAhIhAiJvIcA_ZwPZ9ugVKDbmqwhJZaig5zKyLiuaicRcCGqLEgIDARo8CicAJQgCEiECIm8hwD9nA9n26BUoNuarCEllqKDnMrIuK5qJxFwIaosQ3d6esAYaCwoJBJ_f8zKRAnU6KkYwRAIgM0MvWNJL296kJ9gWvfatfmVvT-A7O2s8Mxp8l9c8EW0CIC-h-H-jBVSgFjg3Eny2u33qF7BDnWFzo7fGfZ7_qc9P \
-       --nat=`curl -s https://ip.codex.storage` \
-       --disc-port=8090 \
-       --listen-addrs=/ip4/0.0.0.0/tcp/8070 \
-       --eth-provider=https://rpc.testnet.codex.storage \
-       --eth-private-key=eth.key \
-       --marketplace-address=0xB119d28d3A1bFD281b23A0890B4c1B626EE8F6F0 \
-       --circom-r1cs=./datadir/circuits/proof_main.r1cs \
-       --circom-wasm=./datadir/circuits/proof_main.wasm \
-       --circom-zkey=./datadir/circuits/proof_main.zkey
+   codex \
+     persistence \
+     prover \
+     --data-dir=datadir \
+     --bootstrap-node=spr:CiUIAhIhAiJvIcA_ZwPZ9ugVKDbmqwhJZaig5zKyLiuaicRcCGqLEgIDARo8CicAJQgCEiECIm8hwD9nA9n26BUoNuarCEllqKDnMrIuK5qJxFwIaosQ3d6esAYaCwoJBJ_f8zKRAnU6KkYwRAIgM0MvWNJL296kJ9gWvfatfmVvT-A7O2s8Mxp8l9c8EW0CIC-h-H-jBVSgFjg3Eny2u33qF7BDnWFzo7fGfZ7_qc9P \
+     --nat=`curl -s https://ip.codex.storage` \
+     --disc-port=8090 \
+     --listen-addrs=/ip4/0.0.0.0/tcp/8070 \
+     --eth-provider=https://rpc.testnet.codex.storage \
+     --eth-private-key=eth.key \
+     --marketplace-address=0xB119d28d3A1bFD281b23A0890B4c1B626EE8F6F0 \
+     --circuit-dir=datadir/circuits
    ```
 
-After node is up and running, you just need to fill-up your ethereum address (`cat eth.address`) with the tokens and then you should be able to [Create storage availability](https://github.com/codex-storage/codex-testnet-starter/blob/master/USINGCODEX.md#create-storage-availability).
+After node is up and running, and your address has founds, you should be able to [Create storage availability](/learn/using#create-storage-availability).
+
+
+#### Codex bootstrap node
+
+Bootstrap nodes are used just to help peers with initial nodes discovery and we need to run Codex with some basic options:
+```shell
+codex \
+  --data-dir=datadir \
+  --nat=`curl -s https://ip.codex.storage` \
+  --disc-port=8090
+```
+
+And we can get bootstrap node SPR via [API](https://api.codex.storage/#tag/Debug/operation/getDebugInfo) call:
+```shell
+curl -s localhost:8080/api/codex/v1/debug/info | jq -r '.spr'
+```
+```shell
+spr:CiUIAhIhApd79-AxPqwRDmu7Pk-berTDtoIoMz0ovKjo85Tz8CUdEgIDARo8CicAJQgCEiECl3v34DE-rBEOa7s-T5t6tMO2gigzPSi8qOjzlPPwJR0Qjv_WtwYaCwoJBFxzjbKRAh-aKkYwRAIgCiTq5jBTaJJb6lUxN-0uNCj8lkV9AGY682D21kIAMiICIE1yxrjbDdiSCiARnS7I2zqJpXC2hOvjB4JoL9SAAk67
+```
+
+That SPR record then can be used by other peer for initial nodes discovery.
+
+We should keep in mind some important things about SPR record (see [ENR](https://eips.ethereum.org/EIPS/eip-778))
+- It uses node IP (`--nat`), discovery port (`--disc-port`) and private key (`--net-privkey`) for record creation
+- Specified data is signed on each run and will be changed but still contain specified node data when decoded
+- You can decode it by passing to the Codex node at run with `--log-level=trace`
+
+For bootstrap node, it is required to forward just discovery port on your Internet router.
 
 ### Run as a daemon in Linux
 
@@ -330,7 +379,59 @@ This functionality is not supported yet :construction:
 
 ### Using Docker
 
-To be added :construction:
+We also ship Codex in Docker containers, which can be run on `amd64` and `arm64` platforms.
+
+#### Docker entrypoint
+[Docker entrypoint](https://github.com/codex-storage/nim-codex/blob/master/docker/docker-entrypoint.sh), supports some additional options, which can be used for easier configuration:
+
+- `ENV_PATH` - path to the file, in form `env=value` which will be sourced and available for Codex at run. That is useful for Kubernetes Pods configuration.
+- `NAT_IP_AUTO` - when set to `true`, will set `CODEX_NAT` variable with container internal IP address. It also is useful for Kubernetes Pods configuration, when we perform automated tests.
+- `NAT_PUBLIC_IP_AUTO` - used to set `CODEX_NAT` to public IP address using lookup services, like [ip.codex.storage](https://ip.codex.storage). Can be used for Docker/Kubernetes, and binary as well, to set public IP in auto mode.
+- `PRIV_KEY` - can be used to pass ethereum private key, which will be saved and passed as a value of the `CODEX_ETH_PRIVATE_KEY` variable. It should be considered as unsafe option and used for testing purposes only.
+- When we set `prover` sub-command, entrypoint will run `cirdl` tool to download ceremony files, required by prover.
+
+#### Docker network
+
+When we are running Codex using Docker with default [bridge network](https://docs.docker.com/engine/network/drivers/bridge/), it will create a double NAT 
+ - One on the Docker side
+ - Second on your Internet connection
+
+If your Internet router does not support [Full Cone NAT](https://learningnetwork.cisco.com/s/question/0D56e0000CWxJ9sCQF/lets-explain-in-details-full-cone-nat-restricted-cone-nat-and-symmetric-nat-terminologies-vs-cisco-nat-terminologies), you might have an issue and peer discovery and data transport will not work or might work unexpected.
+
+In that case, we should consider to
+- Use [host network](https://docs.docker.com/engine/network/drivers/host/) which is supported only in Linux
+- Run [Using binary](#using-binary)
+- Use VM/VPS in the Cloud to run Docker with bridge or host network
+
+#### Run using Docker
+
+And we basically can use same options we [used for binary](#using-binary) and additionally it is required to mount volumes and map the ports.
+
+[Codex storage node](#codex-storage-node)
+```shell
+docker run \
+  --rm \
+  -v $PWD/datadir:/datadir \
+  -v $PWD/eth.key:/opt/eth.key \
+  -p 8070:8070 \
+  -p 8080:8080 \
+  -p 8090:8090/udp \
+  codexstorage/nim-codex:latest \
+  codex \
+    persistence \
+    prover \
+    --data-dir=/datadir \
+    --bootstrap-node=spr:CiUIAhIhAiJvIcA_ZwPZ9ugVKDbmqwhJZaig5zKyLiuaicRcCGqLEgIDARo8CicAJQgCEiECIm8hwD9nA9n26BUoNuarCEllqKDnMrIuK5qJxFwIaosQ3d6esAYaCwoJBJ_f8zKRAnU6KkYwRAIgM0MvWNJL296kJ9gWvfatfmVvT-A7O2s8Mxp8l9c8EW0CIC-h-H-jBVSgFjg3Eny2u33qF7BDnWFzo7fGfZ7_qc9P \
+    --nat=`curl -s https://ip.codex.storage` \
+    --disc-port=8090 \
+    --listen-addrs=/ip4/0.0.0.0/tcp/8070 \
+    --eth-provider=https://rpc.testnet.codex.storage \
+    --eth-private-key=/opt/eth.key \
+    --marketplace-address=0xB119d28d3A1bFD281b23A0890B4c1B626EE8F6F0 \
+    --api-cors-origin="*" \
+    --api-bindaddr=0.0.0.0 \
+    --api-port=8080
+```
 
 ### Using Docker Compose
 
@@ -353,3 +454,4 @@ Helm chart code is available in [helm-charts](https://github.com/codex-storage/h
 2. Sub-commands configuration like `persistence` and `persistence prover` can't be done via environment variables for now.
 3. [NAT traversal #753](https://github.com/codex-storage/nim-codex/issues/753) is not implemented yet and we would need to setup port-forwarding for discovery and transport protocols.
 4. Please ignore `--eth-account` CLI option - [Drop support for --eth-account #727](https://github.com/codex-storage/nim-codex/issues/727).
+5. We should set data-dir explicitly when we use GitHub releases - [[BUG] Change codex default datadir from compile-time to run-time #923](https://github.com/codex-storage/nim-codex/issues/923).
