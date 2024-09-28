@@ -1,10 +1,22 @@
-$$
-\newcommand{sp}{\text{SP}}
-\newcommand{sc}{\text{SC}}
-\newcommand{\postwo}[0]{\text{Poseidon2}}
-$$
+<center>
+    
+**Abstract** 
+</center>
 
 
+<div style="display: flex; justify-content: center; align-items: center;">
+    <div style="text-align: justify; width: 80%"> 
+        The increasing reliance on centralized cloud storage has raised critical concerns regarding user control, data privacy, and censorship, as well as the concentration of economic power in the hands of few entities. While modern decentralized storage networks (DSNs) attempt to address these issues, they often fall short in providing strong durability guarantees, efficient operation, and scalable proofs of storage. In this paper, we introduce Codex, a novel Erasure Coded Decentralized Storage Network that leverages erasure coding and zero-knowledge proofs to offer tunable durability guarantees and cost-effective storage verification. Central to Codex is the concept of the Decentralized Durability Engine (DDE), a framework we formalize to systematically address data redundancy, remote auditing, repair, incentives, and data dispersal in decentralized storage systems. We describe the architecture and mechanisms of Codex, including its marketplace and proof systems, and provide a preliminary reliability analysis using a Continuous Time Markov-Chain (CTMC) model to evaluate durability guarantees. Codex represents a step toward creating a decentralized, resilient, and economically viable storage layer critical for the broader decentralized ecosystem.
+    </div>
+</div>
+    
+<!-- **Abstract (me).**
+Most of the data on the internet today -- personal or business -- is stored on a centralized cloud storage service. This has profound impacts that range from privacy and freedom-of-speech concerns for individuals to storage markets becoming impenetrable oligopolies. Decentralized technologies appear as a possible alternative to this reality, with storage sitting at the base of what could make a decentralized application stack viable.
+
+Yet, solutions so far have failed to make meaningful inroads. We argue that this is partly because a lack of concern with _durability_, a key property of storage, which has been largely neglected thus far. Another point are the massive hardware requirements imposed by some solutions, which renders participation costly and hinders decentralization.
+
+**Abstract.** Centralized cloud storage services ran by a small group of large companies store most of the data on the internet today. Not only this has a profound impact on user privacy and freedom, but it also centralizes all the value captured by providing these services on the hands of few players. Decentralized technologies appear as an alternative to that _status quo_. So far, however, currently 
+ -->
 ## 1. Introduction 
 Data production has been growing at an astounding pace, with significant implications. Data is a critical asset for businesses, driving decision-making, strategic planning, and innovation. Individuals increasingly intertwine their physical lives with the digital world, meticulously documenting every aspect of their lives, taking pictures and videos, sharing their views and perspectives on current events, using digital means for communication and artistic expression, etc. Digital personas have become as important as their physical counterparts, and this tendency is only increasing.
 
@@ -141,7 +153,7 @@ Erasure coding plays two main roles in Codex: _i)_ allowing data to be recovered
 **Erasure Coding for Redundancy.** As described before, a dataset $D$ is initially split into $k$ slots of size $s = \left\lceil \frac{b}{k} \right\rceil$ (Figure 1). Since $b$ may not actually be divisible by $k$, Codex will add _padding blocks_ as required so that the number of blocks in $D$ is $b_p = s \times k$.
 
 <center>
-    <img src="https://hackmd.io/_uploads/Hke8GgG0A.png" width=80%/>
+    <image src="https://hackmd.io/_uploads/Hke8GgG0A.png" width=80%/>
 </center>
     
 **Figure 1.** A padded dataset $D$ split into $k$ slots.
@@ -149,7 +161,7 @@ Erasure coding plays two main roles in Codex: _i)_ allowing data to be recovered
 Codex then erasure-codes $D$ by _interleaving_ blocks taken from each slot (Figure 2), one at a time. The procedure runs $s$ interleaving steps, where $s$ is the number of blocks in a slot.
 
 <center>
-    <img src="https://hackmd.io/_uploads/By3-8lMCR.png" width=80%/>
+    <image src="https://hackmd.io/_uploads/By3-8lMCR.png" width=80%/>
 </center>
 
 **Figure 2.** Erasure-coded dataset $D_e$ with $k + m$ slots and interleaving process.
@@ -167,7 +179,7 @@ A smarter approach would be by _sampling_: instead of downloading the entire fil
 Although the decay is always geometric, the impact of having a loss fraction that is low (e.g. less than $1\%$) can be significant: as depicted in Figure 3, for $l_i = 0.01$ we  get a $p_{\text{detect}}$ that is smaller than $0.5$ even after drawing $50$ samples. If that does not sound too bad, consider an adversarial setting in which an SP purposefully drops a very small fraction of a large file, perhaps one single block out of a million. For fractions that small ($10^{-6}$), one would require hundreds of thousands of samples to get reasonable detection probabilities, e.g. $p_{\text{detect}} > 0.99$.
     
 <center>
-    <img src="https://hackmd.io/_uploads/Hy1BdbmCA.png"/>
+    <image src="https://hackmd.io/_uploads/Hy1BdbmCA.png"/>
 </center>
     
 **Figure 3.** Number of samples $j$ required by a verifier to assert data loss ($p_{\text{detect}}$) for various loss fractions ($l_i$).
@@ -231,7 +243,7 @@ Datasets stored in Codex need to be advertised over a Distributed Hash Table (DH
 A CID unequivocally identifies a piece of data by encoding a flavour of a hash of its content together with the type of hashing method used to compute it. In the case of a Codex dataset $D_e$ (Figure 4), this hash is taken to be the root of the SHA256 Merkle tree constructed over its blocks $\{b_1, \cdots, b_{s \times (k + m)}\}$.
 
 <div style="display: flex; justify-content: center; padding: 0 0 15px 0">
-    <img src="https://hackmd.io/_uploads/r1I_AB400.png" width="60%" />
+    <image src="https://hackmd.io/_uploads/r1I_AB400.png" width="60%" />
 </div>
 
 **Figure 4.** CIDs for Codex datasets.
@@ -282,7 +294,7 @@ An SC that wishes Codex to store a dataset $D_e$ needs to provide $5$ main param
 As discussed in Sec. 5, these parameters may impact durability guarantees directly, and the system offers complete flexibility so that applications can tailor spending and parameters to specific needs. Applications built on Codex will need to provide guidance to their users so they can pick the correct parameters for their needs, not unlike Ethereum wallets help users determine gas fees.
 
 <center>
-    <img src="https://hackmd.io/_uploads/HkW6QFVC0.png" width=70%/>
+    <image src="https://hackmd.io/_uploads/HkW6QFVC0.png" width=70%/>
 </center>
 
 **Figure 6.** Storage requests and their processing by SPs.
@@ -294,7 +306,7 @@ As depicted in Figure 6, every storage request posted by an SC gets recorded on-
 To help mitigate these issues, the Codex marketplace implements a time-based, _expanding window_ mechanism to allow SPs to compete for slots. As depicted in Figure 7, each storage request is assigned a random position in a $z$-bit ID space by taking a hashing function $h$ and computing, for slot $S_i$, the value $h(u\,\|\, i)$, where $u$ is a random nonce. This will effectively disperse storage requests for slots approximately uniformly at random over the ID space.
 
 <div style="padding: 2rem 0 4rem 0">
-    <img src="https://hackmd.io/_uploads/B1hRXsNA0.png"/>
+    <image src="https://hackmd.io/_uploads/B1hRXsNA0.png"/>
 </div>
     
 **Figure 7.** Slots placed at random in a $z$-bit space.
@@ -302,7 +314,7 @@ To help mitigate these issues, the Codex marketplace implements a time-based, _e
 We then allow only hosts whose blockchain IDs are within a certain "distance" of a slot to compete in filling it (Figure 8).   
 
 <div style="padding: 2rem 0 4rem 0">
-    <img src="https://hackmd.io/_uploads/SJKHYsVAR.png"/>
+    <image src="https://hackmd.io/_uploads/SJKHYsVAR.png"/>
 </div>
 
 **Figure 8.** SP eligibility as a function of time and its distance to a slot.
@@ -388,7 +400,7 @@ We model the system using a CTMC with a multi-dimensional state space representi
 States $S_{N-K+1,f}$ for each $f$ are absorbing states. By calculating the expected time of absorption, we can quantify the reliability of the system.
     
 <center>
-    <img src="https://hackmd.io/_uploads/rkCgc-40R.png"/>
+    <image src="https://hackmd.io/_uploads/rkCgc-40R.png"/>
 </center>
 
 **Figure 9.** $p_{\text{loss}}$ (y axis) as a function of $n$ for various values of $R_0$ and expansion factors ($R_{\text{inv}}$).
@@ -417,28 +429,18 @@ The figure also shows what K (and N) values are needed to reach a given reliabil
 
 We have presented Codex, a Decentralized Durability Engine which employs erasure coding and efficient proofs of storage to provide tunable durability guarantees and a favourable tradeoff in cost and complexity for storage providers. By having proofs that are lightweight, Codex can keep the overhead spendings on hardware and electricity to a minimal. This is important both for fostering participation, as storage provider margins can be increased while prices for clients can decrease, and decentralization, as modest requirements are more likely to encourage a more diverse set of participants ranging from hobbyist home providers to larger players.
 
-There remains a large body of work ahead of us. Ongoing work includes:
+Despite our ambitious goals, Codex is a work in progress. Ongoing efforts on improving it include:
 
-* **Reduction of proving costs.** Verifying proofs on-chain is expensive. To reduce those costs, we are working on an in-node aggregation mechanism which should allow providers to batch proofs over multiple slots, as well as an aggregation network which will ultimately allow Codex to go on-chain very infrequentely. We are also futh<>
-* **Support for fine-grained and mutable files.** Codex is currently suitable for large immutable datasets, and any other use case will likely require additional middleware. We have ongoing work on exploring polynomial commitments as opposed to Merkle trees, which will allow us to incrementally change datasets without having to completely re-encode them. This will unlock a host of new use cases, and allow Codex to be used in a much more natural fashion.
-* **Privacy and encryption.** Codex will in the future encrypt data by default so SPs cannot ever know what they are storing. This protects SCs from privacy violation, and SPs from unwanted lawsuits.
+* **Reduction of proving costs.** Verifying proofs on-chain is expensive. To reduce those costs, we are working on an in-node aggregation mechanism which should allow providers to batch proofs over multiple slots. At a longer horizon, we also intend to build our own aggregation network, which will ultimately allow Codex to go on-chain very infrequentely. At the level of individual proofs, we are working on more efficient proof systems which should bring down hardware requirements even more.
+* **Support for fine-grained and mutable files.** Codex, as many other DSNs, is currently suitable for large immutable datasets, and any other use case will currently require additional middleware. We have ongoing work on exploring polynomial commitments as opposed to Merkle trees for proofs, which should allow us to incrementally change datasets without having to completely re-encode them. This will unlock a host of new use cases, and allow Codex to be used in a much more natural fashion.
+* **Privacy and encryption.** Codex will, in the future, encrypt data by default so that SPs cannot ever know what they are storing. This should offer protection for both SCs, as it offers more privacy, and SPs, as it offers plausible deniability and protects them from lawsuits for contents they might be hosting.
 * **Improvements to erasure coding.** There is a large number of different codes offering different tradeoffs, e.g. non-MDS codes like turbocodes and tornado codes, which could result in better performance than the Reed-Solomon codes we currently employ.
 * **Tools and APIs.** We are currently working on creating developer tools (SDKs) and APIs to facilitate the development of decentralized applications on top of the Codex network.
 
-Codex has the potential to support a wide range of use cases, from personal data storage and decentralized web hosting to secure data backup and archival, decentralized identities, and decentralized content distribution. 
-Ultimately, a durable and functional decentralized storage solution is at the base 
+Codex has the potential to support a wide range of use cases, from personal data storage and decentralized web hosting to secure data backup and archival, decentralized identities, and decentralized content distribution.
 
-<!-- Despite their potential benefits, however, the lack of efficient and reliable decentralized storage leaves a key gap that needs to be addressed before any notion of a decentralized technology stack can be seriously contemplated.
- -->
+Ultimately, the use case for Codex is that of a durable and functional decentralized storage layer, without which no decentralized technology stack can be seriously contemplated. As the decentralized ecosystem continues to evolve, we expect Codex’s DDE-based approach to storage to play a crucial role in enabling new types of applications and services that prioritize user control, privacy, and resilience.
 
-As the decentralized ecosystem continues to evolve, Codex’s DDE-based approach to storage could play a crucial role in enabling new types of applications and services that prioritize user control, privacy, and resilience.
-
-<!-- * hosting decentralized websites
-* building general-purpose decentralized databases
-* backup and archival, including historical data for L2 rollups
-* decentralized identities
-* 
- -->
 ## References
               
 [^tanembaum]: A. S. Tanenbaum and M. van Steen, Distributed Systems: Principles and Paradigms, 2nd ed. Upper Saddle River, NJ, USA: Pearson Education, 2007.
