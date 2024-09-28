@@ -1,10 +1,3 @@
-
-$$
-\newcommand{sp}{\text{SP}}
-\newcommand{sc}{\text{SC}}
-\newcommand{\postwo}[0]{\text{Poseidon2}}
-$$
-
 ## 1. Introduction 
 Data production has been growing at an astounding pace, with significant implications. Data is a critical asset for businesses, driving decision-making, strategic planning, and innovation. Individuals increasingly intertwine their physical lives with the digital world, meticulously documenting every aspect of their lives, taking pictures and videos, sharing their views and perspectives on current events, using digital means for communication and artistic expression, etc. Digital personas have become as important as their physical counterparts, and this tendency is only increasing.
 
@@ -213,7 +206,7 @@ def is_proof_required()
 ```
 **Algorithm 2.** Checking if a proof is required (ran on smart contract, on-chain).
     
-Merkle trees for proof verification are built using $\postwo$ hashes[^grassi_23] as those are more efficient to compute inside arithmetic circuits than, say, SHA256, though this may change as we evolve the proving system.
+Merkle trees for proof verification are built using $\text{Poseidon2}$ hashes[^grassi_23] as those are more efficient to compute inside arithmetic circuits than, say, SHA256, though this may change as we evolve the proving system.
 
 **Repair.** The redundancy and proof mechanisms outlined so far allow Codex to _repair_ data in a relatively simple fashion: missing proofs signal lost slots, and are used as failure detectors. Whenever a threshold amount of slots are lost, a lazy repair process is triggered in which the lost slots are put back on sale. Providers are then allowed to fill such slots again but, instead of downloading the slot itself, they download enough blocks from other nodes so they can reconstruct the missing slot, say, $S_i$. They then proceed as before and submit a proof for $S_i$, causing that slot to be filled again.
 
@@ -231,7 +224,7 @@ Datasets stored in Codex need to be advertised over a Distributed Hash Table (DH
 A CID unequivocally identifies a piece of data by encoding a flavour of a hash of its content together with the type of hashing method used to compute it. In the case of a Codex dataset $D_e$ (Figure 4), this hash is taken to be the root of the SHA256 Merkle tree constructed over its blocks $\{b_1, \cdots, b_{s \times (k + m)}\}$.
 
 <div style="display: flex; justify-content: center; padding: 0 0 15px 0">
-    <image src="https://hackmd.io/_uploads/r1I_AB400.png" width=60% />
+    <image src="https://hackmd.io/_uploads/r1I_AB400.png" width="60%" />
 </div>
 
 **Figure 4.** CIDs for Codex datasets.
@@ -240,7 +233,7 @@ Nodes that hold either part or the entirety of $D_e$ will periodically advertise
     
 This structure affords a great deal of flexibility in how peers choose to communicate and encode datasets, and is key in creating a p2p network which can support multiple concurrent p2p client versions and can therefore be upgraded seamlessly.
     
-**Metadata.** Codex stores dataset metadata in descriptors called **manifests**. Those are currently kept separate from the dataset itself, in a manner similar to BitTorrent's _torrent files_. They contain metadata on a number of attributes required to describe and properly process the dataset, such as the Merkle roots for both the content (SHA256) and proof ($\postwo$) trees, the number of blocks contained in the dataset, the block size, erasure coding parameters, and the datasets' MIME-type. Although the CID of a dataset is largely independent of its manifest, a dataset can neither be decoded nor properly verified without it.
+**Metadata.** Codex stores dataset metadata in descriptors called **manifests**. Those are currently kept separate from the dataset itself, in a manner similar to BitTorrent's _torrent files_. They contain metadata on a number of attributes required to describe and properly process the dataset, such as the Merkle roots for both the content (SHA256) and proof ($\text{Poseidon2}$) trees, the number of blocks contained in the dataset, the block size, erasure coding parameters, and the datasets' MIME-type. Although the CID of a dataset is largely independent of its manifest, a dataset can neither be decoded nor properly verified without it.
     
 Manifests are currently stored as content-addressable blocks in Codex and treated similarly to datasets: nodes holding the manifest of a given dataset will advertise its CID onto the DHT, which is computed by taking a SHA256 hash of the manifest's contents. Since manifests are they stored separate from the dataset, however, they can also be exchanged out-of-band, like torrent files can.
 
@@ -419,10 +412,26 @@ We have presented Codex, a Decentralized Durability Engine which employs erasure
 
 There remains a large body of work ahead of us. Ongoing work includes:
 
-* **Reduction of proving costs.** Verifying Groth16 proofs on-chain is expensive. To reduce those costs, we are working on an in-node aggregation mechanism which should allow providers to batch proofs over multiple slots, as well as an aggregation network which will ultimately allow Codex to go on-chain very infrequentely. We are also futh
-* **Support for fine-grained and mutable files.** Codex is currently suitable for large immutable datasets, and any other use case will likely require additional middleware. We have ongoing work on exploring polynomial commitments as opposed to hash-based commitments which will allow us to incrementally change datasets without having to completely re-encode them. This will unlock a host of new use cases, and allow Codex to be used in a much more natural fashion.
+* **Reduction of proving costs.** Verifying proofs on-chain is expensive. To reduce those costs, we are working on an in-node aggregation mechanism which should allow providers to batch proofs over multiple slots, as well as an aggregation network which will ultimately allow Codex to go on-chain very infrequentely. We are also futh<>
+* **Support for fine-grained and mutable files.** Codex is currently suitable for large immutable datasets, and any other use case will likely require additional middleware. We have ongoing work on exploring polynomial commitments as opposed to Merkle trees, which will allow us to incrementally change datasets without having to completely re-encode them. This will unlock a host of new use cases, and allow Codex to be used in a much more natural fashion.
 * **Privacy and encryption.** Codex will in the future encrypt data by default so SPs cannot ever know what they are storing. This protects SCs from privacy violation, and SPs from unwanted lawsuits.
+* **Improvements to erasure coding.** There is a large number of different codes offering different tradeoffs, e.g. non-MDS codes like turbocodes and tornado codes, which could result in better performance than the Reed-Solomon codes we currently employ.
+* **Tools and APIs.** We are currently working on creating developer tools (SDKs) and APIs to facilitate the development of decentralized applications on top of the Codex network.
 
+Codex has the potential to support a wide range of use cases, from personal data storage and decentralized web hosting to secure data backup and archival, decentralized identities, and decentralized content distribution. 
+Ultimately, a durable and functional decentralized storage solution is at the base 
+
+<!-- Despite their potential benefits, however, the lack of efficient and reliable decentralized storage leaves a key gap that needs to be addressed before any notion of a decentralized technology stack can be seriously contemplated.
+ -->
+
+As the decentralized ecosystem continues to evolve, Codex’s DDE-based approach to storage could play a crucial role in enabling new types of applications and services that prioritize user control, privacy, and resilience.
+
+<!-- * hosting decentralized websites
+* building general-purpose decentralized databases
+* backup and archival, including historical data for L2 rollups
+* decentralized identities
+* 
+ -->
 ## References
               
 [^tanembaum]: A. S. Tanenbaum and M. van Steen, Distributed Systems: Principles and Paradigms, 2nd ed. Upper Saddle River, NJ, USA: Pearson Education, 2007.
