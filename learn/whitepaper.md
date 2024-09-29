@@ -2,21 +2,19 @@
     
 **Abstract** 
 </center>
-
-
+  
 <div style="display: flex; justify-content: center; align-items: center;">
-    <div style="text-align: justify; width: 80%"> 
-        The increasing reliance on centralized cloud storage has raised critical concerns regarding user control, data privacy, and censorship, as well as the concentration of economic power in the hands of few entities. While modern decentralized storage networks (DSNs) attempt to address these issues, they often fall short in providing strong durability guarantees, efficient operation, and scalable proofs of storage. In this paper, we introduce Codex, a novel Erasure Coded Decentralized Storage Network that leverages erasure coding and zero-knowledge proofs to offer tunable durability guarantees and cost-effective storage verification. Central to Codex is the concept of the Decentralized Durability Engine (DDE), a framework we formalize to systematically address data redundancy, remote auditing, repair, incentives, and data dispersal in decentralized storage systems. We describe the architecture and mechanisms of Codex, including its marketplace and proof systems, and provide a preliminary reliability analysis using a Continuous Time Markov-Chain (CTMC) model to evaluate durability guarantees. Codex represents a step toward creating a decentralized, resilient, and economically viable storage layer critical for the broader decentralized ecosystem.
-    </div>
+<div style="text-align: justify; width: 80%">
+The internet is becoming more and more centralized. As companies and individuals increasingly rely on centralized cloud providers for storage, critical concerns on privacy, censorship, and user control, as well as on the concentration of economic power in the hands of few entities become more pronounced. 
+
+While there have been several attempts at providing alternatives, modern decentralized storage networks (DSNs) often fall short on basic aspects like having strong durability guarantees, being efficient to operate, or providing scalable proofs of storage. This in turn leads to solutions that are either: _i)_ not useful, as they can lose data; _ii)_ not friendly to decentralization, as they require specialized or expensive hardware, or; _iii)_ economically unfeasible, as they burden providers with too many costs beyond those of the storage hardware itself.
+
+In this paper, we introduce Codex, a novel Erasure Coded Decentralized Storage Network that attempts to tackle those issues. Codex leverages erasure coding as part of both redundancy and storage proofs, coupling it with zero-knowledge proofs and lazy repair to achieve tunable durability guarantees while being modest on hardware and energy requirements. Central to Codex is the concept of the Decentralized Durability Engine (DDE), a framework we formalize to systematically address data redundancy, remote auditing, repair, incentives, and data dispersal in decentralized storage systems.
+
+We describe the architecture and mechanisms of Codex, including its marketplace and proof systems, and provide a preliminary reliability analysis using a Continuous Time Markov-Chain (CTMC) model to evaluate durability guarantees. Codex represents a step toward creating a decentralized, resilient, and economically viable storage layer critical for the broader decentralized ecosystem.
 </div>
-    
-<!-- **Abstract (me).**
-Most of the data on the internet today -- personal or business -- is stored on a centralized cloud storage service. This has profound impacts that range from privacy and freedom-of-speech concerns for individuals to storage markets becoming impenetrable oligopolies. Decentralized technologies appear as a possible alternative to this reality, with storage sitting at the base of what could make a decentralized application stack viable.
+</div>
 
-Yet, solutions so far have failed to make meaningful inroads. We argue that this is partly because a lack of concern with _durability_, a key property of storage, which has been largely neglected thus far. Another point are the massive hardware requirements imposed by some solutions, which renders participation costly and hinders decentralization.
-
-**Abstract.** Centralized cloud storage services ran by a small group of large companies store most of the data on the internet today. Not only this has a profound impact on user privacy and freedom, but it also centralizes all the value captured by providing these services on the hands of few players. Decentralized technologies appear as an alternative to that _status quo_. So far, however, currently 
- -->
 ## 1. Introduction 
 Data production has been growing at an astounding pace, with significant implications. Data is a critical asset for businesses, driving decision-making, strategic planning, and innovation. Individuals increasingly intertwine their physical lives with the digital world, meticulously documenting every aspect of their lives, taking pictures and videos, sharing their views and perspectives on current events, using digital means for communication and artistic expression, etc. Digital personas have become as important as their physical counterparts, and this tendency is only increasing.
 
@@ -32,7 +30,7 @@ Despite their potential benefits, however, the lack of efficient and reliable de
 
 In response to these challenges, we introduce Codex: a novel Erasure Coded Decentralized Storage Network which relies on erasure coding for redundancy and efficient proofs of storage. This method provides unparalleled reliability and allows for the storage of large datasets, larger than any single node in the network, in a durable and secure fashion. Our compact and efficient proofs of storage can detect and prevent catastrophic data loss with great accuracy, while incurring relatively modest hardware and electricity requirements -- two preconditions for achieving true decentralization. In addition, we introduce and formalize in this paper the notion of durability in decentralized storage networks through a new concept we call the _Decentralized Durability Engine_ (DDE).
 
-The remainder of this paper is organized as follows. First, we discuss the context on which Codex is built on (Sec. 2) by expanding on the issues of centralized cloud storage, and providing context on previous takes at decentralized alternatives -- namely, p2p networks, blockchains, and DSNs. Then, we  introduce the conceptual framework that underpins Codex in Sec. 3 -- the Decentralized Durability Engine (DDE) -- followed by a more detailed descriptions of the mechanisms behind Codex and how it materializes as a DDE in Sec. 4. Sec. 5 then presents a preliminary reliability analysis, which places Codex's storage parameters alongside more formal durability guarantees. Finally, Sec. 6 provides conclusions and ongoing work.
+The remainder of this paper is organized as follows. First, we discuss the context on which Codex is built on (Sec. 2) by expanding on the issues of centralized cloud storage, and providing background on previous takes at decentralized alternatives -- namely, p2p networks, blockchains, and DSNs. Then, we  introduce the conceptual framework that underpins Codex in Sec. 3 -- the Decentralized Durability Engine (DDE) -- followed by a more detailed descriptions of the mechanisms behind Codex and how it materializes as a DDE in Sec. 4. Sec. 5 then presents a preliminary reliability analysis, which places Codex's storage parameters alongside more formal durability guarantees. Finally, Sec. 6 provides conclusions and ongoing work.
 
 ## 2. Background and Context
 
@@ -43,9 +41,9 @@ Over the past two decades, centralized cloud storage has become the _de facto_ a
 
 The appeal is clear: scalable, easy-to-use elastic storage and networking coupled with a flexible pay-as-you-go model and a strong focus on durability[^s3_reinvent_19]  translating to dependable infrastructure that is available immediately and at the exact scale required.
 
-Centralization, however, carries a long list of downsides, most of them having to do with having a single actor in control of the whole system. This effectively puts users at the mercy of the controlling actor's commercial interests, which may and often will not coincide with the user's interests on how their data gets used, as well as their ability to stay afloat in the face of natural, political, or economical adversity. Government intervention and censorship are also important sources of concern[^liu_19]. Larger organizations are acutely aware of these risks, with $98\%$ of cloud user businesses adopting multi-cloud environments to mitigate them[^multicloud].
+Centralization, however, carries a long list of downsides, most of them due to having a single actor in control of the whole system. This effectively puts users at the mercy of the controlling actor's commercial interests, which may and often will not coincide with the user's interests on how their data gets used, as well as their ability to stay afloat in the face of natural, political, or economical adversity. Government intervention and censorship are also important sources of concern[^liu_19]. Larger organizations are acutely aware of these risks, with $98\%$ of cloud user businesses adopting multi-cloud environments to mitigate them[^multicloud].
 
-The final downside is economical: since very few companies can currently provide such services at the scale and quality required, the billions in customer spending gets funnelled into the pockets of a handful of individuals. Oligopolies such as these can  derail into an uncompetitive market which finds its equilibrium at a price point which is not necessarily in the best interest of end-users[^feng_14].
+The final downside is economical: since very few companies can currently provide such services at the scale and quality required, the billions in customer spending gets funneled into the pockets of a handful of individuals. Oligopolies such as these can  derail into an uncompetitive market which finds its equilibrium at a price point which is not necessarily in the best interest of end-users[^feng_14].
 
 ### 2.2. Decentralized Alternatives: Past and Present
 
@@ -55,7 +53,7 @@ Given the downsides of centralized cloud storage, it is natural to wonder if the
 
 Early networks like BitTorrent[^cohen_01], however, only had rudimentary incentives based on a form of barter economy in which nodes providing blocks to other nodes would be rewarded with access to more blocks. This provides some basic incentives for nodes to exchange the data they hold, but whether or not a node decides to hold a given piece of data is contingent on whether or not the node operator was interested in that data to begin with; i.e., a node will likely not download a movie if they are not interested in watching it. 
 
-Files which are not popular, therefore, tend to disappear from the network as no one is interested in them, and there is no way to incentivize nodes to do otherwise. This lack of even basic durability guarantees means BitTorrent and, in fact, most of the early p2p file-sharing networks, are suitable as distribution networks at best, but not as storage networks as data can, and probably will, be eventually lost. Even more recent attempts at decentralized file sharing like IPFS[^ipfs_website] suffer from similar shortcomings: by default, IPFS offers no durability guarantees, there is no way to punish a pinning service if it fails to keep data around.
+Files which are not popular, therefore, tend to disappear from the network as no one is interested in them, and there is no way to incentivize nodes to do otherwise. This lack of even basic durability guarantees means BitTorrent and, in fact, most of the early p2p file-sharing networks, are suitable as distribution networks at best, but not as storage networks as data can, and probably will, be eventually lost. Even more recent attempts at decentralized file sharing like IPFS[^ipfs_website] suffer from similar shortcomings: by default, IPFS offers no durability guarantees, i.e., there is no way to punish a pinning service if it fails to keep data around.
 
 **Blockchains.** Blockchains have been introduced as part of Bitcoin in 2008[^nakamoto_08], with the next major player Ethereum[^buterin_13] going live in 2013. A blockchain consists of a series of blocks, each containing a list of transactions. These blocks are linked together in chronological order through cryptographic hashes. Each block contains a hash of the previous block, which secures the chain against tampering. This structure ensures that once a block is added to the blockchain, the information it contains cannot be altered without redoing all subsequent blocks, making it secure against fraud and revisions. For all practical purposes, once a block gets added, it can no longer be removed.
 
@@ -94,7 +92,7 @@ A Decentralized Durability Engine is a tuple $\Gamma = \text{(R, A, P, I, D)}$ w
 * $I$ is a set of incentive mechanisms that encourage nodes to behave honestly and reliably by rewarding good behavior and penalizing malicious or negligent actions.
 * $D$ is a set of data dispersal algorithms that strategically distribute data fragments across multiple nodes to minimize the risk of data loss due to localized failures and to improve data availability and accessibility.
 
-We argue that when designing a storage system that can keep data around, none of these elements are optional. Data needs to be redundant ($R$), there needs to be a way to detect failures and misbehavior ($A$), we must be able to repair data so it is not lost to accumulated failures $(P)$, misbehavior must be penalized if nodes do not behave ($I$), and data must be placed so as fault correlation is understood ($D$).
+We argue that when designing a storage system that can keep data around, none of these elements are optional. Data needs to be redundant ($R$), there needs to be a way to detect failures and misbehavior ($A$), we must be able to repair data so it is not lost to accumulated failures $(P)$, misbehaving nodes must be penalized ($I$), and data must be placed so as fault correlation is understood ($D$).
     
 This is a somewhat informal treatment for now, but the actual parameters that would be input into any reliability analysis of a storage system would be contingent on those choices. In a future publication, we will explore how durability is affected by the choice of each of these elements in a formal framework.
 
@@ -102,7 +100,7 @@ This is a somewhat informal treatment for now, but the actual parameters that wo
 
 This section describes how Codex actually works. The primary motivation behind Codex is to provide a scalable and robust decentralized storage solution which addresses the limitations of existing DSNs. This includes: i) enhanced durability guarantees that can be reasoned about, ii) scalability and performance and iii) decentralization and censorship resistance.
 
-We start this section by laying out key concepts required to understand how Codex works (Sec. 4.1). We then discuss the redundancy ($R$), remote auditing ($A$), and repair mechanisms ($P$) of Codex and how they combine erasure codes and zero-knowledge proofs into a system that is lightweight, efficient, and amenable to decentralization. Sec. 4.4 takes a detour onto the networking layer and provides an overview of our BitTorrent-inspired, scalable data transfer protocols. Finally, incentives ($I$) and dispersal $(D)$ are discussed in Sec. 4.5 as part of the Codex marketplace.
+We start this section by laying out key concepts required to understand how Codex works (Sec. 4.1). We then discuss the redundancy ($R$), remote auditing ($A$), and repair mechanisms ($P$) of Codex and how they combine erasure codes and zero-knowledge proofs into a system that is lightweight, efficient, and amenable to decentralization. Sec. 4.4 takes a detour onto the networking layer and provides an overview of our scalable data transfer protocols. Finally, incentives ($I$) and dispersal $(D)$ are discussed in Sec. 4.5 as part of the Codex marketplace.
 
 ### 4.1. Concepts
 
@@ -116,7 +114,7 @@ $$
 
 where $t_a$ and $t_u$ are the total times in which the system remained available and unavailable, respectively. To maintain high availability, a storage system needs to be _fault tolerant_; i.e., it should be able to correctly service storage and retrieval requests in the presence of hardware faults and malicious participants.
 
-**Durability.** Quantified as a probability $p_\text{dur} = 1 - p_\text{loss}$ that a given unit of data _will not_ be lost over a given period of time; e.g. the probability that some file is not lost lost within a $1$-year period. This probability is sometimes expressed as a percentage (e.g. in S3).
+**Durability.** Quantified as a probability $p_\text{dur} = 1 - p_\text{loss}$ that a given unit of data _will not_ be lost over a given period of time; e.g. the probability that some file is not lost  within a $1$-year period. This probability is sometimes expressed as a percentage (e.g. in S3).
 
 If this number is very close to one, e.g. $p_\text{loss} \leq 10^{-6}$, then the system is said to be _highly durable_. Systems that are not highly durable are those that can lose data with higher or unbounded probability, or that do not quantify their loss probabilities at all.
 
@@ -155,7 +153,7 @@ Erasure coding plays two main roles in Codex: _i)_ allowing data to be recovered
 <center>
     <img src="/learn/whitepaper/dataset-and-blocks.png" width=80%/>
 </center>
-    
+
 **Figure 1.** A padded dataset $D$ split into $k$ slots.
     
 Codex then erasure-codes $D$ by _interleaving_ blocks taken from each slot (Figure 2), one at a time. The procedure runs $s$ interleaving steps, where $s$ is the number of blocks in a slot.
@@ -192,7 +190,7 @@ The final step for Codex proofs is that they need to be _publicly verifiable_. T
     
 Algorithm 1 depicts, in Python-pseudocode, the _proving loop_ that SPs must run for every slot $S_i$ that they fill. It starts by waiting for a period boundary (line $7$), which is a fixed time slice that is larger than the average time between consecutive blocks in the target blockchain; i.e., the loop in lines $6$ -- $15$ runs _at most once_ per block. 
     
-It then asks the on-chain contract if a proof is required for this period (line $8$). The contract will then Algorithm 2 (on-chain), which checks if the current blockhash modulo a `frequency` parameter (lines $3$) amounts to zero. Since hash values are approximately random, that condition will turn out to be true, on average, at every `frequency` blocks. 
+It then asks the on-chain contract if a proof is required for this period (line $8$). The contract will then execute Algorithm 2 (on-chain), which checks if the current blockhash modulo a `frequency` parameter (lines $3$) amounts to zero. Since hash values are approximately random, that condition will turn out to be true, on average, at every `frequency` blocks. 
     
 Going back to Algorithm 1, if a proof turns out to be required for the current period, the SP will then retrieve a random value from the contract (line $9$), which is also derived from the current blockhash. 
     
@@ -254,7 +252,7 @@ This structure affords a great deal of flexibility in how peers choose to commun
     
 **Metadata.** Codex stores dataset metadata in descriptors called **manifests**. Those are currently kept separate from the dataset itself, in a manner similar to BitTorrent's _torrent files_. They contain metadata on a number of attributes required to describe and properly process the dataset, such as the Merkle roots for both the content (SHA256) and proof ($\text{Poseidon2}$) trees, the number of blocks contained in the dataset, the block size, erasure coding parameters, and the datasets' MIME-type. Although the CID of a dataset is largely independent of its manifest, a dataset can neither be decoded nor properly verified without it.
     
-Manifests are currently stored as content-addressable blocks in Codex and treated similarly to datasets: nodes holding the manifest of a given dataset will advertise its CID onto the DHT, which is computed by taking a SHA256 hash of the manifest's contents. Since manifests are they stored separate from the dataset, however, they can also be exchanged out-of-band, like torrent files can.
+Manifests are currently stored as content-addressable blocks in Codex and treated similarly to datasets: nodes holding the manifest of a given dataset will advertise its CID onto the DHT, which is computed by taking a SHA256 hash of the manifest's contents. Since manifests are  stored separate from the dataset, however, they can also be exchanged out-of-band, like torrent files can.
 
 Other systems choose tighter coupling between the metadata and the dataset. IPFS and Swarm use cryptographic structures such as Merkle DAG and a Merkle Tree, where intermediate nodes are placed on the network and queried iteratively to retrieve the respective vertexes and leaves. Such design decisions have their own tradeoffs and advantages, for example an advantage of storing the metadata in a single addressable unit is that it eliminates intermediary network round trips, as opposed to a distributed cryptographic structure such as a tree or a DAG.
 
@@ -341,9 +339,9 @@ In our first model, we use a Continuous Time Markov-Chain (CTMC) model to descri
 - the proving process;
 - dataset repair.
 
-Before discussion the state space and the rate matix of the CTMC model, lets describe these aspects of the system. 
+Before discussing the state space and the rate matix of the CTMC model, lets describe these aspects of the system. 
     
-As before, we assume a dataset $D$  split into $k$ disjoint partitions, and encoded into a new dataset $D_e$ with $\{S_1, \cdots, S_k , \cdots, S_{k+m}\}$ slots.
+As before, we assume a dataset $D$  split into $k$ disjoint partitions, and encoded into a new dataset $D_e$ with $n=k+m$ slots $\{S_1, \cdots, S_k , \cdots, S_{k+m}\}$. This encoding is often characterized by it's code expansion factor $e = n/k =1+m/k$, expressing the storage overhead due to code redundancy.
     
 ### 5.1. Failure Model
 
@@ -351,79 +349,98 @@ When discussing failures, we should differentiate between transient and permanen
 
 In our first model, we focus on permanent node failures. From the perspective of Codex, a node is considered lost if it cannot provide proofs. Permanent node failure can be due to disk failure, to other hardware or software failures leading to data corruption, but also due to operational risks, including hardware failures, network failures, or operational decisions.
 
-Unrepairable hardware failures are typically characterized as MTTF (Mean Time To Failure), assuming an exponential distribution of the time to failure. There are various MTTF statistics available about disk failures[^schroeder_07].
+Unrepairable hardware failures are typically characterized with their **MTTF** (Mean Time To Failure) metric, assuming an exponential distribution of the time to failure. There are various MTTF statistics available about disk failures[^schroeder_07].
 
-As a first approximation, one could start from the above disk MTTF numbers, and try to factor in other reasons of permanent node failures. Disk MTTF is specified in the range of 1e+6 hours, however, we have good reasons to be more pessimistic, or at least err on the more unreliable side, and assume MTTF in the 1e+4 hour range, i.e., a bit more than 1 year.
+As a first approximation, one could start from the above disk MTTF numbers, and try to factor in other reasons of permanent node failures. Disk MTTF is specified in the range of 1e+6 hours, however, we have good reasons to be more pessimistic, or at least err on the more unreliable side, and assume MTTF in the 1e+4 hour range, i.e. around a year.
 
-For the sake of modeling, we also assume i.i.d. (independent and identically distributed) failures among the set of nodes storing a given dataset. This is an optimistic model compared to cases where some storage nodes might fail together e.g. because of being on shared hardware, in the same data center, or being under the same administrative authority. We will model these correlated events separately.
+For the sake of modeling, we also assume i.i.d. (independent and identically distributed) failures among the set of nodes storing a given dataset. This is an optimistic model compared to cases where some storage providers might fail together e.g. because of being on shared hardware, in the same data center, or being under the same administrative authority. We will model these correlated events in a separate document.
 
-There might also be malicious nodes in the set of storage nodes, e.g. witholding data when reconstruction would be required. Again, we will model these separately.
+There might also be malicious nodes in the set of storage providers, e.g. withholding data when reconstruction would be required. Again, we will extend the model to these in a separate document.
 
 ### 5.2. Reconstruction Model
 
-The next important time related parameter of the model is Mean Time To Reconstruct (MTTR). While we model events at the level of a single dataset, it is important to note here that a failure event most probably involves entire disks or entire nodes with multiple disks, with many datasets and a large amount of data. Reconstruction, thus, also involves large amounts of data. The actual repair time depends on a number of factors:
-- time to start repairing
-- data transmission for the purposes of Erasure Code decoding
-- EC decoding itself
-- allocating the new nodes to hold the repaired blocks
-- distributing repaired data to the allocated nodes
+The next important time related parameter of the model is **MTTR** (Mean Time To Reconstruct). While we model events at the level of a single dataset, it is important to note here that a failure event most probably involves entire disks or entire nodes with multiple disks, with many datasets and a large amount of data. Therefore, in the case of reconstruction, the stochastic processes of individual datasets are not independent of each other, leading to higher and uncertain reconstruction times.
+
+The actual repair time depends on a number of factors:
+- time to start repairing the dataset,
+- data transmission for the purposes of Erasure Code decoding,
+- EC decoding itself,
+- allocating the new nodes to hold the repaired blocks,
+- distributing repaired data to the allocated nodes.
 
 Overall, it is clearly not easy to come up with a reasonable distribution for the time of repair, not even the mean time of repair. While time to repair is most probably not an exponential distribution, we model it as such in a first approximation to allow Markov Chain based modeling.
     
 ### 5.3. Triggering Reconstruction
 
-Reconstruction and re-allocation of slots can be triggered by the observed state, and our system "observes" state through the proving process. In our model, we assume that nodes are providing proofs according to a random process with an exponential distribution between proving times with MTBF mean, i.i.d. between nodes. Other distributions are also possible, but for the sake of modelling we start with an exponential distribution, which is also simple to implement in practive.
+Reconstruction and re-allocation of slots can be triggered by the observed state, and our system "observes" state through the proving process. In our model, we assume that nodes are providing proofs according to a random process with an exponential distribution between proving times, with **MTBF** (Mean Time Between Proofs) mean, i.i.d. between nodes. Other distributions are also possible, but for the sake of modelling we start with an exponential distribution, which is also simple to implement in practice.
 
 Reconstruction can be triggered based on the observed state in various ways:
 - if an individual node is missing a slot proof (or more generally, a series of proofs), reconstruction can start. The advantage of this option is that the consequences of failing a proof only depend on the node itself, and not on other nodes.
--  reconstruction can also be triggered by the observed system state, i.e., the number of nodes that has missed the last proof (or more in general some of the last proofs).
+-  reconstruction can also be triggered by the observed system state, i.e. the number of nodes that have missed the last proof (or more in general some of the last proofs). In fact, thanks to the properties of RS codes, whenever a slot is being repaired, all slot's data are regenerated. As a consequence, the cost of repair is independent of the number of slots being repaired, and by triggering repair only after multiple slots are observed lost (the so called "lazy repair"), we can drastically reduce the cost of repair.
 
-We assume reconstruction that uses a combination of the above too triggers. 
-- A single slot is considered lost if it was missing the last $R_1$ proofs.
-- Reconstruction is triggered based on the observed system state, allowing for lazy repair, by triggering it when $R_0$ of the slots is considered lost.
+In our model, we assume reconstruction that uses a combination of the above too triggers. 
+- Reconstruction is triggered based on the observed system state, allowing for lazy repair, by triggering it when $l_0$ of the slots is considered lost.
+- A single slot is considered lost if it was missing the last $l_1$ proofs.
 
 Other reconstruction strategies, such as considering all the proofs from all the slots in a time window, are also possible, but we leave these for further study.
 
 ### 5.4. CTMC Model
 
-We model the system using a CTMC with a multi-dimensional state space representing slot status and proof progress.
+We model the system using a CTMC with a multi-dimensional state space representing slot status and proof progress. To keep the description simple, we introduce the model for the case of $l_1 = 1$ here. An extension to $l_1 > 1$ is possible by increasing the dimensions of the state space to $1+l_1$.
 
 **State space.** We model the system with a multi-dimensional state space $S_{l,f}$ with the following dimensions:
-- losses: $l \in [0, \cdots, n-k+1]$: the number of lost slots. Practical values of $l$ go from $0$ to $n-k$. As soon as $l$ reaches $n-k+1$, the dataset can be considered lost.
-- observations: $f \in [0, \cdots, l]$ is the number of slots with the last test failed, or in other words, observed losses. Since repair reallocates slots to new nodes, we can assume that repaired slots are all available after the process. Hence, $f \le l$ in all reachable states.
+- losses: $l \in [0, \cdots, m+1]$: the number of lost slots. Practical values of $l$ go from $0$ to $m$. As soon as $l$ reaches $m+1$, the dataset can be considered lost.
+- observations: $f \in [0, \cdots, l]$ is the number of slots with the last test failed, or in other words, observed losses. Repair is triggered when $l \ge l_0$. Since repair reallocates slots to new nodes, we can assume that repaired slots are all available after the process. Hence, $f \le l$ in all reachable states.
 
-**State transition rates.** From a given state $S_{l,f}$, we can get to the following states:
-- slot loss, $S_{l+1,f}$: slot loss is driven by MTTF, assuming i.i.d slot losses. Obviously, only available slots can be lost, so the transition probability also depends on $N-l$.
-- missing proofs, $S_{l,f+1}$: we are only interested in the event of observing the loss of a slot that we haven't seen before. Thus, the state transition probability depends on $f-l$, as well as on the proving process and the criteria for considering a slot lost. If we require a fixed number of proofs missing to consider a slot lost, and the time between proofs is i.i.d exponential, we can look at the sum of the random variables, which has a gamma distribition.
-- repair, $S_{0,0}$: repair is only triggered once the number of observed losses reaches the lazy reapir threshold. In case of a successful repair, all slots are fully restored (even if the actual set of nodes storing the slots are changing).
+**State transition rates.** From a given state $S_{l,f}$ we can get to the following states:
+- slot loss, $S_{l+1,f}$: slot loss is driven by MTTF, assuming i.i.d slot losses. Obviously, only available slots can be lost, so the transition probability also depends on $n-l$.
+- missing proofs, $S_{l,f+1}$: we are only interested in the event of observing the loss of a slot that we haven't seen before. Thus, the state transition probability depends on $f-l$.
+- repair, $S_{0,0}$: repair is only triggered once the number of observed losses reaches the lazy repair threshold $l_0$. In case of a successful repair, all slots are fully restored (even if the actual set of nodes storing the slots are changing).
     
-States $S_{N-K+1,f}$ for each $f$ are absorbing states. By calculating the expected time of absorption, we can quantify the reliability of the system.
+States $S_{M+1,f}$ for each $f$ are absorbing states. By calculating the expected time of absorption, we can quantify the reliability of the system.
     
 <center>
-    <img src="/learn/whitepaper/durability-analysis-plot.png"/>
+    <img src="/learn/whitepaper/ploss-vs-slots.png"/>
 </center>
 
-**Figure 9.** $p_{\text{loss}}$ (y axis) as a function of $n$ for various values of $R_0$ and expansion factors ($R_{\text{inv}}$).
+**Figure 9.** $p_{\text{loss}}$ (y axis) as a function of $n$ for various values of $l_0$ and expansion factors ($e$).
 
     
-Figure 8 shows dataset reliability ($p_{\text{loss}}$) as a function of N, the number of slots, assuming an MTTF of 1 year and an MTTR of 24 hours. We set the repair frequency (MTBR) to 24 hours, and explore various options on the code expansion factor and the lazy repair threshold. Clearly, adding more redundancy (a higher expansion factor) allows us to store a dataset on SNs. As expected lazy repair requires more SNs, but reduces repair cost when nodes start to fail.
+Figure 9 shows dataset reliability ($p_{\text{loss}}$) as a function of $n$, the number of slots, assuming an MTTF of 1 year and an MTTR of 24 hours. We set the repair frequency (MTBR) to 24 hours, and explore various options on the code expansion factor $e$ and the lazy repair threshold $l_0$. Clearly, adding more redundancy (using an RS code with a higher expansion factor) allows us to store a dataset on fewer SPs. As expected lazy repair requires the use of more SPs, but reduces repair cost by delaying repair.
 
-The figure also shows what K (and N) values are needed to reach a given reliability threshold under different expansion factors and lazy repair thresholds. For example, values for a failure probability in a year of $10^{-9}$, also called "nine nines" reliability, are summarized in Table 1.
+The figure also shows what $k$ and $m$ values are needed to reach a given reliability threshold under different expansion factors and lazy repair thresholds. For example, values for a failure probability in a year of $10^{-9}$, also called "nine nines" reliability, are summarized in Table 1.
 
 <center>
     
-| Expansion | Lazy repair |Required K and N|
-|----------|--------------|----------------|
-|   1.5    |   1          |   18, 29       |
-|   2      |   1          |    7, 14       |
-|   2.5    |   1          |    4, 10       |
-|   1.5    |   5          |   28, 42       |
-|   2      |   5          |   13, 26       |
-|   2.5    |   5          |    8, 20       |
+| Expansion ($e$) | Lazy repair ($l_0$) |Required k + m|
+|:---------------:|:-------------------:|:------------:|
+|   1.5           |   1                 |   18 +  9    |
+|   2             |   1                 |    7 +  7    |
+|   2.5           |   1                 |    4 +  6    |
+|   1.5           |   5                 |   28 + 14    |
+|   2             |   5                 |   13 + 13    |
+|   2.5           |   5                 |    8 + 12    |
 
-</center>    
+</center> 
 
-**Table 1.** Expansion, lazy repair, and required values for $k$ and $n$ for $p_{\text{loss}} = 10^{-9}$
+**Table 1.** Expansion, lazy repair, and required values for $k$ and $m$ to achieve $p_{\text{loss}} = 10^{-9}$
+
+### 5.5 Proving frequency
+
+An important parameter to asses is the frequency of proofs, expressed in our model as MTBP, since it directly translates into proof generation and proof submission costs. If we could double MTBP, we could halve the associated costs. 
+
+<center>
+    <img src="/learn/whitepaper/ploss-vs-proof-freq.png"/>
+</center>
+
+**Figure 10.** $p_{\text{loss}}$ (y axis) as a function of the proof frequency (MTBP), for various slot counts ($k+m$) and lazy repair thresholds ($l_0$).
+
+In Figure 10 we keep MTTF 1 year and MTTR 1 day, like before, and we show $p_{\text{loss}}$ as a function of MTBP (expressed in days for simplicity). Note that the x axis is logarithmic to show better the cost-benefit of changing the proving interval.
+
+As expected, large values of MTBP (infrequent proofs) are not acceptable, the dataset could easily be lost without triggering repair. What the curves also show is that requiring proofs with an MTBF below a day does not make a significant difference. In fact, with several parameter combinations, namely, with higher $n$ values, we can afford to increase MTBF considerably, to several days.
+
+Note however that we are still using $l_1=1$ in our model, i.e. a slot is considered lost after a single failed proof. We consider this to be too reactive, since single proofs might be missed due to temporary failures. Without going into much detail, a higher tolerance on missed proofs ($l_1 > 1$) is similar to multiplying MTBF by $l_1$ (although the model becomes more complex, with an $l_1 +1$ dimensional state space).
+
 
 ## 6. Conclusions and Future Work
 
@@ -431,13 +448,20 @@ We have presented Codex, a Decentralized Durability Engine which employs erasure
 
 Despite our ambitious goals, Codex is a work in progress. Ongoing efforts on improving it include:
 
-* **Reduction of proving costs.** Verifying proofs on-chain is expensive. To reduce those costs, we are working on an in-node aggregation mechanism which should allow providers to batch proofs over multiple slots. At a longer horizon, we also intend to build our own aggregation network, which will ultimately allow Codex to go on-chain very infrequentely. At the level of individual proofs, we are working on more efficient proof systems which should bring down hardware requirements even more.
-* **Support for fine-grained and mutable files.** Codex, as many other DSNs, is currently suitable for large immutable datasets, and any other use case will currently require additional middleware. We have ongoing work on exploring polynomial commitments as opposed to Merkle trees for proofs, which should allow us to incrementally change datasets without having to completely re-encode them. This will unlock a host of new use cases, and allow Codex to be used in a much more natural fashion.
+* **Reduction of proving costs.** Verifying proofs on-chain is expensive. To bring down costs on the short-term, we are working on an in-node aggregation mechanism which allow providers to batch proofs over multiple slots. On a slightly longer time horizon, we also intend to build our own aggregation network, which will ultimately allow Codex to go on-chain very infrequentely. Finally, at the level of individual proofs, we are working on more efficient proof systems which should bring down hardware requirements even more. 
+* **Bandwidth incentives.** Codex is designed to provide strong incentives that favor durability. While incentivizing availability is harder as it is in general not possible to provide proofs for it[^bassam_18] we can still provide an effective, even if weaker, form of incentive by allowing providers to sell bandwidth. To that end, we are currently working on mechanisms to enable an efficient bandwidth market in Codex which should complement the storage market.
 * **Privacy and encryption.** Codex will, in the future, encrypt data by default so that SPs cannot ever know what they are storing. This should offer protection for both SCs, as it offers more privacy, and SPs, as it offers plausible deniability and protects them from lawsuits for contents they might be hosting.
-* **Improvements to erasure coding.** There is a large number of different codes offering different tradeoffs, e.g. non-MDS codes like turbocodes and tornado codes, which could result in better performance than the Reed-Solomon codes we currently employ.
+* **P2P layer.** We are currently working on optimizing protocols so they scale and perform better. This includes improvements in block transfer latency and throughput, more efficient swarms and block discovery mechanism, as well as research into more secure protocols.
 * **Tools and APIs.** We are currently working on creating developer tools (SDKs) and APIs to facilitate the development of decentralized applications on top of the Codex network.
 
-Codex has the potential to support a wide range of use cases, from personal data storage and decentralized web hosting to secure data backup and archival, decentralized identities, and decentralized content distribution. Ultimately, the use case for Codex is that of a durable and functional decentralized storage layer, without which no decentralized technology stack can be seriously contemplated. As the decentralized ecosystem continues to evolve, we expect Codex’s DDE-based approach to storage to play a crucial role in enabling new types of applications and services that prioritize user control, privacy, and resilience.
+Work within a longer time horizon include:
+
+* **Support for fine-grained and mutable files.** Codex, as many other DSNs, is currently suitable for large immutable datasets, and any other use case will currently require additional middleware. We have ongoing work on exploring polynomial commitments as opposed to Merkle trees for proofs, which should allow us to incrementally change datasets without having to completely re-encode them. This will unlock a host of new use cases, and allow Codex to be used in a much more natural fashion.
+* **Improvements to erasure coding.** There is a large number of different codes offering different tradeoffs, e.g. non-MDS codes like turbocodes and tornado codes, which could result in better performance than the Reed-Solomon codes we currently employ.
+
+Codex has the potential to support a wide range of use cases, from personal data storage and decentralized web hosting to secure data backup and archival, decentralized identities, and decentralized content distribution.
+
+Ultimately, the use case for Codex is that of a durable and functional decentralized storage layer, without which no decentralized technology stack can be seriously contemplated. As the decentralized ecosystem continues to evolve, we expect Codex’s DDE-based approach to storage to play a crucial role in enabling new types of applications and services that prioritize user control, privacy, and resilience.
 
 ## References
               
