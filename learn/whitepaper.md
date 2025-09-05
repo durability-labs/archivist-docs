@@ -9,9 +9,9 @@ The internet is becoming more and more centralized. As companies and individuals
 
 While there have been several attempts at providing alternatives, modern decentralized storage networks (DSNs) often fall short on basic aspects like having strong durability guarantees, being efficient to operate, or providing scalable proofs of storage. This in turn leads to solutions that are either: _i)_ not useful, as they can lose data; _ii)_ not friendly to decentralization, as they require specialized or expensive hardware, or; _iii)_ economically unfeasible, as they burden providers with too many costs beyond those of the storage hardware itself.
 
-In this paper, we introduce Codex, a novel Erasure Coded Decentralized Storage Network that attempts to tackle those issues. Codex leverages erasure coding as part of both redundancy and storage proofs, coupling it with zero-knowledge proofs and lazy repair to achieve tunable durability guarantees while being modest on hardware and energy requirements. Central to Codex is the concept of the Decentralized Durability Engine (DDE), a framework we formalize to systematically address data redundancy, remote auditing, repair, incentives, and data dispersal in decentralized storage systems.
+In this paper, we introduce Archivist, a novel Erasure Coded Decentralized Storage Network that attempts to tackle those issues. Archivist leverages erasure coding as part of both redundancy and storage proofs, coupling it with zero-knowledge proofs and lazy repair to achieve tunable durability guarantees while being modest on hardware and energy requirements. Central to Archivist is the concept of the Decentralized Durability Engine (DDE), a framework we formalize to systematically address data redundancy, remote auditing, repair, incentives, and data dispersal in decentralized storage systems.
 
-We describe the architecture and mechanisms of Codex, including its marketplace and proof systems, and provide a preliminary reliability analysis using a Continuous Time Markov-Chain (CTMC) model to evaluate durability guarantees. Codex represents a step toward creating a decentralized, resilient, and economically viable storage layer critical for the broader decentralized ecosystem.
+We describe the architecture and mechanisms of Archivist, including its marketplace and proof systems, and provide a preliminary reliability analysis using a Continuous Time Markov-Chain (CTMC) model to evaluate durability guarantees. Archivist represents a step toward creating a decentralized, resilient, and economically viable storage layer critical for the broader decentralized ecosystem.
 </div>
 </div>
 
@@ -28,13 +28,13 @@ To address these issues, there is a growing need for decentralized technologies.
 
 Despite their potential benefits, however, the lack of efficient and reliable decentralized storage leaves a key gap that needs to be addressed before any notion of a decentralized technology stack can be seriously contemplated.
 
-In response to these challenges, we introduce Codex: a novel Erasure Coded Decentralized Storage Network which relies on erasure coding for redundancy and efficient proofs of storage. This method provides unparalleled reliability and allows for the storage of large datasets, larger than any single node in the network, in a durable and secure fashion. Our compact and efficient proofs of storage can detect and prevent catastrophic data loss with great accuracy, while incurring relatively modest hardware and electricity requirements -- two preconditions for achieving true decentralization. In addition, we introduce and formalize in this paper the notion of durability in decentralized storage networks through a new concept we call the _Decentralized Durability Engine_ (DDE).
+In response to these challenges, we introduce Archivist: a novel Erasure Coded Decentralized Storage Network which relies on erasure coding for redundancy and efficient proofs of storage. This method provides unparalleled reliability and allows for the storage of large datasets, larger than any single node in the network, in a durable and secure fashion. Our compact and efficient proofs of storage can detect and prevent catastrophic data loss with great accuracy, while incurring relatively modest hardware and electricity requirements -- two preconditions for achieving true decentralization. In addition, we introduce and formalize in this paper the notion of durability in decentralized storage networks through a new concept we call the _Decentralized Durability Engine_ (DDE).
 
-The remainder of this paper is organized as follows. First, we discuss the context on which Codex is built (Sec. 2) by expanding on the issues of centralized cloud storage, and providing background on previous takes at decentralized alternatives -- namely, p2p networks, blockchains, and DSNs. Then, we  introduce the conceptual framework that underpins Codex in Sec. 3 -- the Decentralized Durability Engine (DDE) -- followed by a more detailed descriptions of the mechanisms behind Codex and how it materializes as a DDE in Sec. 4. Sec. 5 then presents a preliminary reliability analysis, which places Codex's storage parameters alongside more formal durability guarantees. Finally, Sec. 6 provides conclusions and ongoing work.
+The remainder of this paper is organized as follows. First, we discuss the context on which Archivist is built (Sec. 2) by expanding on the issues of centralized cloud storage, and providing background on previous takes at decentralized alternatives -- namely, p2p networks, blockchains, and DSNs. Then, we  introduce the conceptual framework that underpins Archivist in Sec. 3 -- the Decentralized Durability Engine (DDE) -- followed by a more detailed descriptions of the mechanisms behind Archivist and how it materializes as a DDE in Sec. 4. Sec. 5 then presents a preliminary reliability analysis, which places Archivist's storage parameters alongside more formal durability guarantees. Finally, Sec. 6 provides conclusions and ongoing work.
 
 ## 2. Background and Context
 
-Codex aims at being a useful and decentralized alternative to centralized storage. In this section, we discuss the context in which this needs arises, as well as why past and current approaches to building and reasoning about decentralized storage were incomplete. This will set the stage for our introduction of the Decentralized Durability Engine -- our approach to reasoning about decentralized storage -- in Sec. 3.
+Archivist aims at being a useful and decentralized alternative to centralized storage. In this section, we discuss the context in which this needs arises, as well as why past and current approaches to building and reasoning about decentralized storage were incomplete. This will set the stage for our introduction of the Decentralized Durability Engine -- our approach to reasoning about decentralized storage -- in Sec. 3.
 
 ### 2.1. Centralized Cloud Storage
 Over the past two decades, centralized cloud storage has become the _de facto_ approach for storage services on the internet for both individuals and companies alike. Indeed, recent research places the percentage of businesses that rely on at least one cloud provider at $94\%$[^zippia_cloud_report], while most modern smartphones will backup their contents to a cloud storage provider by default.
@@ -78,7 +78,7 @@ While useful, we argue this definition is incomplete as it pushes a number of ke
 * remote auditing and repair protocols;
 * strategies for data redundancy and dispersal.
 
-Such elements are of particular importance as one attempts to reason about what would be required to construct a DSN that provides actual utility. As we set out to design Codex and asked ourselves that question, we found that the key to useful DSNs is in _durability_; i.e., a storage system is only useful if it can provide durability guarantees that can be reasoned about. 
+Such elements are of particular importance as one attempts to reason about what would be required to construct a DSN that provides actual utility. As we set out to design Archivist and asked ourselves that question, we found that the key to useful DSNs is in _durability_; i.e., a storage system is only useful if it can provide durability guarantees that can be reasoned about. 
 
 In the next section, we explore a construct we name Decentralized Durability Engines which, we argue, lead to a more principled approach to designing storage systems that provide utility.
     
@@ -96,15 +96,15 @@ We argue that when designing a storage system that can keep data around, none of
     
 This is a somewhat informal treatment for now, but the actual parameters that would be input into any reliability analysis of a storage system would be contingent on those choices. In a future publication, we will explore how durability is affected by the choice of each of these elements in a formal framework.
 
-## 4. Codex: A Decentralized Durability Engine
+## 4. Archivist: A Decentralized Durability Engine
 
-This section describes how Codex actually works. The primary motivation behind Codex is to provide a scalable and robust decentralized storage solution which addresses the limitations of existing DSNs. This includes: i) enhanced durability guarantees that can be reasoned about, ii) scalability and performance and iii) decentralization and censorship resistance.
+This section describes how Archivist actually works. The primary motivation behind Archivist is to provide a scalable and robust decentralized storage solution which addresses the limitations of existing DSNs. This includes: i) enhanced durability guarantees that can be reasoned about, ii) scalability and performance and iii) decentralization and censorship resistance.
 
-We start this section by laying out key concepts required to understand how Codex works (Sec. 4.1). We then discuss the redundancy ($R$), remote auditing ($A$), and repair mechanisms ($P$) of Codex and how they combine erasure codes and zero-knowledge proofs into a system that is lightweight, efficient, and amenable to decentralization. Sec. 4.4 takes a detour onto the networking layer and provides an overview of our scalable data transfer protocols. Finally, incentives ($I$) and dispersal $(D)$ are discussed in Sec. 4.5 as part of the Codex marketplace.
+We start this section by laying out key concepts required to understand how Archivist works (Sec. 4.1). We then discuss the redundancy ($R$), remote auditing ($A$), and repair mechanisms ($P$) of Archivist and how they combine erasure codes and zero-knowledge proofs into a system that is lightweight, efficient, and amenable to decentralization. Sec. 4.4 takes a detour onto the networking layer and provides an overview of our scalable data transfer protocols. Finally, incentives ($I$) and dispersal $(D)$ are discussed in Sec. 4.5 as part of the Archivist marketplace.
 
 ### 4.1. Concepts
 
-In the context of Codex (and of storage systems in general), two properties appear as fundamental:
+In the context of Archivist (and of storage systems in general), two properties appear as fundamental:
 
 **Availability.** A system is said to be _available_ when it is able to provide its intended service, and _unavailable_ otherwise. The availability of a system over any given interval of time is given by [^tanembaum]:
 
@@ -118,37 +118,37 @@ where $t_a$ and $t_u$ are the total times in which the system remained available
 
 If this number is very close to one, e.g. $p_\text{loss} \leq 10^{-6}$, then the system is said to be _highly durable_. Systems that are not highly durable are those that can lose data with higher or unbounded probability, or that do not quantify their loss probabilities at all.
 
-Ideally, we would like storage systems to be highly available and highly durable. Since achieving _provable availability_ is in general not possible[^bassam_18], Codex focuses on stronger guarantees for durability and on incentivizing availability instead.
+Ideally, we would like storage systems to be highly available and highly durable. Since achieving _provable availability_ is in general not possible[^bassam_18], Archivist focuses on stronger guarantees for durability and on incentivizing availability instead.
 
-**Dataset.** A _dataset_ $D = \{c_1, \cdots c_b\}$ is defined in Codex as an ordered set of $b \in \mathbb{N}$ fixed-sized blocks. Blocks are typically small, on the order of $64\text{kB}$. For all intents and purposes, one can think of a dataset as being a regular file.
+**Dataset.** A _dataset_ $D = \{c_1, \cdots c_b\}$ is defined in Archivist as an ordered set of $b \in \mathbb{N}$ fixed-sized blocks. Blocks are typically small, on the order of $64\text{kB}$. For all intents and purposes, one can think of a dataset as being a regular file.
 
-**Storage Client (SC).** A Storage Client is a node that participates in the Codex network to buy storage. These may be individuals seeking to backup the contents of their hard drives, or organizations seeking to store business data.
+**Storage Client (SC).** A Storage Client is a node that participates in the Archivist network to buy storage. These may be individuals seeking to backup the contents of their hard drives, or organizations seeking to store business data.
 
-**Storage Provider (SP).** A Storage Provider is a node that participates in Codex by selling disk space to other nodes.
+**Storage Provider (SP).** A Storage Provider is a node that participates in Archivist by selling disk space to other nodes.
 
 ### 4.2. Overview
 
-At a high level, storing data in Codex works as follows. Whenever a SC wishes to store a dataset $D$ into Codex, it:
+At a high level, storing data in Archivist works as follows. Whenever a SC wishes to store a dataset $D$ into Archivist, it:
 
 1. splits $D$ into $k$ disjoint $\{S_1, \cdots, S_k\}$ partitions named **slots**, where each slot contains $s = \left\lceil \frac{b}{k} \right\rceil$ blocks;
 1. erasure-codes $D$ with a Reed-Solomon Code[^reed_60] by extending it into a new dataset $D_e$ which adds an extra $m \times s$ parity blocks to $D$ (Sec. 4.3). This effectively adds $m$ new slots to the dataset. Since we use a systematic code, $D$ remains a prefix of $D_e$;
 1. computes two different Merkle tree roots: one used for inclusion proofs during data exchange, based on SHA256, and another one for storage proofs, based on Poseidon2 (Sec 4.3);
-1. generates a content-addressable manifest for $D_e$ and advertises it into the Codex DHT (Sec. 4.4);
-1. posts a **storage request** containing a set of parameters in the Codex marketplace (on-chain), which includes things like how much the SC is willing to pay for storage, as well as expectations that may impact the profitability of candidate SPs and the durability guarantees for $D_e$, for each slot (Sec. 4.5).
+1. generates a content-addressable manifest for $D_e$ and advertises it into the Archivist DHT (Sec. 4.4);
+1. posts a **storage request** containing a set of parameters in the Archivist marketplace (on-chain), which includes things like how much the SC is willing to pay for storage, as well as expectations that may impact the profitability of candidate SPs and the durability guarantees for $D_e$, for each slot (Sec. 4.5).
 
-The Codex marketplace (Sec. 4.5) then ensures that SPs willing to store data for a given storage request are provided a fair opportunity to do so. Eventually, for each slot $S_i \in D_e$, _some_ SP will:
+The Archivist marketplace (Sec. 4.5) then ensures that SPs willing to store data for a given storage request are provided a fair opportunity to do so. Eventually, for each slot $S_i \in D_e$, _some_ SP will:
 
 1. declare its interest in it by filing a **slot reservation**;
 1. download the data for the slot from the SC;
 1. provide an initial proof of storage and some staking collateral for it.
 
-Once this process completes, we say that slot $S_i$ has been **filled**. Once all slots in $D_e$ have been filled, we say that $D_e$ has been **fulfilled**. For the remainder of this section, we will dive into the architecture and mechanisms of Codex by explaining in more detail each aspect of the storage flow.
+Once this process completes, we say that slot $S_i$ has been **filled**. Once all slots in $D_e$ have been filled, we say that $D_e$ has been **fulfilled**. For the remainder of this section, we will dive into the architecture and mechanisms of Archivist by explaining in more detail each aspect of the storage flow.
 
 ### 4.3. Erasure Coding, Repair, and Storage Proofs
 
-Erasure coding plays two main roles in Codex: _i)_ allowing data to be recovered following loss of one or more SPs and the slots that they hold (redundancy) and _ii)_ enabling cost-effective proofs of storage. We will go through each of these aspects separately.
+Erasure coding plays two main roles in Archivist: _i)_ allowing data to be recovered following loss of one or more SPs and the slots that they hold (redundancy) and _ii)_ enabling cost-effective proofs of storage. We will go through each of these aspects separately.
     
-**Erasure Coding for Redundancy.** As described before, a dataset $D$ is initially split into $k$ slots of size $s = \left\lceil \frac{b}{k} \right\rceil$ (Figure 1). Since $b$ may not actually be divisible by $k$, Codex will add _padding blocks_ as required so that the number of blocks in $D$ is $b_p = s \times k$.
+**Erasure Coding for Redundancy.** As described before, a dataset $D$ is initially split into $k$ slots of size $s = \left\lceil \frac{b}{k} \right\rceil$ (Figure 1). Since $b$ may not actually be divisible by $k$, Archivist will add _padding blocks_ as required so that the number of blocks in $D$ is $b_p = s \times k$.
 
 <center>
     <img src="/learn/whitepaper/dataset-and-blocks.png" width=80%/>
@@ -156,7 +156,7 @@ Erasure coding plays two main roles in Codex: _i)_ allowing data to be recovered
 
 **Figure 1.** A padded dataset $D$ split into $k$ slots.
     
-Codex then erasure-codes $D$ by _interleaving_ blocks taken from each slot (Figure 2), one at a time. The procedure runs $s$ interleaving steps, where $s$ is the number of blocks in a slot.
+Archivist then erasure-codes $D$ by _interleaving_ blocks taken from each slot (Figure 2), one at a time. The procedure runs $s$ interleaving steps, where $s$ is the number of blocks in a slot.
 
 <center>
     <img src="/learn/whitepaper/ec-dataset-and-blocks.png" width=80%/>
@@ -166,9 +166,9 @@ Codex then erasure-codes $D$ by _interleaving_ blocks taken from each slot (Figu
     
 At each _interleaving step_, we collect $k$ blocks by selecting the $i^{th}$ block within each of the $k$ slots ($1 \leq i \leq s$), and feed those through the Reed-Solomon encoder. The encoder then outputs $m$ parity blocks, which get added as the $i^{th}$ block of $m$ new distinct _parity slots_. Since slots have $s$ blocks each we are left, at the end of this process, with $m$ parity slots of $s$ blocks each, or $m \times s$ new parity blocks.
     
-The Codex marketplace (Sec. 4.5) then employs mechanisms to ensure that each one of these slots are assigned to a different node so that failure probabilities for each slot are decorrelated. This is important as, bridging back to durability guarantees, assuming that we could know the probability $p_{\text{loss}}$ with which a given SP could fail over a one year period, this would bound the probability of data loss at $p_{\text{loss}} \leq \binom{k + m}{k} p_{\text{loss}}^k(1 - p_{\text{loss}})^{m}$. We say this is a bound because in practice repair would kick in earlier, so the probability of loss is actually a lot smaller than this. We will carry a more detailed analysis taking those aspects into account in Sec. 5.
+The Archivist marketplace (Sec. 4.5) then employs mechanisms to ensure that each one of these slots are assigned to a different node so that failure probabilities for each slot are decorrelated. This is important as, bridging back to durability guarantees, assuming that we could know the probability $p_{\text{loss}}$ with which a given SP could fail over a one year period, this would bound the probability of data loss at $p_{\text{loss}} \leq \binom{k + m}{k} p_{\text{loss}}^k(1 - p_{\text{loss}})^{m}$. We say this is a bound because in practice repair would kick in earlier, so the probability of loss is actually a lot smaller than this. We will carry a more detailed analysis taking those aspects into account in Sec. 5.
      
-**Erasure Coding for Storage Proofs.** The other, less obvious way in which Codex employs erasure coding is _locally_ at each SP when generating storage proofs. This allows Codex to be expedient in detecting both unintentional and malicious data loss with a high level of accuracy.
+**Erasure Coding for Storage Proofs.** The other, less obvious way in which Archivist employs erasure coding is _locally_ at each SP when generating storage proofs. This allows Archivist to be expedient in detecting both unintentional and malicious data loss with a high level of accuracy.
     
 To understand how this works, imagine we had an SP that has promised to store some slot $S_i \in D_e$ until a certain time instant $t_b$. How do we ensure that the SP is indeed holding its promise? One way to approach this would be by having a verifier download the whole slot $S_i$ from the SP at random instants in time. This would ensure the data is still there, but would be costly.
 
@@ -184,9 +184,9 @@ Although the decay is always geometric, the impact of having a loss fraction tha
     
 The reason it is hard to detect loss is because we are attempting to find the perhaps single block that is missing out of $b$ blocks by random sampling. Erasure coding completely changes that dynamic in that _any_ $k$ out of $b$ blocks is enough to recover the data, so that only loss fractions that are larger than $k/b$ matter as any smaller fraction can be compensated by the erasure code. 
     
-If we require SPs to _locally encode_ slots with a code rate [^wikipedia_code_rate] that is higher than $0.5$ so that a dataset with $b$ blocks expands to $2b$ and any $b$ blocks out of those are enough to recover the data, this means that data will only be lost if _more than half of the blocks_ are dropped, i.e., when $l_i \geq 0.5$. From Figure 3, we can see that in this case we approach $p_{\text{detect}} = 1$ with a very small number of samples: indeed, by looking at only $10$ samples, we already get $p_{\text{detect}} > 0.99$. The actual implementation in Codex borrows heavily from these ideas, though it requires SPs to use a somewhat more intrincate two-dimensional encoding structure for other technical reasons[^spanbroek_23].
+If we require SPs to _locally encode_ slots with a code rate [^wikipedia_code_rate] that is higher than $0.5$ so that a dataset with $b$ blocks expands to $2b$ and any $b$ blocks out of those are enough to recover the data, this means that data will only be lost if _more than half of the blocks_ are dropped, i.e., when $l_i \geq 0.5$. From Figure 3, we can see that in this case we approach $p_{\text{detect}} = 1$ with a very small number of samples: indeed, by looking at only $10$ samples, we already get $p_{\text{detect}} > 0.99$. The actual implementation in Archivist borrows heavily from these ideas, though it requires SPs to use a somewhat more intrincate two-dimensional encoding structure for other technical reasons[^spanbroek_23].
     
-The final step for Codex proofs is that they need to be _publicly verifiable_. The actual proving mechanism in Codex constructs a Groth16[^groth_16] proof so that it can be verified on-chain; i.e., the verifiers are the public blockchain nodes themselves. The implementation has therefore both an on-chain component, which contains the logic to determine when proofs are required and when they are overdue, and an off-chain component, which runs periodically to trigger those at the right instants.
+The final step for Archivist proofs is that they need to be _publicly verifiable_. The actual proving mechanism in Archivist constructs a Groth16[^groth_16] proof so that it can be verified on-chain; i.e., the verifiers are the public blockchain nodes themselves. The implementation has therefore both an on-chain component, which contains the logic to determine when proofs are required and when they are overdue, and an off-chain component, which runs periodically to trigger those at the right instants.
     
 Algorithm 1 depicts, in Python-pseudocode, the _proving loop_ that SPs must run for every slot $S_i$ that they fill. It starts by waiting for a period boundary (line $7$), which is a fixed time slice that is larger than the average time between consecutive blocks in the target blockchain; i.e., the loop in lines $6$ -- $15$ runs _at most once_ per block. 
     
@@ -212,7 +212,7 @@ async def proving_loop(
           private = [slot_root, merkle_proofs]
         ))
 ```
-**Algorithm 1.** Codex's proving loop (ran on SPs, off-chain).
+**Algorithm 1.** Archivist's proving loop (ran on SPs, off-chain).
 
 It then uses this randomness to determine the indices of the blocks within the locally erasure-coded slot that it needs to provide proofs for, and computes Merkle inclusion proofs for each (line $10$). The zero-knowledge proof is then constructed by running a verification of those inclusion proofs against the dataset root in a zk-SNARK, in which the randomness, the dataset (Merkle) root, and the slot index are taken as public inputs, and the inclusion proofs and the slot (Merkle) root are private instead (lines $12$ - $15$). Once the proof is calculated, it is posted on-chain (line $11$), where it is verified.
 
@@ -225,38 +225,38 @@ def is_proof_required()
     
 Merkle trees for proof verification are built using $\text{Poseidon2}$ hashes[^grassi_23] as those are more efficient to compute inside arithmetic circuits than, say, SHA256, though this may change as we evolve the proving system.
 
-**Repair.** The redundancy and proof mechanisms outlined so far allow Codex to _repair_ data in a relatively simple fashion: missing proofs signal lost slots, and are used as failure detectors. Whenever a threshold amount of slots are lost, a lazy repair process is triggered in which the lost slots are put back on sale. Providers are then allowed to fill such slots again but, instead of downloading the slot itself, they download enough blocks from other nodes so they can reconstruct the missing slot, say, $S_i$. They then proceed as before and submit a proof for $S_i$, causing that slot to be filled again.
+**Repair.** The redundancy and proof mechanisms outlined so far allow Archivist to _repair_ data in a relatively simple fashion: missing proofs signal lost slots, and are used as failure detectors. Whenever a threshold amount of slots are lost, a lazy repair process is triggered in which the lost slots are put back on sale. Providers are then allowed to fill such slots again but, instead of downloading the slot itself, they download enough blocks from other nodes so they can reconstruct the missing slot, say, $S_i$. They then proceed as before and submit a proof for $S_i$, causing that slot to be filled again.
 
-The way Codex organizes its data as partitioned and erasure coded slots is largely inspired by HAIL[^bowers_09]. The use of local erasure coding and compact proofs is instead inspired by earlier work on PoRs[^juels_07] and PDPs[^ateniese_07], as well as compact PoRs[^schacham_08].
+The way Archivist organizes its data as partitioned and erasure coded slots is largely inspired by HAIL[^bowers_09]. The use of local erasure coding and compact proofs is instead inspired by earlier work on PoRs[^juels_07] and PDPs[^ateniese_07], as well as compact PoRs[^schacham_08].
 
-A key aspect of the Codex proving system is that it attempts to be as lightweight as possible. The final goal is to be able to run it on simple computers equipped with inexpensive CPUs and modest amounts of RAM. Current requirements for home SPs are well around what a NUC or consumer laptop can provide, but those should drop even further as we optimize it. This is key as an efficient proving system means that:
+A key aspect of the Archivist proving system is that it attempts to be as lightweight as possible. The final goal is to be able to run it on simple computers equipped with inexpensive CPUs and modest amounts of RAM. Current requirements for home SPs are well around what a NUC or consumer laptop can provide, but those should drop even further as we optimize it. This is key as an efficient proving system means that:
     
 1. both non-storage hardware; e.g. CPUs and RAM, and electricity overhead costs for proofs should be small. This leads to better margins for SPs;
 2. minimal requirements are modest, which favours decentralization.
     
 ### 4.4. Publishing and Retrieving Data
 
-Datasets stored in Codex need to be advertised over a Distributed Hash Table (DHT), which is a flavour of the Kademlia DHT[^maymounkov_02], so they can be located and retrieved by other peers. At a basic level, the Codex DHT maps _Content IDentifiers_ (CIDs)[^cid_spec], which identify data, onto _provider lists_, which identify peers holding that data. 
+Datasets stored in Archivist need to be advertised over a Distributed Hash Table (DHT), which is a flavour of the Kademlia DHT[^maymounkov_02], so they can be located and retrieved by other peers. At a basic level, the Archivist DHT maps _Content IDentifiers_ (CIDs)[^cid_spec], which identify data, onto _provider lists_, which identify peers holding that data. 
     
-A CID unequivocally identifies a piece of data by encoding a flavour of a hash of its content together with the type of hashing method used to compute it. In the case of a Codex dataset $D_e$ (Figure 4), this hash is taken to be the root of the SHA256 Merkle tree constructed over its blocks $\{b_1, \cdots, b_{s \times (k + m)}\}$.
+A CID unequivocally identifies a piece of data by encoding a flavour of a hash of its content together with the type of hashing method used to compute it. In the case of a Archivist dataset $D_e$ (Figure 4), this hash is taken to be the root of the SHA256 Merkle tree constructed over its blocks $\{b_1, \cdots, b_{s \times (k + m)}\}$.
 
 <div style="display: flex; justify-content: center; padding: 0 0 15px 0">
     <img src="/learn/whitepaper/cid.png" width="60%" />
 </div>
 
-**Figure 4.** CIDs for Codex datasets.
+**Figure 4.** CIDs for Archivist datasets.
     
 Nodes that hold either part or the entirety of $D_e$ will periodically advertise a _Signed Peer Record_ (SPR) under $D_e$'s CID in the DHT to inform other peers that they are available to provide blocks for $D_e$. An SPR is a signed record[^signed_envelope_spec] which contains the peer's ID, its public key, and its supported network addresses as a list of multiaddresses[^multiaddress_spec].
     
 This structure affords a great deal of flexibility in how peers choose to communicate and encode datasets, and is key in creating a p2p network which can support multiple concurrent p2p client versions and can therefore be upgraded seamlessly.
     
-**Metadata.** Codex stores dataset metadata in descriptors called **manifests**. Those are currently kept separate from the dataset itself, in a manner similar to BitTorrent's _torrent files_. They contain metadata on a number of attributes required to describe and properly process the dataset, such as the Merkle roots for both the content (SHA256) and proof ($\text{Poseidon2}$) trees, the number of blocks contained in the dataset, the block size, erasure coding parameters, and the datasets' MIME-type. Although the CID of a dataset is largely independent of its manifest, a dataset can neither be decoded nor properly verified without it.
+**Metadata.** Archivist stores dataset metadata in descriptors called **manifests**. Those are currently kept separate from the dataset itself, in a manner similar to BitTorrent's _torrent files_. They contain metadata on a number of attributes required to describe and properly process the dataset, such as the Merkle roots for both the content (SHA256) and proof ($\text{Poseidon2}$) trees, the number of blocks contained in the dataset, the block size, erasure coding parameters, and the datasets' MIME-type. Although the CID of a dataset is largely independent of its manifest, a dataset can neither be decoded nor properly verified without it.
     
-Manifests are currently stored as content-addressable blocks in Codex and treated similarly to datasets: nodes holding the manifest of a given dataset will advertise its CID onto the DHT, which is computed by taking a SHA256 hash of the manifest's contents. Since manifests are  stored separate from the dataset, however, they can also be exchanged out-of-band, like torrent files can.
+Manifests are currently stored as content-addressable blocks in Archivist and treated similarly to datasets: nodes holding the manifest of a given dataset will advertise its CID onto the DHT, which is computed by taking a SHA256 hash of the manifest's contents. Since manifests are  stored separate from the dataset, however, they can also be exchanged out-of-band, like torrent files can.
 
 Other systems choose tighter coupling between the metadata and the dataset. IPFS and Swarm use cryptographic structures such as Merkle DAG and a Merkle Tree, where intermediate nodes are placed on the network and queried iteratively to retrieve the respective vertexes and leaves. Such design decisions have their own tradeoffs and advantages, for example an advantage of storing the metadata in a single addressable unit is that it eliminates intermediary network round trips, as opposed to a distributed cryptographic structure such as a tree or a DAG.
 
-**Retrieving data.** Data retrieval in Codex follows a process similar to BitTorrent: a peer wishing to download a dataset $D_e$ must first acquire its manifest, either through Codex itself by looking up the manifest's CID on the DHT and downloading it from peers providing it, or out-of-band. Once in posession of the manifest, the peer can learn the dataset's CID (constructed from its SHA256 Merkle root) and look that up over the DHT. This is depicted Figure 5a **(1)**. 
+**Retrieving data.** Data retrieval in Archivist follows a process similar to BitTorrent: a peer wishing to download a dataset $D_e$ must first acquire its manifest, either through Archivist itself by looking up the manifest's CID on the DHT and downloading it from peers providing it, or out-of-band. Once in posession of the manifest, the peer can learn the dataset's CID (constructed from its SHA256 Merkle root) and look that up over the DHT. This is depicted Figure 5a **(1)**. 
 
 <div style="display: flex; justify-content: center;">
     <div style="text-align: center;">
@@ -271,25 +271,25 @@ Other systems choose tighter coupling between the metadata and the dataset. IPFS
 
 **Figure 5.** (a) DHT lookup and (b) download swarm.
 
-The nodes responsible for that CID will reply with a (randomized) subset of the providers for that CID (Figure 5a **(2)**). The peer can then contact these nodes to bootstrap itself into a download swarm (Figure 5b). Once part of the swarm, the peer will engage in an exchange protocol similar to BitSwap[^bitswap_spec] by advertising the blocks it wishes to download to neighbors, and receiving requests from neighbors in return. Dropped peers are replaced by querying the DHT again. Note that SPs always participate in the swarms for the datasets they host, acting as seeders. Since the mechanism is so similar to BitTorrent, we expect Codex to scale at least as well.
+The nodes responsible for that CID will reply with a (randomized) subset of the providers for that CID (Figure 5a **(2)**). The peer can then contact these nodes to bootstrap itself into a download swarm (Figure 5b). Once part of the swarm, the peer will engage in an exchange protocol similar to BitSwap[^bitswap_spec] by advertising the blocks it wishes to download to neighbors, and receiving requests from neighbors in return. Dropped peers are replaced by querying the DHT again. Note that SPs always participate in the swarms for the datasets they host, acting as seeders. Since the mechanism is so similar to BitTorrent, we expect Archivist to scale at least as well.
     
-Codex right now relies on simple incentive mechanisms to ensure that peers share blocks. There is current ongoing work on _bandwidth incentives_ and, in future versions, peers will be able to purchase block transfers from each other.
+Archivist right now relies on simple incentive mechanisms to ensure that peers share blocks. There is current ongoing work on _bandwidth incentives_ and, in future versions, peers will be able to purchase block transfers from each other.
     
-### 4.5. Codex Marketplace
+### 4.5. Archivist Marketplace
 
-The Codex marketplace is the set of components that run both on-chain, as smart contracts, and off-chain, as part of both SCs and SPs. Its main goal is to define and enforce the set of rules which together enable: _i)_ orderly selling and purchasing of storage; _ii)_ verification of storage proofs; _iii)_ rules for penalizing faulty actors (slashing) and compensating SP repairs and SC data loss; and _iv)_ various other aspects of the system's economics, which  will be discussed as part of an upcoming Codex tokenomics litepaper. 
+The Archivist marketplace is the set of components that run both on-chain, as smart contracts, and off-chain, as part of both SCs and SPs. Its main goal is to define and enforce the set of rules which together enable: _i)_ orderly selling and purchasing of storage; _ii)_ verification of storage proofs; _iii)_ rules for penalizing faulty actors (slashing) and compensating SP repairs and SC data loss; and _iv)_ various other aspects of the system's economics, which  will be discussed as part of an upcoming Archivist tokenomics litepaper. 
 
-Codex implements an ask/bid market in which SCs post **storage requests** on chain, and SPs can then act on those if they turn out to be profitable. This means that the request side; i.e., how much an SC is willing to pay, is always visible, whereas the bid side; i.e., at what price an SP is willing to sell, is not.
+Archivist implements an ask/bid market in which SCs post **storage requests** on chain, and SPs can then act on those if they turn out to be profitable. This means that the request side; i.e., how much an SC is willing to pay, is always visible, whereas the bid side; i.e., at what price an SP is willing to sell, is not.
     
-An SC that wishes Codex to store a dataset $D_e$ needs to provide $5$ main parameters. Those are:
+An SC that wishes Archivist to store a dataset $D_e$ needs to provide $5$ main parameters. Those are:
     
 1. **Size in bytes.** Specifies how many storage bytes the SC wishes to purchase.
 2. **Duration.** Specifies for how long the SC wishes to purchase the storage bytes in (1); e.g. one year.
 3. **Number of slots.** Contains the number of slots in $D_e$. This is derived from the erasure coding parameters $k$ and $m$ discussed in Sec. 4.3.
-4. **Price.** The price this SC is willing to pay for storage, expressed as a fractional amount of Codex tokens per byte, per second. For instance, if this is set to $1$ and the SC wants to buy $1\text{MB}$ of storage for $10$ seconds, then this means the SC is willing to disburse $10$ million Codex tokens for this request.
-5. **Collateral per slot.** Dictates the amount of Codex tokens that the SP is expected to put as collateral if they decide to fulfill a slot in this request (staking). Failure to provide timely proofs may result in loss of this collateral (slashing).
+4. **Price.** The price this SC is willing to pay for storage, expressed as a fractional amount of Archivist tokens per byte, per second. For instance, if this is set to $1$ and the SC wants to buy $1\text{MB}$ of storage for $10$ seconds, then this means the SC is willing to disburse $10$ million Archivist tokens for this request.
+5. **Collateral per slot.** Dictates the amount of Archivist tokens that the SP is expected to put as collateral if they decide to fulfill a slot in this request (staking). Failure to provide timely proofs may result in loss of this collateral (slashing).
 
-As discussed in Sec. 5, these parameters may impact durability guarantees directly, and the system offers complete flexibility so that applications can tailor spending and parameters to specific needs. Applications built on Codex will need to provide guidance to their users so they can pick the correct parameters for their needs, not unlike Ethereum wallets help users determine gas fees.
+As discussed in Sec. 5, these parameters may impact durability guarantees directly, and the system offers complete flexibility so that applications can tailor spending and parameters to specific needs. Applications built on Archivist will need to provide guidance to their users so they can pick the correct parameters for their needs, not unlike Ethereum wallets help users determine gas fees.
 
 <center>
     <img src="/learn/whitepaper/marketplace-overview.png" width=70%/>
@@ -301,7 +301,7 @@ As depicted in Figure 6, every storage request posted by an SC gets recorded on-
     
 **Ensuring diversity.** SPs compete for unfilled slots. If we allowed this competition to happen purely based on latency; i.e., the fastest provider to reserve a slot wins, we could easily end up with a system that is too centralized or, even worse, with multiple slots ending up at a single provider. The latter is particularly serious as failures within a provider may not be decorrelated, and we therefore want to ensure that the distribution of slots amongst providers is as randomized as possible.
 
-To help mitigate these issues, the Codex marketplace implements a time-based, _expanding window_ mechanism to allow SPs to compete for slots. As depicted in Figure 7, each storage request is assigned a random position in a $z$-bit ID space by taking a hashing function $h$ and computing, for slot $S_i$, the value $h(u\,\|\, i)$, where $u$ is a random nonce. This will effectively disperse storage requests for slots approximately uniformly at random over the ID space.
+To help mitigate these issues, the Archivist marketplace implements a time-based, _expanding window_ mechanism to allow SPs to compete for slots. As depicted in Figure 7, each storage request is assigned a random position in a $z$-bit ID space by taking a hashing function $h$ and computing, for slot $S_i$, the value $h(u\,\|\, i)$, where $u$ is a random nonce. This will effectively disperse storage requests for slots approximately uniformly at random over the ID space.
 
 <div style="padding: 2rem 0 4rem 0">
     <img src="/learn/whitepaper/marketplace-slot-dispersal.png"/>
@@ -329,11 +329,11 @@ where $t = 0$ at the moment in which the storage request for $a$ is published. I
 
 ## 5. Reliability Analysis
 
-In this section, we provide an initial analysis of durability for Codex. The main goal is investigating the values for $p_{\text{loss}}$, our probability of losing data over a 1-year period. In particular, we are interested in understanding what sorts of parameters are required for us to obtain very high levels of reliability (e.g. $p_{\text{loss}} = 10^{-9}$, or nine nines of availability).
+In this section, we provide an initial analysis of durability for Archivist. The main goal is investigating the values for $p_{\text{loss}}$, our probability of losing data over a 1-year period. In particular, we are interested in understanding what sorts of parameters are required for us to obtain very high levels of reliability (e.g. $p_{\text{loss}} = 10^{-9}$, or nine nines of availability).
     
-Codex, as a system, stores a large amount of datasets, each encoded, distributed, verified, and repaired according to the specific parameters set up in the respective storage contract. Since datasets are set up independently and operate (mostly) independently, we can model the system at the level of the dataset. We will later discuss correlation between various datasets stored in the system.
+Archivist, as a system, stores a large amount of datasets, each encoded, distributed, verified, and repaired according to the specific parameters set up in the respective storage contract. Since datasets are set up independently and operate (mostly) independently, we can model the system at the level of the dataset. We will later discuss correlation between various datasets stored in the system.
 
-In our first model, we use a Continuous Time Markov-Chain (CTMC) model to describe the state of the dataset at any time instance. The model considers the following aspects of Codex:
+In our first model, we use a Continuous Time Markov-Chain (CTMC) model to describe the state of the dataset at any time instance. The model considers the following aspects of Archivist:
 - dataset encoding;
 - node failures;
 - the proving process;
@@ -347,7 +347,7 @@ As before, we assume a dataset $D$  split into $k$ disjoint partitions, and enco
 
 When discussing failures, we should differentiate between transient and permanent failures, as well as between catastrophic node failures (the slot data is entirely lost) and partial failures.
 
-In our first model, we focus on permanent node failures. From the perspective of Codex, a node is considered lost if it cannot provide proofs. Permanent node failure can be due to disk failure, to other hardware or software failures leading to data corruption, but also due to operational risks, including hardware failures, network failures, or operational decisions.
+In our first model, we focus on permanent node failures. From the perspective of Archivist, a node is considered lost if it cannot provide proofs. Permanent node failure can be due to disk failure, to other hardware or software failures leading to data corruption, but also due to operational risks, including hardware failures, network failures, or operational decisions.
 
 Unrepairable hardware failures are typically characterized with their **MTTF** (Mean Time To Failure) metric, assuming an exponential distribution of the time to failure. There are various MTTF statistics available about disk failures[^schroeder_07].
 
@@ -444,24 +444,24 @@ Note however that we are still using $l_1=1$ in our model, i.e. a slot is consid
 
 ## 6. Conclusions and Future Work
 
-We have presented Codex, a Decentralized Durability Engine which employs erasure coding and efficient proofs of storage to provide tunable durability guarantees and a favourable tradeoff in cost and complexity for storage providers. By having proofs that are lightweight, Codex can keep the overhead spendings on hardware and electricity to a minimal. This is important both for fostering participation, as storage provider margins can be increased while prices for clients can decrease, and decentralization, as modest requirements are more likely to encourage a more diverse set of participants ranging from hobbyist home providers to larger players.
+We have presented Archivist, a Decentralized Durability Engine which employs erasure coding and efficient proofs of storage to provide tunable durability guarantees and a favourable tradeoff in cost and complexity for storage providers. By having proofs that are lightweight, Archivist can keep the overhead spendings on hardware and electricity to a minimal. This is important both for fostering participation, as storage provider margins can be increased while prices for clients can decrease, and decentralization, as modest requirements are more likely to encourage a more diverse set of participants ranging from hobbyist home providers to larger players.
 
-Despite our ambitious goals, Codex is a work in progress. Ongoing efforts on improving it include:
+Despite our ambitious goals, Archivist is a work in progress. Ongoing efforts on improving it include:
 
-* **Reduction of proving costs.** Verifying proofs on-chain is expensive. To bring down costs on the short-term, we are working on an in-node aggregation mechanism which allow providers to batch proofs over multiple slots. On a slightly longer time horizon, we also intend to build our own aggregation network, which will ultimately allow Codex to go on-chain very infrequentely. Finally, at the level of individual proofs, we are working on more efficient proof systems which should bring down hardware requirements even more. 
-* **Bandwidth incentives.** Codex is designed to provide strong incentives that favor durability. While incentivizing availability is harder as it is in general not possible to provide proofs for it[^bassam_18] we can still provide an effective, even if weaker, form of incentive by allowing providers to sell bandwidth. To that end, we are currently working on mechanisms to enable an efficient bandwidth market in Codex which should complement the storage market.
-* **Privacy and encryption.** Codex will, in the future, encrypt data by default so that SPs cannot ever know what they are storing. This should also offer SCs more privacy.
+* **Reduction of proving costs.** Verifying proofs on-chain is expensive. To bring down costs on the short-term, we are working on an in-node aggregation mechanism which allow providers to batch proofs over multiple slots. On a slightly longer time horizon, we also intend to build our own aggregation network, which will ultimately allow Archivist to go on-chain very infrequentely. Finally, at the level of individual proofs, we are working on more efficient proof systems which should bring down hardware requirements even more. 
+* **Bandwidth incentives.** Archivist is designed to provide strong incentives that favor durability. While incentivizing availability is harder as it is in general not possible to provide proofs for it[^bassam_18] we can still provide an effective, even if weaker, form of incentive by allowing providers to sell bandwidth. To that end, we are currently working on mechanisms to enable an efficient bandwidth market in Archivist which should complement the storage market.
+* **Privacy and encryption.** Archivist will, in the future, encrypt data by default so that SPs cannot ever know what they are storing. This should also offer SCs more privacy.
 * **P2P layer.** We are currently working on optimizing protocols so they scale and perform better. This includes improvements in block transfer latency and throughput, more efficient swarms and block discovery mechanism, as well as research into more secure protocols.
-* **Tools and APIs.** We are currently working on creating developer tools (SDKs) and APIs to facilitate the development of decentralized applications on top of the Codex network.
+* **Tools and APIs.** We are currently working on creating developer tools (SDKs) and APIs to facilitate the development of decentralized applications on top of the Archivist network.
 
 Work within a longer time horizon include:
 
-* **Support for fine-grained and mutable files.** Codex, as many other DSNs, is currently suitable for large immutable datasets, and any other use case will currently require additional middleware. We have ongoing work on exploring polynomial commitments as opposed to Merkle trees for proofs, which should allow us to incrementally change datasets without having to completely re-encode them. This will unlock a host of new use cases, and allow Codex to be used in a much more natural fashion.
+* **Support for fine-grained and mutable files.** Archivist, as many other DSNs, is currently suitable for large immutable datasets, and any other use case will currently require additional middleware. We have ongoing work on exploring polynomial commitments as opposed to Merkle trees for proofs, which should allow us to incrementally change datasets without having to completely re-encode them. This will unlock a host of new use cases, and allow Archivist to be used in a much more natural fashion.
 * **Improvements to erasure coding.** There is a large number of different codes offering different tradeoffs, e.g. non-MDS codes like turbocodes and tornado codes, which could result in better performance than the Reed-Solomon codes we currently employ.
 
-Codex has the potential to support a wide range of use cases, from personal data storage and decentralized web hosting to secure data backup and archival, decentralized identities, and decentralized content distribution.
+Archivist has the potential to support a wide range of use cases, from personal data storage and decentralized web hosting to secure data backup and archival, decentralized identities, and decentralized content distribution.
 
-Ultimately, the use case for Codex is that of a durable and functional decentralized storage layer, without which no decentralized technology stack can be seriously contemplated. As the decentralized ecosystem continues to evolve, we expect Codex’s DDE-based approach to storage to play a crucial role in enabling new types of applications and services that prioritize user control, privacy, and resilience.
+Ultimately, the use case for Archivist is that of a durable and functional decentralized storage layer, without which no decentralized technology stack can be seriously contemplated. As the decentralized ecosystem continues to evolve, we expect Archivist’s DDE-based approach to storage to play a crucial role in enabling new types of applications and services that prioritize user control, privacy, and resilience.
 
 ## References
               
@@ -505,7 +505,7 @@ Ultimately, the use case for Codex is that of a durable and functional decentral
     
 [^reed_60]: I. S. Reed and G. Solomon, "Polynomial Codes Over Certain Finite Fields," Journal of the Society for Industrial and Applied Mathematics, vol. 8, no. 2, pp. 300-304, 1960
 
-[^spanbroek_23]: M. Spanbroek, "Storage Proofs & Erasure Coding," https://github.com/codex-storage/codex-research/blob/master/design/proof-erasure-coding.md (accessed Sep. 26, 2024).
+[^spanbroek_23]: M. Spanbroek, "Storage Proofs & Erasure Coding," https://github.com/durability-labs/archivist-research-old/blob/master/design/proof-erasure-coding.md (accessed Sep. 26, 2024).
               
 [^wikipedia_code_rate]: "Code rate," Wikipedia. https://en.wikipedia.org/wiki/Code_rate (accessed Sep. 26, 2024).
               

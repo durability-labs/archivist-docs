@@ -3,31 +3,31 @@
 layout: home
 
 hero:
-  name: Codex
+  name: Archivist
   text: Decentralised data storage platform
-  tagline: Codex is a durable, decentralised data storage protocol, created so the world community can preserve its most important knowledge without risk of censorship.
+  tagline: Archivist is a durable, decentralised data storage protocol, created so the world community can preserve its most important knowledge without risk of censorship.
   actions:
     - theme: brand
-      text: What is Codex?
-      link: /learn/what-is-codex
+      text: What is Archivist?
+      link: /learn/what-is-archivist
     - theme: alt
       text: Quick start
       link: /learn/quick-start
     - theme: alt
-      text: Join Codex Testnet
+      text: Join Archivist Testnet
       link: /networks/testnet
 
 features:
   - title: Learn
-    details: Get more information about Codex
-    link: /learn/what-is-codex
+    details: Get more information about Archivist
+    link: /learn/what-is-archivist
     icon: 📚
   - title: Networks
-    details: Participate in Codex network as a Storage operator or Buyer
+    details: Participate in Archivist network as a Storage operator or Buyer
     link: /networks/networks
     icon: 🚦
   - title: Developers
-    details: Build Codex
+    details: Build Archivist
     link: /developers/api
     icon: 🏗️
 ---

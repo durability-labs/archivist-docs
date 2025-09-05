@@ -1,10 +1,10 @@
 ---
 outline: [2, 3]
 ---
-# Running a Local Codex Network with Marketplace Support
+# Running a Local Archivist Network with Marketplace Support
 
-This tutorial will teach you how to run a small Codex network with the
-_storage marketplace_ enabled; i.e., the functionality in Codex which
+This tutorial will teach you how to run a small Archivist network with the
+_storage marketplace_ enabled; i.e., the functionality in Archivist which
 allows participants to offer and buy storage in a market, ensuring that
 storage providers honor their part of the deal by means of cryptographic proofs.
 
@@ -12,7 +12,7 @@ In this tutorial, you will:
 
 1. [Set Up a Geth PoA network](#_1-set-up-a-geth-poa-network);
 2. [Set up The Marketplace](#_2-set-up-the-marketplace);
-3. [Run Codex](#_3-run-codex);
+3. [Run Archivist](#_3-run-archivist);
 4. [Buy and Sell Storage in the Marketplace](#_4-buy-and-sell-storage-on-the-marketplace).
 
 ## Prerequisites
@@ -22,14 +22,14 @@ To complete this tutorial, you will need:
 * the [geth](https://github.com/ethereum/go-ethereum) Ethereum client;
   You need version `1.13.x` of geth as newer versions no longer support
   Proof of Authority (PoA). This tutorial was tested using geth version `1.13.15`.
-* a Codex binary, which [you can compile from source](https://github.com/codex-storage/nim-codex?tab=readme-ov-file#build-and-run).
+* a Archivist binary, which [you can compile from source](https://github.com/durability-labs/archivist-node#build-and-run).
 
 We will also be using [bash](https://en.wikipedia.org/wiki/Bash_(Unix_shell))
 syntax throughout. If you use a different shell, you may need to adapt
 things to your platform.
 
 To get started, create a new folder where we will keep the tutorial-related
-files so that we can keep them separate from the codex repository.
+files so that we can keep them separate from the archivist repository.
 We assume the name of the folder to be `marketplace-tutorial`.
 
 ## 1. Set Up a Geth PoA Network
@@ -220,39 +220,39 @@ make sure, you are running the correct Geth version
 ## 2. Set Up The Marketplace
 
 You will need to open new terminal for this section and geth needs to be
-running already. Setting up the Codex marketplace entails:
+running already. Setting up the Archivist marketplace entails:
 
-1. Deploying the Codex Marketplace contracts to our private blockchain
+1. Deploying the Archivist Marketplace contracts to our private blockchain
 2. Setup Ethereum accounts we will use to buy and sell storage in
-   the Codex marketplace
+   the Archivist marketplace
 3. Provisioning those accounts with the required token balances
 
-### 2.1. Deploy the Codex Marketplace Contracts
+### 2.1. Deploy the Archivist Marketplace Contracts
 
 Make sure you leave the `marketplace-tutorial` directory, and clone
-the `codex-storage/nim-codex.git`:
+the `durability-labs/archivist-node.git`:
 
 ```bash
-git clone https://github.com/codex-storage/nim-codex.git
+git clone https://github.com/durability-labs/archivist-node.git
 ```
 
 > If you just want to clone the repo to run the tutorial, you can
 > skip the history and just download the head of the master branch by using
-> `--depth 1` option: `git clone --depth 1 https://github.com/codex-storage/nim-codex.git`
+> `--depth 1` option: `git clone --depth 1 https://github.com/durability-labs/archivist-node.git`
 
 Thus, our directory structure for the purpose of this tutorial looks like this:
 
 ```bash
 |
-|-- nim-codex
+|-- archivist-node
 └-- marketplace-tutorial
 ```
 
-> You could clone the `codex-storage/nim-codex.git` to some other location.
+> You could clone the `durability-labs/archivist-node.git` to some other location.
 > Just to keeps things nicely separated it is best to make sure that
-> `nim-codex` is not under `marketplace-tutorial` directory.
+> `archivist-node` is not under `marketplace-tutorial` directory.
 
-Now, from the `nim-codex` folder run:
+Now, from the `archivist-node` folder run:
 
 ```bash
 make update && make
@@ -263,7 +263,7 @@ make update && make
 Now, in order to start a local Ethereum network run:
 
 ```bash
-cd vendor/codex-contracts-eth
+cd vendor/archivist-contracts
 npm install
 ```
 
@@ -282,11 +282,11 @@ geth attach --exec web3.eth.blockNumber ./geth-data/geth.ipc
 
 once that gets past $256$, you are ready to go.
 
-To deploy contracts, from the `codex-contracts-eth` directory run:
+To deploy contracts, from the `archivist-contracts` directory run:
 
 ```bash
 export DISTTEST_NETWORK_URL=http://localhost:8545
-npx hardhat --network codexdisttestnetwork deploy
+npx hardhat --network archivistdisttestnetwork deploy
 ```
 
 If the command completes successfully, you will see the output similar
@@ -302,7 +302,7 @@ You are now ready to prepare the accounts.
 
 ### 2.2. Generate the Required Accounts
 
-We will run $2$ Codex nodes: a **storage provider**, which will sell storage
+We will run $2$ Archivist nodes: a **storage provider**, which will sell storage
 on the network, and a **client**, which will buy and use such storage;
 we therefore need two valid Ethereum accounts. We could create random
 accounts by using one of the many  tools available to that end but, since
@@ -311,7 +311,7 @@ provide you with two pre-made accounts along with their private keys,
 which you can copy and paste instead:
 
 First make sure you're back in the `marketplace-tutorial` folder and
-not the `codex-contracts-eth` subfolder. Then set these variables:
+not the `archivist-contracts` subfolder. Then set these variables:
 
 **Storage:**
 ```bash
@@ -330,17 +330,17 @@ echo $ETH_CLIENT_PK > client.pkey && chmod 0600 client.pkey
 ### 2.3. Provision Accounts with Tokens
 
 We now need to transfer some ETH to each of the accounts, as well as provide
-them with some Codex tokens for the storage node to use as collateral and
+them with some Archivist tokens for the storage node to use as collateral and
 for the client node to buy actual storage.
 
 Although the process is not particularly complicated, I suggest you use
-[the script we prepared](https://github.com/gmega/local-codex-bare/blob/main/scripts/mint-tokens.js)
+[the script we prepared](https://github.com/gmega/local-archivist-bare/blob/main/scripts/mint-tokens.js)
 for that. This script, essentially:
 
 1. reads the Marketplace contract address and its ABI from the deployment data;
 2. transfers $1$ ETH from the signer account to a target account if the target
    account has no ETH balance;
-3. mints $n$ Codex tokens and adds it into the target account's balance.
+3. mints $n$ Archivist tokens and adds it into the target account's balance.
 
 To use the script, just download it into a local file named `mint-tokens.js`,
 for instance using `curl` (make sure you are in
@@ -348,14 +348,14 @@ the `marketplace-tutorial` directory):
 
 ```bash
 # download script
-curl https://raw.githubusercontent.com/gmega/codex-local-bare/main/scripts/mint-tokens.js -o mint-tokens.js
+curl https://raw.githubusercontent.com/gmega/archivist-local-bare/main/scripts/mint-tokens.js -o mint-tokens.js
 ```
 
 Then run:
 
 ```bash
 # set the contract file location (we assume you are in the marketplace-tutorial directory)
-export CONTRACT_DEPLOY_FULL="../nim-codex/vendor/codex-contracts-eth/deployments/codexdisttestnetwork"
+export CONTRACT_DEPLOY_FULL="../archivist-node/vendor/archivist-contracts/deployments/archivistdisttestnetwork"
 export GETH_SIGNER_ADDR=$(cat geth_signer_address.txt)
 # Installs Web3-js
 npm install web3
@@ -365,7 +365,7 @@ node ./mint-tokens.js $CONTRACT_DEPLOY_FULL/TestToken.json $GETH_SIGNER_ADDR 0x4
 node ./mint-tokens.js $CONTRACT_DEPLOY_FULL/TestToken.json $GETH_SIGNER_ADDR 0x9F0C62Fe60b22301751d6cDe1175526b9280b965 1000000000000000000
 ```
 
-If you get a message like 
+If you get a message like
 
 ```bash
 Usage: mint-tokens.js <token-hardhat-deploy-json> <signer-account> <receiver-account> <token-ammount>
@@ -377,9 +377,9 @@ holds the signer address (we used
 `export GETH_SIGNER_ADDR=$(cat geth_signer_address.txt)` above to
 make sure it is set).
 
-## 3. Run Codex
+## 3. Run Archivist
 
-With accounts and geth in place, we can now start the Codex nodes.
+With accounts and geth in place, we can now start the Archivist nodes.
 
 ### 3.1. Storage Node
 
@@ -387,12 +387,12 @@ The storage node will be the one storing data and submitting the proofs of
 storage to the chain. To do that, it needs access to:
 
 1. the address of the Marketplace contract that has been deployed to
-   the local geth node in [Step 2.1](#_2-1-deploy-the-codex-marketplace-contracts);
-2. the sample ceremony files which are shipped in the Codex contracts repo
-  (`nim-codex/vendor/codex-contracts-eth`).
+   the local geth node in [Step 2.1](#_2-1-deploy-the-archivist-marketplace-contracts);
+2. the sample ceremony files which are shipped in the Archivist contracts repo
+  (`archivist-node/vendor/archivist-contracts`).
 
 **Address of the Marketplace Contract.** The contract address can be found
-inside of the file `nim-codex/vendor/codex-contracts-eth/deployments/codexdisttestnetwork/Marketplace.json`.
+inside of the file `archivist-node/vendor/archivist-contracts/deployments/archivistdisttestnetwork/Marketplace.json`.
 We captured that location above in `CONTRACT_DEPLOY_FULL` variable, thus, from
 the `marketplace-tutorial` folder just run:
 
@@ -418,15 +418,15 @@ where you replace `0x0000000000000000000000000000000000000000` with
 the address of the Marketplace contract.
 
 **Prover ceremony files.** The ceremony files are under the
-`nim-codex/vendor/codex-contracts-eth/verifier/networks/codexdisttestnetwork`
+`archivist-node/vendor/archivist-contracts/verifier/networks/archivistdisttestnetwork`
 subdirectory. There are three of them: `proof_main.r1cs`, `proof_main.zkey`,
-and `prooof_main.wasm`. We will need all of them to start the Codex storage node.
+and `prooof_main.wasm`. We will need all of them to start the Archivist storage node.
 
 **Starting the storage node.** Let:
 
 * `PROVER_ASSETS` contain the directory where the prover ceremony files are
   located. **This must be an absolute path**;
-* `CODEX_BINARY` contain the location of your Codex binary;
+* `ARCHIVIST_BINARY` contain the location of your Archivist binary;
 * `MARKETPLACE_ADDRESS` contain the address of the Marketplace contract
   (we have already set it above).
 
@@ -434,9 +434,9 @@ Set these paths into environment variables (make sure you are in
 the `marketplace-tutorial` directory):
 
 ```bash
-export CONTRACT_DEPLOY_FULL=$(realpath "../nim-codex/vendor/codex-contracts-eth/deployments/codexdisttestnetwork")
-export PROVER_ASSETS=$(realpath "../nim-codex/vendor/codex-contracts-eth/verifier/networks/codexdisttestnetwork/")
-export CODEX_BINARY=$(realpath "../nim-codex/build/codex")
+export CONTRACT_DEPLOY_FULL=$(realpath "../archivist-node/vendor/archivist-contracts/deployments/archivistdisttestnetwork")
+export PROVER_ASSETS=$(realpath "../archivist-node/vendor/archivist-contracts/verifier/networks/archivistdisttestnetwork/")
+export ARCHIVIST_BINARY=$(realpath "../archivist-node/build/archivist")
 export MARKETPLACE_ADDRESS=$(cat marketplace_address.txt)
 ```
 > you may notice, that we have already set the `CONTRACT_DEPLOY_FULL` variable
@@ -445,8 +445,8 @@ export MARKETPLACE_ADDRESS=$(cat marketplace_address.txt)
 To launch the storage node, run:
 
 ```bash
-${CODEX_BINARY}\
-  --data-dir=./codex-storage\
+${ARCHIVIST_BINARY}\
+  --data-dir=./archivist-storage\
   --listen-addrs=/ip4/0.0.0.0/tcp/8080\
   --api-port=8000\
   --disc-port=8090\
@@ -473,7 +473,7 @@ We get the Signed Peer Record (SPR) of the storage node so we can bootstrap
 the client node with it. To get the SPR, issue the following call:
 
 ```bash
-curl -H 'Accept: text/plain' 'http://localhost:8000/api/codex/v1/spr' --write-out '\n'
+curl -H 'Accept: text/plain' 'http://localhost:8000/api/archivist/v1/spr' --write-out '\n'
 ```
 
 You should get the SPR back starting with `spr:`.
@@ -484,17 +484,17 @@ Next set these paths into environment variables:
 
 ```bash
 # set the SPR for the storage node
-export STORAGE_NODE_SPR=$(curl -H 'Accept: text/plain' 'http://localhost:8000/api/codex/v1/spr')
+export STORAGE_NODE_SPR=$(curl -H 'Accept: text/plain' 'http://localhost:8000/api/archivist/v1/spr')
 # basic vars
-export CONTRACT_DEPLOY_FULL=$(realpath "../nim-codex/vendor/codex-contracts-eth/deployments/codexdisttestnetwork")
-export CODEX_BINARY=$(realpath "../nim-codex/build/codex")
+export CONTRACT_DEPLOY_FULL=$(realpath "../archivist-node/vendor/archivist-contracts/deployments/archivistdisttestnetwork")
+export ARCHIVIST_BINARY=$(realpath "../archivist-node/build/archivist")
 export MARKETPLACE_ADDRESS=$(cat marketplace_address.txt)
 ```
 and then run:
 
 ```bash
-${CODEX_BINARY}\
-  --data-dir=./codex-client\
+${ARCHIVIST_BINARY}\
+  --data-dir=./archivist-client\
   --listen-addrs=/ip4/0.0.0.0/tcp/8081\
   --api-port=8001\
   --disc-port=8091\
@@ -514,7 +514,7 @@ some of it for sale.
 ### 4.1 Sell Storage
 
 The following request will cause the storage node to put out $5\text{MB}$
-of storage for sale for $1$ hour, at a minimum price of $1000$ Codex token
+of storage for sale for $1$ hour, at a minimum price of $1000$ Archivist token
 per byte per second, while expressing that maximum penalty (a collateral)
 the storage provider is willing to risk for not fulfilling its part of the
 contract is limited to $50000000$ tokens (wei) for this specific availability.[^1]
@@ -522,7 +522,7 @@ This total collateral will be distributed across all storage requests matching
 this availability.
 
 ```bash
-curl 'http://localhost:8000/api/codex/v1/sales/availability' \
+curl 'http://localhost:8000/api/archivist/v1/sales/availability' \
   --header 'Content-Type: application/json' \
   --data '{
   "totalSize": "5000000",
@@ -544,13 +544,13 @@ which identifies this storage offer.
 To check the current storage offers for this node, you can issue:
 
 ```bash
-curl 'http://localhost:8000/api/codex/v1/sales/availability'
+curl 'http://localhost:8000/api/archivist/v1/sales/availability'
 ```
 
 or with `jq`:
 
 ```bash
-curl 'http://localhost:8000/api/codex/v1/sales/availability' | jq
+curl 'http://localhost:8000/api/archivist/v1/sales/availability' | jq
 ```
 
 This should print a list of offers, with the one you just created figuring
@@ -570,7 +570,7 @@ dd if=/dev/urandom of=./data.bin bs=1M count=1
 Assuming your file is named `data.bin`, you can upload it with:
 
 ```bash
-curl --request POST http://localhost:8001/api/codex/v1/data --header 'Content-Type: application/octet-stream' --write-out '\n' -T ./data.bin
+curl --request POST http://localhost:8001/api/archivist/v1/data --header 'Content-Type: application/octet-stream' --write-out '\n' -T ./data.bin
 ```
 
 Once the upload completes, you should see a _Content Identifier_,
@@ -584,7 +584,7 @@ export CID=zDvZRwzm2mK7tvDzKScRLapqGdgNTLyyEBvx1TQY37J2CdWdS6Sj
 ```
 
 ```bash
-curl "http://localhost:8001/api/codex/v1/storage/request/${CID}" \
+curl "http://localhost:8001/api/archivist/v1/storage/request/${CID}" \
   --header 'Content-Type: application/octet-stream' \
   --data "{
     \"duration\": \"600\",
@@ -615,7 +615,7 @@ The parameters under `--data` say that:
    content (the bigger the `tolerance` the bigger the resulting dataset).
 5. finally, the `expiry` puts a time limit for filling all the slots by
    the storage provider(s). If slots are not filled by the `expire` interval,
-   the request will timeout and fail. 
+   the request will timeout and fail.
 
 ### 4.3. Track your Storage Requests
 
@@ -625,7 +625,7 @@ and a storage node will eventually pick it up.
 You can poll the status of your request by means of:
 ```bash
 export STORAGE_PURCHASE_ID="6b6e2445f33ed624891f0543fe9dbf4bd0a6971febccaae2431375a5b9a2840d"
-curl "http://localhost:8001/api/codex/v1/storage/purchases/${STORAGE_PURCHASE_ID}"
+curl "http://localhost:8001/api/archivist/v1/storage/purchases/${STORAGE_PURCHASE_ID}"
 ```
 
 This returns a result like:
@@ -662,9 +662,9 @@ Anything other than that means the request has not been completely
 processed yet, and an `"error"` state other than `null` means it failed.
 
 Well, it was quite a journey, wasn't it? You can congratulate yourself for
-successfully finishing the codex marketplace tutorial!
+successfully finishing the archivist marketplace tutorial!
 
-[^1]: Codex files get partitioned into pieces called "slots" and distributed
+[^1]: Archivist files get partitioned into pieces called "slots" and distributed
 to various storage providers. The collateral refers to one such slot,
 and will be slowly eaten away as the storage provider fails to deliver
 timely proofs.

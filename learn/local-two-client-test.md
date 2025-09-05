@@ -1,18 +1,18 @@
-# Codex Two-Client Test
+# Archivist Two-Client Test
 
-The two-client test is a manual test you can perform to check your setup and familiarize yourself with the Codex API. These steps will guide you through running and connecting two nodes, in order to upload a file to one and then download that file from the other. This test also includes running a local blockchain node in order to have the Marketplace functionality available. However, running a local blockchain node is not strictly necessary, and you can skip steps marked as optional if you choose not start a local blockchain node.
+The two-client test is a manual test you can perform to check your setup and familiarize yourself with the Archivist API. These steps will guide you through running and connecting two nodes, in order to upload a file to one and then download that file from the other. This test also includes running a local blockchain node in order to have the Marketplace functionality available. However, running a local blockchain node is not strictly necessary, and you can skip steps marked as optional if you choose not start a local blockchain node.
 
 ## Prerequisite
 
-Make sure you have [built the client](/learn/build) or obtained [compiled binary](/learn/quick-start#get-codex-binary).
+Make sure you have [built the client](/learn/build) or obtained [compiled binary](/learn/quick-start#get-archivist-binary).
 
 ## Steps
 
 ### 0. Setup blockchain node (optional)
 
-You need to have installed NodeJS and npm in order to spinup a local blockchain node.
+You need to have installed NodeJS and npm in order to spin-up a local blockchain node.
 
-Go to directory `vendor/codex-contracts-eth` and run these two commands:
+Go to directory `vendor/archivist-contracts` and run these two commands:
 ```
 npm ci
 npm start
@@ -25,7 +25,7 @@ This will launch a local Ganache blockchain.
 Open a terminal and run:
 - Mac/Linux:
   ```shell
-   codex \
+   archivist \
      --data-dir="$(pwd)/Data1" \
      --api-port=8080 \
      --disc-port=8090 \
@@ -33,7 +33,7 @@ Open a terminal and run:
    ```
 - Windows:
   ```batch
-  codex.exe ^
+  archivist.exe ^
     --data-dir="Data1" ^
     --api-port=8080 ^
     --disc-port=8090 ^
@@ -58,14 +58,14 @@ Optionally, if you want to use the Marketplace blockchain functionality, you nee
 | `persistence`  | Enables Marketplace functionality. Requires a blockchain connection.  |
 | `eth-account`  | Defines which blockchain account the node should use.                 |
 
-Codex uses sane defaults for most of its arguments. Here we specify some explicitly for the purpose of this walk-through.
+Archivist uses sane defaults for most of its arguments. Here we specify some explicitly for the purpose of this walk-through.
 
 ### 2. Sign of life
 
 Run the command :
 
 ```bash
-curl -X GET http://127.0.0.1:8080/api/codex/v1/debug/info
+curl -X GET http://127.0.0.1:8080/api/archivist/v1/debug/info
 ```
 
 This GET request will return the node's debug information. The response will be in JSON and should look like:
@@ -76,7 +76,7 @@ This GET request will return the node's debug information. The response will be 
   "addrs": [
     "/ip4/127.0.0.1/tcp/8070"
   ],
-  "repo": "/Users/user/projects/nim-codex/Data1",
+  "repo": "/Users/user/projects/archivist-node/Data1",
   "spr": "spr:CiUIAhIhA1AL2J7EWfg7x77iOrR9YYBisY6CDtU2nEhuwDaQyjpkEgIDARo8CicAJQgCEiEDUAvYnsRZ-DvHvuI6tH1hgGKxjoIO1TacSG7ANpDKOmQQ2MWasAYaCwoJBH8AAAGRAh-aKkYwRAIgB2ooPfAyzWEJDe8hD2OXKOBnyTOPakc4GzqKqjM2OGoCICraQLPWf0oSEuvmSroFebVQx-3SDtMqDoIyWhjq1XFF",
   "announceAddresses": [
     "/ip4/127.0.0.1/tcp/8070"
@@ -91,7 +91,7 @@ This GET request will return the node's debug information. The response will be 
     },
     "nodes": []
   },
-  "codex": {
+  "archivist": {
     "version": "untagged build",
     "revision": "b3e626a5"
   }
@@ -106,7 +106,7 @@ This GET request will return the node's debug information. The response will be 
 | `spr`               | Signed Peer Record, encoded information about this node and its location in the network. |
 | `announceAddresses` | Multiaddresses used for annoucning this node                                             |
 | `table`             | Table of nodes present in the node's DHT                                                 |
-| `codex`             | Codex version information                                                                |
+| `archivist`         | Archivist version information                                                            |
 
 ### 3. Launch Node #2
 
@@ -117,7 +117,7 @@ Replace `<SPR HERE>` in the following command with the SPR returned from the pre
 Open a new terminal and run:
 - Mac/Linux:
   ```shell
-  codex \
+  archivist \
     --data-dir="$(pwd)/Data2" \
     --api-port=8081 \
     --disc-port=8091 \
@@ -126,7 +126,7 @@ Open a new terminal and run:
   ```
 - Windows:
   ```
-  codex.exe ^
+  archivist.exe ^
     --data-dir="Data2" ^
     --api-port=8081 ^
     --disc-port=8091 ^
@@ -134,15 +134,15 @@ Open a new terminal and run:
     --bootstrap-node=<SPR HERE>
   ```
 
-Alternatively on Mac, Linux, or MSYS2 and a recent Codex binary you can run it in one command like:
+Alternatively on Mac, Linux, or MSYS2 and a recent Archivist binary you can run it in one command like:
 
 ```shell
-codex \
+archivist \
   --data-dir="$(pwd)/Data2" \
   --api-port=8081 \
   --disc-port=8091 \
   --listen-addrs=/ip4/127.0.0.1/tcp/8071 \
-  --bootstrap-node=$(curl -H "Accept: text/plain" http://127.0.0.1:8080/api/codex/v1/spr)
+  --bootstrap-node=$(curl -H "Accept: text/plain" http://127.0.0.1:8080/api/archivist/v1/spr)
 ```
 
 Notice we're using a new data-dir, and we've increased each port number by one. This is needed so that the new node won't try to open ports already in use by the first node.
@@ -158,21 +158,21 @@ You can get the first node's peer id by running the following command and findin
 ```shell
 curl -X GET \
   -H "Accept: text/plain" \
-  http://127.0.0.1:8081/api/codex/v1/peerid
+  http://127.0.0.1:8081/api/archivist/v1/peerid
 ```
 
 Next replace `<PEER ID HERE>` in the following command with the peerId returned from the previous command:
 
 ```shell
 curl -X GET \
-  http://127.0.0.1:8080/api/codex/v1/connect/<PEER ID HERE>?addrs=/ip4/127.0.0.1/tcp/8071
+  http://127.0.0.1:8080/api/archivist/v1/connect/<PEER ID HERE>?addrs=/ip4/127.0.0.1/tcp/8071
 ```
 
-Alternatively on Mac, Linux, or MSYS2 and a recent Codex binary you can run it in one command like:
+Alternatively on Mac, Linux, or MSYS2 and a recent Archivist binary you can run it in one command like:
 
 ```shell
 curl -X GET \
-  http://127.0.0.1:8080/api/codex/v1/connect/$(curl -X GET -H "Accept: text/plain" http://127.0.0.1:8081/api/codex/v1/peerid)\?addrs=/ip4/127.0.0.1/tcp/8071
+  http://127.0.0.1:8080/api/archivist/v1/connect/$(curl -X GET -H "Accept: text/plain" http://127.0.0.1:8081/api/archivist/v1/peerid)\?addrs=/ip4/127.0.0.1/tcp/8071
 ```
 
 Notice that we are sending the "`peerId`" and the multiaddress of node 2 to the `/connect` endpoint of node 1. This provides node 1 all the information it needs to communicate with node 2. The response to this request should be `Successfully connected to peer`.
@@ -185,7 +185,7 @@ Next replace `<FILE PATH>` with the path to the file you want to upload in the f
 
 ```shell
 curl -X POST \
-  127.0.0.1:8080/api/codex/v1/data \
+  127.0.0.1:8080/api/archivist/v1/data \
   -H "Content-Type: application/octet-stream" \
   -H "Expect: 100-continue" \
   -T "<FILE PATH>"
@@ -193,7 +193,7 @@ curl -X POST \
 > [!TIP]
 > If curl is reluctant to show you the response, add `-o <FILENAME>` to write the result to a file.
 
-Depending on the file size this may take a moment. Codex is processing the file by cutting it into blocks and generating erasure-recovery data. When the process is finished, the request will return the content-identifier (CID) of the uploaded file. It should look something like `zdj7WVxH8HHHenKtid8Vkgv5Z5eSUbCxxr8xguTUBMCBD8F2S`.
+Depending on the file size this may take a moment. Archivist is processing the file by cutting it into blocks and generating erasure-recovery data. When the process is finished, the request will return the content-identifier (CID) of the uploaded file. It should look something like `zdj7WVxH8HHHenKtid8Vkgv5Z5eSUbCxxr8xguTUBMCBD8F2S`.
 
 ### 6. Download The File
 
@@ -201,7 +201,7 @@ Replace `<CID>` with the identifier returned in the previous step. Replace `<OUT
 
 ```bash
 curl -X GET \
-  127.0.0.1:8081/api/codex/v1/data/<CID>/network \
+  127.0.0.1:8081/api/archivist/v1/data/<CID>/network \
   -o <OUTPUT FILE>
 ```
 

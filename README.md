@@ -1,8 +1,8 @@
-# Codex documentation
+# Archivist documentation
 
- Welcome to Codex documentation.
+ Welcome to Archivist documentation.
 
- Codex is a decentralised data storage platform that provides exceptionally strong censorship resistance and durability guarantees.
+ Archivist is a decentralised data storage platform that provides exceptionally strong censorship resistance and durability guarantees.
 
 
 ## Run and build
@@ -35,8 +35,8 @@
 
  2. Clone repository
     ```shell
-    git clone https://github.com/codex-storage/codex-docs
-    cd codex-docs
+    git clone https://github.com/durability-labs/archivist-docs
+    cd archivist-docs
     ```
 
  3. Install dependencies
@@ -73,9 +73,9 @@
  - Make a PR to the upstream repository
 
  Project structure
- - `learn` - All information to learn about Codex
- - `networks` - Codex networks related information
- - `developers` - Codex development process and guides
+ - `learn` - All information to learn about Archivist
+ - `networks` - Archivist networks related information
+ - `developers` - Archivist development process and guides
 
 
 ## Internationalization
@@ -86,7 +86,7 @@
  1. Create a folder with a name of the two letter language code - `ko` for Korean, please check [List of ISO 639 language codes](https://en.wikipedia.org/wiki/List_of_ISO_639_language_codes).
 
  2. Copy and translate required pages. It make sense to use English pages as a source as it is the primary language. Pages are located inside the repository sub-folders
-    - *codex*
+    - *archivist*
     - *developers*
     - *learn*
     - *networks*
@@ -94,7 +94,7 @@
     After translation, we will have a new folder with all sub-folders
     ```
     ko
-    ├── codex
+    ├── archivist
     ├── developers
     ├── learn
     └── networks
