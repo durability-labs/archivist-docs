@@ -6,7 +6,7 @@ import { withMermaid } from 'vitepress-plugin-mermaid'
 // https://vitepress.dev/reference/site-config
 export default withMermaid({
   lang: 'en-US',
-  title: 'Codex Docs',
+  title: 'Archivist Docs',
   description: 'Decentralised data storage platform',
   lastUpdated: true,
   cleanUrls: true,
@@ -51,12 +51,12 @@ export default withMermaid({
       { text: 'Whitepaper', link: '/learn/whitepaper' },
       { text: 'Tokenomics Litepaper', link: '/learn/tokenomics-litepaper' },
       {
-        text: 'Codex',
+        text: 'Archivist',
         items: [
-          { text: 'About', link: '/codex/about' },
-          { text: 'Security', link: '/codex/security' },
-          { text: 'Privacy Policy', link: '/codex/privacy-policy' },
-          { text: 'Terms of Use', link: '/codex/terms-of-use' }
+          { text: 'About', link: '/archivist/about' },
+          { text: 'Security', link: '/archivist/security' },
+          { text: 'Privacy Policy', link: '/archivist/privacy-policy' },
+          { text: 'Terms of Use', link: '/archivist/terms-of-use' }
         ]
       }
     ],
@@ -74,45 +74,35 @@ export default withMermaid({
     },
 
     logo: {
-      alt: 'Codex • Docs',
-      light: '/codex-mark-primary-black-resized.png',
-      dark: '/codex-mark-primary-white-resized.png',
+      alt: 'Archivist • Docs',
+      light: '/archivist-mark-primary-black-resized.png',
+      dark: '/archivist-mark-primary-white-resized.png',
     },
 
-    siteTitle: 'Codex • Docs',
+    siteTitle: 'Archivist • Docs',
 
-    logoLink: '/learn/what-is-codex',
+    logoLink: '/learn/what-is-archivist',
 
     sidebar: [
       {
         text: 'Introduction',
         collapsed: false,
         items: [
-          { text: 'What is Codex?', link: '/learn/what-is-codex' },
+          { text: 'What is Archivist?', link: '/learn/what-is-archivist' },
           { text: 'Architecture', link: '/learn/architecture' },
           { text: 'Whitepaper', link: '/learn/whitepaper' },
           { text: 'Tokenomics Litepaper', link: '/learn/tokenomics-litepaper' }
         ]
       },
       {
-        text: 'Setup Codex with Installer',
+        text: 'Setup Archivist Manually',
         collapsed: false,
         items: [
-          { text: 'Disclaimer', link: '/codex/installer-disclaimer' },
-          { text: 'Requirements', link: '/learn/installer/requirements' },
-          { text: 'Install and Run Codex', link: '/learn/installer/install-and-run' },
-          { text: 'Upload/Download', link: '/learn/installer/upload-and-download' },
-        ]
-      },
-      {
-        text: 'Setup Codex Manually',
-        collapsed: false,
-        items: [
-          { text: 'Disclaimer', link: '/codex/disclaimer' },
+          { text: 'Disclaimer', link: '/archivist/disclaimer' },
           { text: 'Quick start', link: '/learn/quick-start' },
-          { text: 'Build Codex', link: '/learn/build' },
-          { text: 'Run Codex', link: '/learn/run' },
-          { text: 'Using Codex', link: '/learn/using' },
+          { text: 'Build Archivist', link: '/learn/build' },
+          { text: 'Run Archivist', link: '/learn/run' },
+          { text: 'Using Archivist', link: '/learn/using' },
           { text: 'Local Two Client Test', link: '/learn/local-two-client-test' },
           { text: 'Local Marketplace', link: '/learn/local-marketplace' },
           { text: 'Download Flow', link: '/learn/download-flow' },
@@ -120,7 +110,7 @@ export default withMermaid({
         ]
       },
       {
-        text: 'Codex networks',
+        text: 'Archivist networks',
         collapsed: false,
         items: [
           { text: 'Devnet', link: '/networks/devnet' },
@@ -135,13 +125,13 @@ export default withMermaid({
         ]
       },
       {
-        text: 'Codex',
+        text: 'Archivist',
         collapsed: false,
         items: [
-          { text: 'About', link: '/codex/about' },
-          { text: 'Security', link: '/codex/security' },
-          { text: 'Privacy Policy', link: '/codex/privacy-policy' },
-          { text: 'Terms of Use', link: '/codex/terms-of-use' }
+          { text: 'About', link: '/archivist/about' },
+          { text: 'Security', link: '/archivist/security' },
+          { text: 'Privacy Policy', link: '/archivist/privacy-policy' },
+          { text: 'Terms of Use', link: '/archivist/terms-of-use' }
         ]
       }
     ],

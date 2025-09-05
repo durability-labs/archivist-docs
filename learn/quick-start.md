@@ -1,14 +1,14 @@
 # Quick Start
 
-To run Codex through this guide we would need to perform the following steps:
-- [Review the disclaimer](/codex/disclaimer)
-- [Get Codex binary](#get-codex-binary)
-- [Run Codex](#run-codex)
-- [Interact with Codex](#interact-with-codex)
+To run Archivist through this guide we would need to perform the following steps:
+- [Review the disclaimer](/archivist/disclaimer)
+- [Get Archivist binary](#get-archivist-binary)
+- [Run Archivist](#run-archivist)
+- [Interact with Archivist](#interact-with-archivist)
 
-## Get Codex binary
+## Get Archivist binary
 
-For quick a start we will use precompiled binaries from [GitHub release page](https://github.com/codex-storage/nim-codex/releases). If you prefer to compile from the sources, please check [Build Codex](/learn/build).
+For quick a start we will use precompiled binaries from [GitHub release page](https://github.com/durability-labs/archivist-node/releases). If you prefer to compile from the sources, please check [Build Archivist](/learn/build).
 
 Please follow the steps for your OS from the list:
 - [Linux/macOS](#linux-macos)
@@ -16,9 +16,9 @@ Please follow the steps for your OS from the list:
 
 ### Linux/macOS
 
-1. Install latest Codex release
+1. Install latest Archivist release
    ```shell
-   curl -s https://get.codex.storage/install.sh | bash
+   curl -s https://get.archivist.storage/install.sh | bash
    ```
 
 2. Install dependencies
@@ -29,14 +29,14 @@ Please follow the steps for your OS from the list:
 
 3. Check the result
    ```shell
-   codex --version
+   archivist --version
    ```
 
 ### Windows
 
-1. Install latest Codex release
+1. Install latest Archivist release
    ```batch
-    curl -sO https://get.codex.storage/install.cmd && install.cmd 
+    curl -sO https://get.archivist.storage/install.cmd && install.cmd
    ```
 
    > [!WARNING]
@@ -58,7 +58,7 @@ Please follow the steps for your OS from the list:
     - Current session only
       ```batch
       :: Default installation directory
-      set "PATH=%PATH%%LOCALAPPDATA%\Codex;"
+      set "PATH=%PATH%%LOCALAPPDATA%\Archivist;"
       ```
 
     - Update PATH permanently
@@ -67,62 +67,62 @@ Please follow the steps for your OS from the list:
 
 3. Check the result
    ```shell
-   codex --version
+   archivist --version
    ```
 
-## Run Codex
+## Run Archivist
 
-We may [run Codex in different modes](/learn/run#run), and for a quick start we will run [Codex node](/learn/run#codex-node), to be able to share files in the network.
+We may [run Archivist in different modes](/learn/run#run), and for a quick start we will run [Archivist node](/learn/run#archivist-node), to be able to share files in the network.
 
-1. Run Codex
+1. Run Archivist
 
    **Linux/macOS**
    ```shell
-   codex \
+   archivist \
      --data-dir=datadir \
      --disc-port=8090 \
      --listen-addrs=/ip4/0.0.0.0/tcp/8070 \
      --nat=any \
      --api-cors-origin="*" \
-     --bootstrap-node=spr:CiUIAhIhAiJvIcA_ZwPZ9ugVKDbmqwhJZaig5zKyLiuaicRcCGqLEgIDARo8CicAJQgCEiECIm8hwD9nA9n26BUoNuarCEllqKDnMrIuK5qJxFwIaosQ3d6esAYaCwoJBJ_f8zKRAnU6KkYwRAIgM0MvWNJL296kJ9gWvfatfmVvT-A7O2s8Mxp8l9c8EW0CIC-h-H-jBVSgFjg3Eny2u33qF7BDnWFzo7fGfZ7_qc9P
+     --bootstrap-node=spr:CiUIAhIhA5mg11LZgFQ4XzIRb1T5xw9muFW1ALNKTijyKhQmvKYXEgIDARpJCicAJQgCEiEDmaDXUtmAVDhfMhFvVPnHD2a4VbUAs0pOKPIqFCa8phcQl-XFxQYaCwoJBE4vqKqRAnU6GgsKCQROL6iqkQJ1OipHMEUCIQDfzVYbN6A_O4i29e_FtDDUo7GJS3bkXRQtoteYbPSFtgIgcc8Kgj2ggVJyK16EY9xi4bY2lpTTeNIRjvslXSRdN5w
    ```
 
    **Windows**
 
    > [!WARNING]
-   > Windows might at this stage prompt you to grant internet access to Codex. You must allow it for things to work.
-   > It also might be required to add incoming firewall rules for Codex and we can use `netsh` utility.
+   > Windows might at this stage prompt you to grant internet access to Archivist. You must allow it for things to work.
+   > It also might be required to add incoming firewall rules for Archivist and we can use `netsh` utility.
 
    <details>
    <summary>add firewall rules using netsh</summary>
 
    ```batch
    :: Add rules
-   netsh advfirewall firewall add rule name="Allow Codex (TCP-In)" protocol=TCP dir=in localport=8070 action=allow
-   netsh advfirewall firewall add rule name="Allow Codex (UDP-In)" protocol=UDP dir=in localport=8090 action=allow
+   netsh advfirewall firewall add rule name="Allow Archivist (TCP-In)" protocol=TCP dir=in localport=8070 action=allow
+   netsh advfirewall firewall add rule name="Allow Archivist (UDP-In)" protocol=UDP dir=in localport=8090 action=allow
 
    :: List rules
-   netsh advfirewall firewall show rule name=all | find /I "Codex"
+   netsh advfirewall firewall show rule name=all | find /I "Archivist"
 
    :: Delete rules
-   netsh advfirewall firewall delete rule name="Allow Codex (TCP-In)"
-   netsh advfirewall firewall delete rule name="Allow Codex (UDP-In)"
+   netsh advfirewall firewall delete rule name="Allow Archivist (TCP-In)"
+   netsh advfirewall firewall delete rule name="Allow Archivist (UDP-In)"
    ```
    </details>
 
    ```batch
-   :: Run Codex
-   codex ^
+   :: Run Archivist
+   archivist ^
      --data-dir=datadir ^
      --disc-port=8090 ^
      --listen-addrs=/ip4/0.0.0.0/tcp/8070 ^
      --nat=any ^
      --api-cors-origin="*" ^
-     --bootstrap-node=spr:CiUIAhIhAiJvIcA_ZwPZ9ugVKDbmqwhJZaig5zKyLiuaicRcCGqLEgIDARo8CicAJQgCEiECIm8hwD9nA9n26BUoNuarCEllqKDnMrIuK5qJxFwIaosQ3d6esAYaCwoJBJ_f8zKRAnU6KkYwRAIgM0MvWNJL296kJ9gWvfatfmVvT-A7O2s8Mxp8l9c8EW0CIC-h-H-jBVSgFjg3Eny2u33qF7BDnWFzo7fGfZ7_qc9P
+     --bootstrap-node=spr:CiUIAhIhA5mg11LZgFQ4XzIRb1T5xw9muFW1ALNKTijyKhQmvKYXEgIDARpJCicAJQgCEiEDmaDXUtmAVDhfMhFvVPnHD2a4VbUAs0pOKPIqFCa8phcQl-XFxQYaCwoJBE4vqKqRAnU6GgsKCQROL6iqkQJ1OipHMEUCIQDfzVYbN6A_O4i29e_FtDDUo7GJS3bkXRQtoteYbPSFtgIgcc8Kgj2ggVJyK16EY9xi4bY2lpTTeNIRjvslXSRdN5w
    ```
 
    > [!TIP]
-   > In the example above we use [Codex Testnet](/networks/testnet#bootstrap-nodes) bootstrap nodes and thus we join Testnet. If you would like to join a different network, please use [appropriate value](/networks/networks).
+   > In the example above we use [Archivist Testnet](/networks/testnet#bootstrap-nodes) bootstrap nodes and thus we join Testnet. If you would like to join a different network, please use [appropriate value](/networks/networks).
 
 2. Configure port-forwarding for the TCP/UDP ports on your Internet router
    | Protocol | Service   | Port   |
@@ -130,18 +130,18 @@ We may [run Codex in different modes](/learn/run#run), and for a quick start we 
    | UDP      | Discovery | `8090` |
    | TCP      | Transport | `8070` |
 
-If you would like to purchase or sell storage, please consider to run [Codex node with marketplace support](/learn/run#codex-node-with-marketplace-support) or [Codex storage node](/learn/run#codex-storage-node).
+If you would like to purchase or sell storage, please consider to run [Archivist node with marketplace support](/learn/run#archivist-node-with-marketplace-support) or [Archivist storage node](/learn/run#archivist-storage-node).
 
-## Interact with Codex
+## Interact with Archivist
 
-When your Codex node is up and running you can interact with it using [Codex App UI](https://app.codex.storage) for files sharing.
+When your Archivist node is up and running you can interact with it using [Archivist App UI](https://app.archivist.storage) for files sharing.
 
-Also, you can interact with Codex using [Codex API](/developers/api) and for a walk-through of the API, consider following the [Using Codex](/learn/using) guide.
+Also, you can interact with Archivist using [Archivist API](/developers/api) and for a walk-through of the API, consider following the [Using Archivist](/learn/using) guide.
 
 ## Stay in touch
 
-Want to stay up-date, or looking for further assistance? Try our [discord-server](https://discord.gg/codex-storage).
+Want to stay up-date, or looking for further assistance? Try our [discord-server](https://discord.gg/archivist-storage).
 
-Ready to explore Codex functionality? Please [Join Codex Testnet](/networks/testnet).
+Ready to explore Archivist functionality? Please [Join Archivist Testnet](/networks/testnet).
 
-If you want to run Codex locally without joining the Testnet, consider trying the [Codex Two-Client Test](/learn/local-two-client-test) or the [Running a Local Codex Network with Marketplace Support](/learn/local-marketplace).
+If you want to run Archivist locally without joining the Testnet, consider trying the [Archivist Two-Client Test](/learn/local-two-client-test) or the [Running a Local Archivist Network with Marketplace Support](/learn/local-marketplace).
