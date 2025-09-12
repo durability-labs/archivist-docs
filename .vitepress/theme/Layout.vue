@@ -11,7 +11,7 @@ import DefaultTheme from 'vitepress/theme'
           width="520"
           height="315"
           src="https://www.youtube.com/embed/NZEOilcLdKA?si=WrnLR1Mm71FkgFvC?controls=0"
-          title="Codex @ depin:con - Codex: Data Durability Engine & DSN (Presentation)"
+          title="Archivist @ depin:con - Archivist: Data Durability Engine & DSN (Presentation)"
           frameborder="0"
           allow="encrypted-media"
           allowfullscreen>

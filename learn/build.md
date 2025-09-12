@@ -1,4 +1,4 @@
-# Build Codex
+# Build Archivist
 
 ## Table of Contents
 
@@ -16,15 +16,15 @@
 
 ## Prerequisites
 
-To build nim-codex, developer tools need to be installed and accessible in the OS.
+To build archivist-node, developer tools need to be installed and accessible in the OS.
 
-Instructions below correspond roughly to environmental setups in nim-codex's [CI workflow](https://github.com/codex-storage/nim-codex/blob/master/.github/workflows/ci.yml) and are known to work.
+Instructions below correspond roughly to environmental setups in archivist-node's [CI workflow](https://github.com/durability-labs/archivist-node/blob/main/.github/workflows/ci.yml) and are known to work.
 
 Other approaches may be viable. On macOS, some users may prefer [MacPorts](https://www.macports.org/) to [Homebrew](https://brew.sh/). On Windows, rather than use MSYS2, some users may prefer to install developer tools with [winget](https://docs.microsoft.com/en-us/windows/package-manager/winget/), [Scoop](https://scoop.sh/), or [Chocolatey](https://chocolatey.org/), or download installers for e.g. Make and CMake while otherwise relying on official Windows developer tools. Community contributions to these docs and our build system are welcome!
 
 ### Rust
 
-The current implementation of Codex's zero-knowledge proving circuit requires the installation of rust v1.79.0 or greater. Be sure to install it for your OS and add it to your terminal's path such that the command `cargo --version` gives a compatible version.
+The current implementation of Archivist's zero-knowledge proving circuit requires the installation of rust v1.79.0 or greater. Be sure to install it for your OS and add it to your terminal's path such that the command `cargo --version` gives a compatible version.
 
 ### Linux
 
@@ -55,8 +55,7 @@ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs/ | sh -s -- --default-
 . "$HOME/.cargo/env"
 ```
 
-Note that you will currently not be able to build Codex with gcc 14. To verify that 
-you have a supported version, run:
+Note that you will currently not be able to build Archivist with gcc 14. To verify that you have a supported version, run:
 
 ```shell
 gcc --version
@@ -137,16 +136,16 @@ File: `C:/Users/<username>/AppData/Roaming/Code/User/settings.json`
 
 ### Other
 
-It is possible that nim-codex can be built and run on other platforms supported by the [Nim](https://nim-lang.org/) language: BSD family, older versions of Windows, etc. There has not been sufficient experimentation with nim-codex on such platforms, so instructions are not provided. Community contributions to these docs and our build system are welcome!
+It is possible that archivist-node can be built and run on other platforms supported by the [Nim](https://nim-lang.org/) language: BSD family, older versions of Windows, etc. There has not been sufficient experimentation with archivist-node on such platforms, so instructions are not provided. Community contributions to these docs and our build system are welcome!
 
 ## Repository
 
 In Bash run
 ```shell
-git clone https://github.com/codex-storage/nim-codex.git repos/nim-codex && cd repos/nim-codex
+git clone https://github.com/durability-labs/archivist-node.git repos/archivist-node && cd repos/archivist-node
 ```
 
-nim-codex uses the [nimbus-build-system](https://github.com/status-im/nimbus-build-system), so next run
+archivist-node uses the [nimbus-build-system](https://github.com/status-im/nimbus-build-system), so next run
 ```shell
 make update
 ```
@@ -165,7 +164,7 @@ In Bash run
 make
 ```
 
-The default `make` target creates the `build/codex` executable.
+The default `make` target creates the `build/archivist` executable.
 
 ## Tools
 
@@ -202,18 +201,18 @@ To run the integration tests, an Ethereum test node is required. Follow these in
 
 1. Install NodeJS (tested with v18.14.0), consider using NVM as a version manager. [Node Version Manager (`nvm`)](https://github.com/nvm-sh/nvm#readme)
 1. Open a terminal
-1. Go to the vendor/codex-contracts-eth folder: `cd /<git-root>/vendor/codex-contracts-eth/`
+1. Go to the vendor/archivist-contracts folder: `cd /<git-root>/vendor/archivist-contracts/`
 1. `npm install` -> Should complete with the number of packages added and an overview of known vulnerabilities.
 1. `npm test` -> Should output test results. May take a minute.
 
 Before the integration tests are started, you must start the Ethereum test node manually.
 1. Open a terminal
-1. Go to the vendor/codex-contracts-eth folder: `cd /<git-root>/vendor/codex-contracts-eth/`
+1. Go to the vendor/archivist-contracts folder: `cd /<git-root>/vendor/archivist-contracts/`
 1. `npm start` -> This should launch Hardhat, and output a number of keys and a warning message.
 
 #### Run
 
-The `testAll` target runs the same tests as `make test` and also runs tests for nim-codex's Ethereum contracts, as well a basic suite of integration tests.
+The `testAll` target runs the same tests as `make test` and also runs tests for archivist-node's Ethereum contracts, as well a basic suite of integration tests.
 
 To run `make testAll`.
 
@@ -231,15 +230,15 @@ option; e.g.:
 
 ```bash=
 # Clone original repo.
-git clone https://github.com/codex-storage/nim-codex
+git clone https://github.com/durability-labs/archivist-node
 
 # Build inside docker
-docker build -t codexstorage/nim-codex:latest -f nim-codex/docker/codex.Dockerfile nim-codex
+docker build -t durabilitylabs/archivist-node:latest -f archivist-node/docker/archivist.Dockerfile archivist-node
 
 # Extract executable
-docker create --name=codex-build codexstorage/nim-codex:latest
-docker cp codex-build:/usr/local/bin/codex ./codex
-docker cp codex-build:/usr/local/bin/cirdl ./cirdl
+docker create --name=archivist-build durabilitylabs/archivist-node:latest
+docker cp archivist-build:/usr/local/bin/archivist ./archivist
+docker cp archivist-build:/usr/local/bin/cirdl ./cirdl
 ```
 
 and voilà, you should have the binaries available in the current folder.

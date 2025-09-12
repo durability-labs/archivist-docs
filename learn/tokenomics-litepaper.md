@@ -1,9 +1,9 @@
 ---
 outline: [1, 3]
 ---
-# Codex Tokenomics Litepaper - Testnet Version
+# Archivist Tokenomics Litepaper - Testnet Version
 
-**Codex: A Decentralized Storage Protocol for Durable Information**
+**Archivist: A Decentralized Storage Protocol for Durable Information**
 
 # Legal Notices
 
@@ -17,33 +17,33 @@ outline: [1, 3]
 
 ## Scope
 
-This document describes the Codex Tokenomics with elements that reflect the Testnet deployment of the Codex Protocol.
+This document describes the Archivist Tokenomics with elements that reflect the Testnet deployment of the Archivist Protocol.
 
-## What Codex Does
+## What Archivist Does
 
-Codex is a state-of-the-art decentralized storage platform that offers a novel solution that enhances data durability guarantees for storing vast amounts of data while eliminating any reliance on centralized institutions that could lead to a single point of failure.
+Archivist is a state-of-the-art decentralized storage platform that offers a novel solution that enhances data durability guarantees for storing vast amounts of data while eliminating any reliance on centralized institutions that could lead to a single point of failure.
 
 While centralized storage systems such as Google Cloud tout eleven nines of durability, durable file storage in distributed systems that provide censorship resistance and privacy are a vital prerequisite to use cases such as preserving factual records of history in network states.
 
-While no system can guarantee absolute protection against data loss, through its technical architecture, economic incentives, and algorithmic encoding, Codex is designed to provide highly decentralized data storage with high durability, resiliency to cloud failures, and resistance to censorship.
+While no system can guarantee absolute protection against data loss, through its technical architecture, economic incentives, and algorithmic encoding, Archivist is designed to provide highly decentralized data storage with high durability, resiliency to cloud failures, and resistance to censorship.
 
-## How Codex Works
+## How Archivist Works
 
-Codex operates as a network of storage nodes, referred to herein as **Storage Providers** (SP), that store user data for the duration of a contract entered into by SPs and storage users, referred to herein simply as **Clients**.
+Archivist operates as a network of storage nodes, referred to herein as **Storage Providers** (SP), that store user data for the duration of a contract entered into by SPs and storage users, referred to herein simply as **Clients**.
 
 Storage contracts are initiated by a **Client** requesting to store a specified amount of data, for a specified amount of time, and at a specific price per the full contract. **Storage Providers** commit to slots to store redundant fragments of this data.
 
 The fact that **SPs** must post collateral (stake) in order to fill a slot helps protect against Sybil attacks, promoting diversity in storage nodes fulfilling each contract. Additionally, this collateral acts as an economic incentive to ensure that **SPs** fulfill their obligations to periodically prove that they are still in possession of the data in question.
 
-This is achieved by periodic challenges to **SPs** to provide cryptographic proofs that demonstrate the data they have contracted to store can be retrieved. Codex incorporates Zero Knowledge (ZK) and Data Availability Sampling (DAS) to achieve low-cost, highly efficient, and reliable data loss detection.
+This is achieved by periodic challenges to **SPs** to provide cryptographic proofs that demonstrate the data they have contracted to store can be retrieved. Archivist incorporates Zero Knowledge (ZK) and Data Availability Sampling (DAS) to achieve low-cost, highly efficient, and reliable data loss detection.
 
 **SPs** are required to respond to these challenges, sending their proofs to **Validators,** who verify the validity of the proofs and posts to the blockchain only the absence of a proof. This reduces costs of validating proofs, while not affecting the **Protocol**’s security.
 
 Should SPs fail to prove a fixed number of times they still have the data in question, or send an invalid proof, their collateral is partially slashed. The slash penalty is a fixed percentage of the total collateral. This slashing continues until a certain number of slashings is reached, at which point the entire collateral is slashed. At this moment, the SP slot is considered “abandoned”. The slashed collateral is used as an incentive for a new **SP** to take over the failed slot through the “slot recovery mechanism” (discussed further later). This ensures the collateral provides an economic incentive to ensure the durability of the data.
 
-Codex is thus designed such that rational behavior for **SPs** consists of storing the data in the most space-efficient manner to minimize excess storage costs, while balancing the need for enough redundancy to recover from the possibility of data loss/corruption by the penalty of forfeiture of their collateral (slashing).
+Archivist is thus designed such that rational behavior for **SPs** consists of storing the data in the most space-efficient manner to minimize excess storage costs, while balancing the need for enough redundancy to recover from the possibility of data loss/corruption by the penalty of forfeiture of their collateral (slashing).
 
-While Codex’s tech maximizes recoverability and durability in the event of partial data loss, Codex’s economic incentives coordinate rational actors to provide a stable and predictable environment for data storage users. At the heart of these economic incentives is the Codex utility token (CDX), which serves as the collateral to protect file durability and facilitate slot repair, and the means of payment to coordinate successful storage contracts.
+While Archivist’s tech maximizes recoverability and durability in the event of partial data loss, Archivist’s economic incentives coordinate rational actors to provide a stable and predictable environment for data storage users. At the heart of these economic incentives is the Archivist utility token (ARC), which serves as the collateral to protect file durability and facilitate slot repair, and the means of payment to coordinate successful storage contracts.
 
 # Contract Lifecycle
 
@@ -71,7 +71,7 @@ Note that a slot is not considered confirmed as filled until after an **SP** bot
 
 If there are still empty slots when the timeout/expiry for the contract request expires, the deal is terminated.
 
-The **Storage Providers** who did fill slots, if any, are compensated for the amount of time which they did store the slot data, at the contract requests specified price per TB per Month. The remainder of the **Client**’s deposit is returned. 
+The **Storage Providers** who did fill slots, if any, are compensated for the amount of time which they did store the slot data, at the contract requests specified price per TB per Month. The remainder of the **Client**’s deposit is returned.
 
 As there is a high probability of having at least a few slots occupied, there should be no need for further penalties on the **Client** to prevent spam requests and incentivise **Clients** to submit attractive deals.
 
@@ -115,23 +115,23 @@ All collateral is returned to **SPs t**hat currently fill the slots (note due to
 
 Deals can not be automatically rolled forward or extended. If a **Client** desires to continue a deal, they must create a new storage contract request. Otherwise, Clients can retrieve their data.
 
-# CDX Testnet  Tokenomics
+# ARC Testnet  Tokenomics
 
-The CDX token does not exist in the Testnet Phase. The description below refers to the mechanics of a Testnet token and not CDX itself and will be referred to as *CDX (Testnet token)* for this purpose.
+The ARC token does not exist in the Testnet Phase. The description below refers to the mechanics of a Testnet token and not ARC itself and will be referred to as *ARC (Testnet token)* for this purpose.
 
-For the avoidance of doubt, the *CDX (Testnet token)* are virtual items with no value of any kind and they are not convertible to any other currency, token, or any other form of property. They are solely intended to be utilised for the purposes of enabling the tokenomics and facilitating the different roles in this Testnet Phase.
+For the avoidance of doubt, the *ARC (Testnet token)* are virtual items with no value of any kind and they are not convertible to any other currency, token, or any other form of property. They are solely intended to be utilised for the purposes of enabling the tokenomics and facilitating the different roles in this Testnet Phase.
 
 ## Roles
 
-The Codex protocol has two primary roles fulfilled by network participants.
+The Archivist protocol has two primary roles fulfilled by network participants.
 
-- **Clients**: pay Storage Providers in *CDX (Testnet token)* to securely store their data on the Codex network for an agreed upon amount of time.
-- **Storage Providers**: post *CDX (Testnet token)* collateral to enter into storage contracts with Clients in exchange for a *CDX (Testnet token)* denominated payment.
-- **Validators**: post *CDX (Testnet token)* collateral to validate storage proofs in exchange for a *CDX (Testnet token)* denominated payment.
+- **Clients**: pay Storage Providers in *ARC (Testnet token)* to securely store their data on the Archivist network for an agreed upon amount of time.
+- **Storage Providers**: post *ARC (Testnet token)* collateral to enter into storage contracts with Clients in exchange for a *ARC (Testnet token)* denominated payment.
+- **Validators**: post *ARC (Testnet token)* collateral to validate storage proofs in exchange for a *ARC (Testnet token)* denominated payment.
 
 ## Token Utility
 
-The *CDX (Testnet token)* is used as both a form of posted collateral and a means of payment in order to secure the network and access its services.
+The *ARC (Testnet token)* is used as both a form of posted collateral and a means of payment in order to secure the network and access its services.
 
 Collateral is primarily used as a spam and sybil-attack prevention mechanism, liability insurance (e.g. compensating Clients in case of catastrophic loss of data), and to enforce rational behavior.
 
@@ -139,36 +139,36 @@ Payments are made by Clients to Providers for services rendered, such as for sto
 
 ### **For Clients**
 
-- Pay storage costs and fees in *CDX (Testnet token)* for storing files.
+- Pay storage costs and fees in *ARC (Testnet token)* for storing files.
 
 ### **For Storage Providers**
 
-- Post collateral in *CDX (Testnet token)* when committing to new storage contracts. This collateral is slashed if they do not fulfill their agreed upon services.
-- Earn *CDX (Testnet token)* from the collateral of slashed Storage Providers by participating in the slot recovery mechanism.
-- Earn *CDX (Testnet token)* from Clients when successfully completing the storage service.
+- Post collateral in *ARC (Testnet token)* when committing to new storage contracts. This collateral is slashed if they do not fulfill their agreed upon services.
+- Earn *ARC (Testnet token)* from the collateral of slashed Storage Providers by participating in the slot recovery mechanism.
+- Earn *ARC (Testnet token)* from Clients when successfully completing the storage service.
 
 ### For Validators
 
-- Post collateral in *CDX (Testnet token)* to operate the validation service. This collateral is slashed if they do not mark a proof as missing within a predetermined period.
-- Earn *CDX (Testnet token)* from the collateral of slashed Storage Providers by marking proofs as missed
+- Post collateral in *ARC (Testnet token)* to operate the validation service. This collateral is slashed if they do not mark a proof as missing within a predetermined period.
+- Earn *ARC (Testnet token)* from the collateral of slashed Storage Providers by marking proofs as missed
 
-Figure below depicts the flow of the *CDX (Testnet token)* token within the system.
+Figure below depicts the flow of the *ARC (Testnet token)* token within the system.
 
-![Flow of the *CDX token within the system](/learn/tokenomics-token-flow.png)
+![Flow of the *ARC token within the system](/learn/tokenomics-token-flow.png)
 
 ## Value Capture and Accrual Mechanisms
 
-Codex creates *value* to participants:
+Archivist creates *value* to participants:
 
 - Clients can benefit from storing data with strong durability guarantees;
 - Storage Providers can earn yield from their spare resources or capital by providing a service.
 - Validators earn payouts for marking proofs as missing.
 
-Clients need *CDX (Testnet token)* tokens to request storage deals. *CDX (Testnet token)* captures the value created to Clients by being a *Value Transfer Token* to them.
+Clients need *ARC (Testnet token)* tokens to request storage deals. *ARC (Testnet token)* captures the value created to Clients by being a *Value Transfer Token* to them.
 
-Storage Providers and Validators are rewarded in *CDX (Testnet token)* token and also need it as a proof of commitment to the Protocol. They risk being slashed in exchange for rewards. *CDX (Testnet token)* captures the value created to Providers by being a *Work Token* to them.
+Storage Providers and Validators are rewarded in *ARC (Testnet token)* token and also need it as a proof of commitment to the Protocol. They risk being slashed in exchange for rewards. *ARC (Testnet token)* captures the value created to Providers by being a *Work Token* to them.
 
-The following mechanisms describe how the value accrues to the *CDX (Testnet token)* token.
+The following mechanisms describe how the value accrues to the *ARC (Testnet token)* token.
 
 ### Protocol Fee over Contracts
 
@@ -228,7 +228,7 @@ The following mechanisms help incentivize the expected behavior of each role and
 
 ### Clients Provide Full Payment Upfront
 
-Clients must deposit the full amount in *CDX (Testnet token)* that covers the entirety of the storage contract duration upfront. This indicates their pledge to pay a certain amount for the storage contract, though the contract only begins when and if all data slots are filled by Storage Providers.
+Clients must deposit the full amount in *ARC (Testnet token)* that covers the entirety of the storage contract duration upfront. This indicates their pledge to pay a certain amount for the storage contract, though the contract only begins when and if all data slots are filled by Storage Providers.
 
 ### Delayed Payment to Storage Providers
 
@@ -236,7 +236,7 @@ Storage Providers only receive payment related to the provision of services at t
 
 ### Collateral Requirement
 
-In order to fill a data slot, Storage Providers first stake and commit the required collateral in the form of the *CDX  (Testnet token)* for that slot which is then subject to slashing if they do not post a proof to confirm the slot.
+In order to fill a data slot, Storage Providers first stake and commit the required collateral in the form of the *ARC  (Testnet token)* for that slot which is then subject to slashing if they do not post a proof to confirm the slot.
 
 Validators also need to post collateral to participate in the validation service.
 
@@ -252,7 +252,7 @@ At any point during the duration of the storage contract, the storage provider i
 
 ### Slot Recovery Mechanism
 
-If a Storage Provider does not submit the required storage proofs when required, after a number of slashings their entire collateral will be seized. A portion of the confiscated collateral is used as an incentive for the new Storage Provider who recovers and starts serving the abandoned slot. The remainder of the confiscated collateral in *CDX (Testnet token)* is burned.
+If a Storage Provider does not submit the required storage proofs when required, after a number of slashings their entire collateral will be seized. A portion of the confiscated collateral is used as an incentive for the new Storage Provider who recovers and starts serving the abandoned slot. The remainder of the confiscated collateral in *ARC (Testnet token)* is burned.
 
 ### Slashing Defaulted Contract
 
@@ -268,7 +268,7 @@ If at any point during the contract, sufficient slots are abandoned such that th
 
 ### Burning
 
-*CDX (Testnet token)* tokens are burned in these instances:
+*ARC (Testnet token)* tokens are burned in these instances:
 
 - When a storage deal contract fails to initiate, a small portion of the Client's payment for the storage deal is burned. This serves primarily as a mechanism to deter spam and ensure that deal requests are submitted at market-appropriate prices for storage.
 - When a storage deal contract successfully initiates, the protocol applies a fee for facilitating the transaction.
