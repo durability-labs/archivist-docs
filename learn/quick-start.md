@@ -140,7 +140,7 @@ Also, you can interact with Archivist using [Archivist API](/developers/api) and
 
 ## Stay in touch
 
-Want to stay up-date, or looking for further assistance? Try our [discord-server](https://discord.gg/archivist-storage).
+Want to stay up-date, or looking for further assistance? Try our [discord-server](https://discord.gg/4yHFJErnCp).
 
 Ready to explore Archivist functionality? Please [Join Archivist Testnet](/networks/testnet).
 

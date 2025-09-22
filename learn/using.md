@@ -45,7 +45,7 @@ curl -X POST \
 On successful upload, you'll receive a CID. This can be used to download the file from any node in the network.
 
 > [!TIP]
-> Are you on the [Archivist Discord server](https://discord.gg/archivist-storage)? Post your CID in the [# :wireless: | share-cids](https://discord.com/channels/1395434707566465136/1413402212935401533) channel, see if others are able to download it. Archivist does not (yet?) provide file metadata, so if you want others to be able to open your file, tell them which extension to give it.
+> Are you on the [Archivist Discord server](https://discord.gg/4yHFJErnCp)? Post your CID in the [#:wireless:|share-cids](https://discord.com/channels/1395434707566465136/1413402212935401533) channel, see if others are able to download it. Archivist does not (yet?) provide file metadata, so if you want others to be able to open your file, tell them which extension to give it.
 
 ### Download a file
 When you have a CID of data you want to download, you can use the following commands:
@@ -183,7 +183,7 @@ curl -X POST ^
 On successful upload, you'll receive a CID. This can be used to download the file from any node in the network.
 
 > [!TIP]
-> Are you on the [Archivist Discord server](https://discord.gg/archivist-storage)? Post your CID in the [# :wireless: | share-cids](https://discord.com/channels/1395434707566465136/1413402212935401533) channel, see if others are able to download it. Archivist does not (yet?) provide file metadata, so if you want others to be able to open your file, tell them which extension to give it.
+> Are you on the [Archivist Discord server](https://discord.gg/4yHFJErnCp)? Post your CID in the [#:wireless:|share-cids](https://discord.com/channels/1395434707566465136/1413402212935401533) channel, see if others are able to download it. Archivist does not (yet?) provide file metadata, so if you want others to be able to open your file, tell them which extension to give it.
 
 ### Download a file {#download-a-file-windows}
 When you have a CID of data you want to download, you can use the following commands:
