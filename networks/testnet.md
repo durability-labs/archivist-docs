@@ -7,28 +7,28 @@ The Archivist Testnet has been launched and is ready to be used for testing.
 
 Your participation in the Archivist Testnet is subject to the [Archivist Testnet Terms and Conditions](https://github.com/durability-labs/archivist-testnet-starter/blob/main/Archivist%20Testnet%20Terms%20and%20Conditions.pdf) and [Archivist Testnet Privacy Policy](https://github.com/durability-labs/archivist-testnet-starter/blob/main/Archivist%20Testnet%20Privacy%20Policy.pdf).
 
-**Guides.** We have basic guides covering how to set up a Storage Client which can be used to upload and persist files by buying storage in the Archivist network. We recommend that you start with those.
+**Guides.** We have basic guides covering how to set up a Storage Node which can be used to upload and persist files by buying storage in the Archivist network. We recommend that you start with those.
 
 Running a Storage Provider is more involved and is covered as a separate guide which demonstrates the storage sales side, as well as how to run Archivist with its own local Ethereum execution client.
 
 Guides are available either on Discord, as step-by-step, interactive guides, or here as simple instructions that you can follow:
 
-- **Basic: running a storage client.** [[Discord](#sc-guide-discord) | [web](#sc-guide-web)]
+- **Basic: Running a storage node.** [[Discord](#sc-guide-discord) | [web](#sc-guide-web)]
 - **Advanced: Running a storage provider.** [[web](#sp-guide-web)]
 
 The guides were tested on the following operating systems:
 
  - Linux: Ubuntu 24.04, Debian 12, Fedora 40
- - macOS: 15
+ - macOS: 26
  - Windows: 11, Server 2022
 
-## Running a Storage Client (Discord Version) {#sc-guide-discord}
+## Running a Storage node (Discord Version) {#sc-guide-discord}
 
-You can join [Archivist Discord server](https://discord.gg/archivist-storage) and jump into the [#:tv:|join-testnet](https://discord.com/channels/1395434707566465136/1413397613226758184) channel.
+You can join [Archivist Discord server](https://discord.gg/4yHFJErnCp) and jump into the [#:tv:|join-testnet](https://discord.com/channels/1395434707566465136/1413397613226758184) channel.
 
 It is mostly the same as a [Web guide](#sc-guide-web), but uses Discord capabilities so you can have an interactive, step-by-step guide, and you also can get a support in the [#:sos:|node-help](https://discord.com/channels/1395434707566465136/1413398454398488727) channel.
 
-## Running a Storage Client (Web Version) {#sc-guide-web}
+## Running a Storage Node (Web Version) {#sc-guide-web}
 
 **Prerequisites**
 
@@ -42,7 +42,9 @@ Steps for [Linux/macOS](#basic-linux-macos) and [Windows](#basic-windows) are sl
 
 1. Install Archivist binaries from GitHub releases:
    ```shell
-   curl -s https://get.archivist.storage/install.sh | bash
+   mkdir archivist-testnet && cd archivist-testnet
+
+   curl -s https://get.archivist.storage/testnet/install.sh | bash
    ```
 
 2. Install dependencies when required:
@@ -53,20 +55,20 @@ Steps for [Linux/macOS](#basic-linux-macos) and [Windows](#basic-windows) are sl
 
 3. Generate an ethereum keypair:
    ```shell
-   curl -s https://get.archivist.storage/generate.sh | bash
+   curl -s https://get.archivist.storage/testnet/generate.sh | bash
    ```
    Your private key will be saved to `eth.key` and address to  `eth.address` file.
 
 4. Fill-up your address shown on the screen with the tokens:
-   - Use the web faucets to mint some [ETH](https://faucet-eth.testnet.archivist.storage) and [TST](https://faucet-tst.testnet.archivist.storage) tokens.
-   - We can also do this using Discord [# bot](https://discord.com/channels/895609329053474826/1230785221553819669) channel
+   - Use the web faucets to mint some [ETH](https://faucet-arb.testnet.archivist.storage) and [TST](https://faucet-tst.testnet.archivist.storage) tokens.
+   - We can also do this using Discord [#:robot:|bot](https://discord.com/channels/1395434707566465136/1417459231547981946) channel
      - Use `/set ethaddress` command to enter your generated address
      - Use `/mint` command to receive ETH and TST tokens
      - Use `/balance` command to check if you have received test tokens successfully
 
 5. Run Archivist node:
    ```shell
-   curl -s https://get.archivist.storage/run.sh | bash
+   curl -s https://get.archivist.storage/testnet/run.sh | bash
    ```
 
 6. Configure [port forwarding](#basic-common) and we are ready go to.
@@ -116,8 +118,8 @@ Steps for [Linux/macOS](#basic-linux-macos) and [Windows](#basic-windows) are sl
    Your private key will be saved to `eth.key` and address to  `eth.address` file.
 
 5. Fill-up your address shown on the screen with the tokens:
-   - Use the web faucets to mint some [ETH](https://faucet-eth.testnet.archivist.storage) and [TST](https://faucet-tst.testnet.archivist.storage) tokens.
-   - We can also do this using Discord [# bot](https://discord.com/channels/895609329053474826/1230785221553819669) channel
+   - Use the web faucets to mint some [ETH](https://faucet-arb.testnet.archivist.storage) and [TST](https://faucet-tst.testnet.archivist.storage) tokens.
+   - We can also do this using Discord [#:robot:|bot](https://discord.com/channels/895609329053474826/1230785221553819669) channel
      - Use `/set ethaddress` command to enter your generated address
      - Use `/mint` command to receive ETH and TST tokens
      - Use `/balance` command to check if you have received test tokens successfully
@@ -141,7 +143,7 @@ After your node is up and running, you can use the [Archivist API](/developers/a
 
 You also can use [Archivist App UI](https://app.archivist.storage) to interact with your local Archivist node.
 
-Need help? Reach out to us in [#:sos:|node-help](https://discord.com/channels/895609329053474826/1286205545837105224) channel or check [troubleshooting guide](/learn/troubleshoot.md).
+Need help? Reach out to us in [#:sos:|node-help](https://discord.com/channels/1395434707566465136/1413398454398488727) channel or check [troubleshooting guide](/learn/troubleshoot.md).
 
 ## Running a Storage Provider (Web Version) {#sp-guide-web}
 
@@ -169,6 +171,6 @@ Work in progress :construction:
 | - | ------------------- | ------------------------------------------------------------------------------------ |
 | 1 | Arbitrum Public RPC | [rpc.testnet.archivist.storage](https://rpc.testnet.archivist.storage)               |
 | 2 | Block explorer      | [sepolia.arbiscan.io](https://sepolia.arbiscan.io)                                   |
-| 3 | Faucet ETH          | [faucet-eth.testnet.archivist.storage](https://faucet-eth.testnet.archivist.storage) |
+| 3 | Faucet ETH          | [faucet-arb.testnet.archivist.storage](https://faucet-arb.testnet.archivist.storage) |
 | 4 | Faucet TST          | [faucet-tst.testnet.archivist.storage](https://faucet-tst.testnet.archivist.storage) |
 | 5 | Status page         | [status.testnet.archivist.storage](https://status.testnet.archivist.storage)         |

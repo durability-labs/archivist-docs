@@ -140,7 +140,7 @@ export default withMermaid({
       { icon: 'github', link: 'https://github.com/durability-labs/archivist-docs' },
       { icon: 'twitter', link: 'https://twitter.com/Archivist_storage' },
       { icon: 'youtube', link: 'https://www.youtube.com/@ArchivistStorage' },
-      { icon: 'discord', link: 'https://discord.gg/archivist-storage' }
+      { icon: 'discord', link: 'https://discord.gg/4yHFJErnCp' }
     ]
   },
 
