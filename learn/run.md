@@ -47,6 +47,11 @@ Using the `log-level` parameter, you can set the top-level log level like `--log
 you can set log levels for specific topics like `--log-level="info; trace: marketplace,node; error: blockexchange"`,
 which sets the top-level log level to `info` and then for topics `marketplace` and `node` sets the level to `trace` and so on.
 
+And one useful example, to get most important data for debugging
+```shell
+--log-level="trace; warn:discv5,providers,manager,cache,libp2p,multistream,switch,transport,tcptransport,semaphore,asyncstreamwrapper,lpstream,mplex,mplexchannel,noise,bufferstream,mplexcoder,secure,chronosstream,connection,connmanager,websock,ws-session,dialer,muxedupgrade,upgrade,identify,contracts,clock,archivist,pendingblocks,peerctxstore,discoveryengine,blockexcengine,blockexcnetwork,blockexcnetworkpeer,JSONRPC-CLIENT,JSONRPC-HTTP-CLIENT"
+```
+
 ### CLI options
 
 ```shell
