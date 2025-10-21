@@ -4,7 +4,7 @@ Archivist is a decentralised data storage protocol. Its primary features are str
 
 <br/>
 
-<p><iframe width="560" height="315" src="https://www.youtube.com/embed/XH-R2oJO7P4" title="" frameBorder="0"   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"  allowFullScreen><br>Powered by <a href="https://youtubeembedcode.com">youtube embed code</a> and <a href="https://snabblan.io/">snabblån utan uc</a></iframe></p>
+<p><img src="/public/archivist-mark-primary-white-resized.png" alt="Archivist mark" width="560" height="315" loading="lazy" decoding="async" style="display:block;"></p>
 
 ### Motive
 

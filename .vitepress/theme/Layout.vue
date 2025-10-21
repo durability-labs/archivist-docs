@@ -6,17 +6,15 @@ import DefaultTheme from 'vitepress/theme'
 <template>
   <DefaultTheme.Layout>
     <template #home-hero-image>
-      <div>
-        <iframe
-          width="520"
-          height="315"
-          src="https://www.youtube.com/embed/NZEOilcLdKA?si=WrnLR1Mm71FkgFvC?controls=0"
-          title="Archivist @ depin:con - Archivist: Data Durability Engine & DSN (Presentation)"
-          frameborder="0"
-          allow="encrypted-media"
-          allowfullscreen>
-        </iframe>
-      </div>
+      <img
+        src="/public/archivist-mark-primary-white-resized.png"
+        alt="Archivist mark"
+        width="520"
+        height="315"
+        loading="lazy"
+        decoding="async"
+        style="display:block;width:100%;height:auto;aspect-ratio:520/315;object-fit:contain;background:##1b1b1e;"
+      />
     </template>
   </DefaultTheme.Layout>
 </template>
