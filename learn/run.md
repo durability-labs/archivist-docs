@@ -512,7 +512,7 @@ We can run Archivist as a service via [systemd](https://systemd.io) using follow
     ```shell
     sudo vi /etc/logrotate.d/archivist
     ```
-    ```logrotate
+    ```
     /opt/archivist/logs/*.log {
       daily
       missingok
@@ -549,8 +549,8 @@ We also ship Archivist in Docker containers, which can be run on `amd64` and `ar
 - When we set `prover` sub-command, entrypoint will run `cirdl` tool to download ceremony files, required by [Archivist storage node](#archivist-storage-node).
 - `BOOTSTRAP_NODE_URL` - Archivist node API URL in form of `http://bootstrap:8080`, to be used to get it's SPR as a bootstrap node. That is useful for Docker and Kubernetes configuration.
 - `NETWORK` - is a helper variable to simply a specific network join. It helps to automate `BOOTSTRAP_NODE_FROM_URL` variable.
-- `BOOTSTRAP_NODE_FROM_URL` - can be used to pass SPR nodes from an URL like [spr.archivist.storage/testnet](https://spr.archivist.storage/testnet).
-- `MARKETPLACE_ADDRESS_FROM_URL` - can be used to pass a Marketplace contract address from an URL like [marketplace.archivist.storage/testnet/latest](https://marketplace.archivist.storage/testnet/latest).
+- `BOOTSTRAP_NODE_FROM_URL` - can be used to pass SPR nodes from an URL like https://config.archivist.storage/testnet/spr.
+- `MARKETPLACE_ADDRESS_FROM_URL` - can be used to pass a Marketplace contract address from an URL like https://config.archivist.storage/testnet/marketplace.
 
 #### Docker network
 
@@ -674,7 +674,7 @@ For Docker Compose, it is more suitable to use [environment variables](#environm
           - ARCHIVIST_ETH_PROVIDER=https://rpc.testnet.archivist.storage
           - ARCHIVIST_ETH_PRIVATE_KEY=/opt/eth.key
           - ARCHIVIST_CIRCUIT_DIR=/datadir/circuits
-          - BOOTSTRAP_NODE_FROM_URL=https://spr.archivist.storage/testnet
+          - BOOTSTRAP_NODE_FROM_URL=https://config.archivist.storage/testnet/spr
         ports:
           - 8080:8080/tcp # API
           - 8090:8090/udp # Discovery

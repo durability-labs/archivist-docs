@@ -153,9 +153,7 @@ Work in progress :construction:
 
 ### Bootstrap Nodes
 
- Testnet bootstrap nodes records could be found in [GitHub repository](https://github.com/durability-labs/archivist-spr) and accessed via endpoints
- - Archivist - [`spr.archivist.storage/testnet`](https://spr.archivist.storage/testnet)
- - Geth - [`spr.archivist.storage/testnet/geth`](https://spr.archivist.storage/testnet/geth)
+ Testnet bootstrap nodes records could be found in [GitHub repository](https://github.com/durability-labs/archivist-config) and accessed via https://config.archivist.storage/testnet/spr endpoint.
 
 ### Smart contracts
 
@@ -163,7 +161,7 @@ Work in progress :construction:
 | ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Token       | [`0x3b7412Ee1144b9801341A4F391490eB735DDc005`](https://sepolia.arbiscan.io/tx/0xa1663765db57b2e62c4b0d1fd14c19c7bb68f294ff8253655ea3d954e11631bd) |
 | Verifier    | [`0xfF043672Ea1Da9Be566Ecf683Bfc055BaD2C1B7D`](https://sepolia.arbiscan.io/tx/0x9045fde6f4a6d8c026be51bc56d8aeabf159a5bbaf508e71678e8a7ba62d5be8) |
-| Marketplace | [`marketplace.archivist.storage/testnet/latest`](https://marketplace.archivist.storage/testnet/latest)                                            |
+| Marketplace | [`config.archivist.storage/testnet/marketplace`](https://config.archivist.storage/testnet/marketplace)                                            |
 
 ### Endpoints
 
