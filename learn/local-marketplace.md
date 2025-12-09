@@ -445,21 +445,19 @@ export MARKETPLACE_ADDRESS=$(cat marketplace_address.txt)
 To launch the storage node, run:
 
 ```bash
-${ARCHIVIST_BINARY}\
-  --data-dir=./archivist-storage\
-  --listen-addrs=/ip4/0.0.0.0/tcp/8080\
-  --api-port=8000\
-  --disc-port=8090\
-  persistence\
-  --eth-provider=http://localhost:8545\
-  --eth-private-key=./storage.pkey\
-  --marketplace-address=${MARKETPLACE_ADDRESS}\
-  --validator\
-  --validator-max-slots=1000\
-  prover\
-  --circom-r1cs=${PROVER_ASSETS}/proof_main.r1cs\
-  --circom-wasm=${PROVER_ASSETS}/proof_main.wasm\
-  --circom-zkey=${PROVER_ASSETS}/proof_main.zkey
+${ARCHIVIST_BINARY} \
+  --data-dir=./archivist-storage \
+  --listen-addrs=/ip4/0.0.0.0/tcp/8080 \
+  --api-port=8000 \
+  --disc-port=8090 \
+  --persistence=true \
+  --eth-provider=http://localhost:8545 \
+  --eth-private-key=./storage.pkey \
+  --marketplace-address=${MARKETPLACE_ADDRESS} \
+  --validator \
+  --validator-max-slots=1000 \
+  --prover=true \
+  --circuit-dir=${PROVER_ASSETS}
 ```
 
 **Starting the client node.**
@@ -493,15 +491,15 @@ export MARKETPLACE_ADDRESS=$(cat marketplace_address.txt)
 and then run:
 
 ```bash
-${ARCHIVIST_BINARY}\
-  --data-dir=./archivist-client\
-  --listen-addrs=/ip4/0.0.0.0/tcp/8081\
-  --api-port=8001\
-  --disc-port=8091\
-  --bootstrap-node=${STORAGE_NODE_SPR}\
-  persistence\
-  --eth-provider=http://localhost:8545\
-  --eth-private-key=./client.pkey\
+${ARCHIVIST_BINARY} \
+  --data-dir=./archivist-client \
+  --listen-addrs=/ip4/0.0.0.0/tcp/8081 \
+  --api-port=8001 \
+  --disc-port=8091 \
+  --bootstrap-node=${STORAGE_NODE_SPR} \
+  --persistence=true \
+  --eth-provider=http://localhost:8545 \
+  --eth-private-key=./client.pkey \
   --marketplace-address=${MARKETPLACE_ADDRESS}
 ```
 

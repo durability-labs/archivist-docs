@@ -59,84 +59,80 @@ archivist --help
 
 Usage:
 
-archivist [OPTIONS]... command
+archivist [OPTIONS]...
 
 The following options are available:
 
-     --config-file          Loads the configuration from a TOML file [=none].
-     --log-level            Sets the log level [=info].
-     --log-format           Specifies what kind of logs should be written to stdout (auto, colors, nocolors,
-                            json) [=auto].
-     --metrics              Enable the metrics server [=false].
-     --metrics-address      Listening address of the metrics server [=127.0.0.1].
-     --metrics-port         Listening HTTP port of the metrics server [=8008].
- -d, --data-dir             The directory where the node will store configuration and data.
- -i, --listen-addrs         Multi Addresses to listen on [=/ip4/0.0.0.0/tcp/0].
-     --nat                  Specify method to use for determining public address. Must be one of: any, none,
-                            upnp, pmp, extip:<IP> [=any].
- -u, --disc-port            Discovery (UDP) port [=8090].
-     --net-privkey          Source of network (secp256k1) private key file path or name [=key].
- -b, --bootstrap-node       Specifies one or more bootstrap nodes to use when connecting to the network.
-     --max-peers            The maximum number of peers to connect to [=160].
-     --num-threads          Number of worker threads ("0" = use as many threads as there are CPU cores
-                            available) [=DefaultThreadCount].
-     --agent-string         Node agent string which is used as identifier in network [=Archivist Node].
-     --api-bindaddr         The REST API bind address [=127.0.0.1].
- -p, --api-port             The REST Api port [=8080].
-     --api-cors-origin      The REST Api CORS allowed origin for downloading data. '*' will allow all
-                            origins, '' will allow none. [=Disallow all cross origin requests to download
-                            data].
-     --repo-kind            Backend for main repo store (fs, sqlite, leveldb) [=fs].
- -q, --storage-quota        The size of the total storage quota dedicated to the node [=$DefaultQuotaBytes].
- -t, --block-ttl            Default block timeout in seconds - 0 disables the ttl [=$DefaultBlockTtl].
-     --block-mi             Time interval in seconds - determines frequency of block maintenance cycle: how
-                            often blocks are checked for expiration and cleanup [=$DefaultBlockInterval].
-     --block-mn             Number of blocks to check every maintenance cycle [=1000].
- -c, --cache-size           The size of the block cache, 0 disables the cache - might help on slow hardrives
-                            [=0].
-
-Available sub-commands:
-
-archivist persistence [OPTIONS]... command
-
-The following options are available:
-
-     --eth-provider         The URL of the JSON-RPC API of the Ethereum node [=ws://localhost:8545].
-     --eth-account          The Ethereum account that is used for storage contracts.
-     --eth-private-key      File containing Ethereum private key for storage contracts.
-     --marketplace-address  Address of deployed Marketplace contract.
-     --validator            Enables validator, requires an Ethereum node [=false].
-     --validator-max-slots  Maximum number of slots that the validator monitors [=1000].
-                            If set to 0, the validator will not limit the maximum number of slots it
-                            monitors.
-     --validator-groups     Slot validation groups [=ValidationGroups.none].
-                            A number indicating total number of groups into which the whole slot id space
-                            will be divided. The value must be in the range [2, 65535]. If not provided, the
-                            validator will observe the whole slot id space and the value of the
-                            --validator-group-index parameter will be ignored. Powers of twos are advised
-                            for even distribution.
-     --validator-group-index  Slot validation group index [=0].
-                            The value provided must be in the range [0, validatorGroups). Ignored when
-                            --validator-groups is not provided. Only slot ids satisfying condition [(slotId
-                            mod validationGroups) == groupIndex] will be observed by the validator.
-     --reward-recipient     Address to send payouts to (eg rewards and refunds).
-
-Available sub-commands:
-
-archivist persistence prover [OPTIONS]...
-
-The following options are available:
-
- -cd, --circuit-dir          Directory where the node will store proof circuit data [=data/circuits].
-     --circom-r1cs          The r1cs file for the storage circuit [=data/circuits/proof_main.r1cs].
-     --circom-wasm          The wasm file for the storage circuit [=data/circuits/proof_main.wasm].
-     --circom-zkey          The zkey file for the storage circuit [=data/circuits/proof_main.zkey].
-     --circom-no-zkey       Ignore the zkey file - use only for testing! [=false].
-     --proof-samples        Number of samples to prove [=5].
-     --max-slot-depth       The maximum depth of the slot tree [=32].
-     --max-dataset-depth    The maximum depth of the dataset tree [=8].
-     --max-block-depth      The maximum depth of the network block merkle tree [=5].
-     --max-cell-elements    The maximum number of elements in a cell [=67].
+     --config-file             Loads the configuration from a TOML file [=none].
+     --log-level               Sets the log level [=info].
+     --log-format              Specifies what kind of logs should be written to stdout (auto, colors, nocolors,
+                               json) [=auto].
+     --metrics                 Enable the metrics server [=false].
+     --metrics-address         Listening address of the metrics server [=127.0.0.1].
+     --metrics-port            Listening HTTP port of the metrics server [=8008].
+ -d, --data-dir                The directory where the node will store configuration and data.
+ -i, --listen-addrs            Multi Addresses to listen on [=/ip4/0.0.0.0/tcp/0].
+     --nat                     Specify method to use for determining public address. Must be one of: any, none,
+                               upnp, pmp, extip:<IP> [=any].
+ -u, --disc-port               Discovery (UDP) port [=8090].
+     --net-privkey             Source of network (secp256k1) private key file path or name [=key].
+ -b, --bootstrap-node          Specifies one or more bootstrap nodes to use when connecting to the network.
+     --max-peers               The maximum number of peers to connect to [=160].
+     --num-threads             Number of worker threads ("0" = use as many threads as there are CPU cores
+                               available) [=0].
+     --agent-string            Node agent string which is used as identifier in network [=Archivist Node].
+     --api-bindaddr            The REST API bind address [=127.0.0.1].
+ -p, --api-port                The REST Api port [=8080].
+     --api-cors-origin         The REST Api CORS allowed origin for downloading data. '*' will allow all
+                               origins, '' will allow none. [=Disallow all cross origin requests to download
+                               data].
+     --repo-kind               Backend for main repo store (fs, sqlite, leveldb) [=fs].
+ -q, --storage-quota           The size of the total storage quota dedicated to the node [=$DefaultQuotaBytes].
+ -t, --block-ttl               Default block timeout in seconds - 0 disables the ttl [=$DefaultBlockTtl].
+     --block-mi                Time interval in seconds - determines frequency of block maintenance cycle: how
+                               often blocks are checked for expiration and cleanup [=$DefaultBlockInterval].
+     --block-mn                Number of blocks to check every maintenance cycle [=1000].
+ -c, --cache-size              The size of the block cache, 0 disables the cache - might help on slow hardrives
+                               [=0].
+     --persistence             Enables marketplace persistence. Requires 'eth-provider' option to be set.
+                               [=false].
+     --eth-provider            The URL of the JSON-RPC API of the Ethereum node [=ws://localhost:8545].
+     --eth-account             The Ethereum account that is used for storage contracts.
+     --eth-private-key         File containing Ethereum private key for storage contracts.
+     --marketplace-address     Address of deployed Marketplace contract.
+     --use-system-clock        Assume system clock is accurate enough for chain-related operations [=false].
+     --validator               Enables validator, requires an Ethereum node [=false].
+     --validator-max-slots     Maximum number of slots that the validator monitors [=1000].
+                               If set to 0, the validator will not limit the maximum number of slots it
+                               monitors.
+     --validator-groups        Slot validation groups [=ValidationGroups.none].
+                               A number indicating total number of groups into which the whole slot id space
+                               will be divided. The value must be in the range [2, 65535]. If not provided, the
+                               validator will observe the whole slot id space and the value of the
+                               --validator-group-index parameter will be ignored. Powers of twos are advised
+                               for even distribution.
+     --validator-group-index   Slot validation group index [=0].
+                               The value provided must be in the range [0, validatorGroups). Ignored when
+                               --validator-groups is not provided. Only slot ids satisfying condition [(slotId
+                               mod validationGroups) == groupIndex] will be observed by the validator.
+     --reward-recipient        Address to send payouts to (eg rewards and refunds).
+     --prover                  Enables zkProver system, required to generate storage proofs. Requires
+                               'persistence' to be enabled. [=false].
+ -cd, --circuit-dir             Directory where the node will store proof circuit data [=data/circuits].
+     --prover-backend          The backend to use for the prover. Must be one of: nimgroth16, circomcompat
+                               [=nimgroth16].
+     --curve                   The curve to use for the storage circuit [=bn128].
+     --circom-r1cs             The r1cs file for the storage circuit [=<circuit-dir>/proof_main.r1cs].
+     --circom-graph            The graph file for the storage circuit (only used with nimgroth16 backend)
+                               [=<circuit-dir>/proof_main.bin].
+     --circom-wasm             The wasm file for the storage circuit (only used with circomcompat backend)
+                               [=<circuit-dir>/proof_main.wasm].
+     --circom-zkey             The zkey file for the storage circuit [=<circuit-dir>/proof_main.zkey].
+     --proof-samples           Number of samples to prove [=5].
+     --max-slot-depth          The maximum depth of the slot tree [=32].
+     --max-dataset-depth       The maximum depth of the dataset tree [=8].
+     --max-block-depth         The maximum depth of the network block merkle tree [=5].
+     --max-cell-elements       The maximum number of elements in a cell [=67].
 ```
 
 ### Environment variables
@@ -151,7 +147,7 @@ and then transform it in the following way:
 For example, to configure `--log-level`, use `ARCHIVIST_LOG_LEVEL` as the environment variable name.
 
 > [!WARNING]
-> Some options can't be configured via environment variables for now [^multivalue-env-var] [^sub-commands].
+> Some options can't be configured via environment variables for now [^multivalue-env-var].
 
 ### Configuration file
 
@@ -271,7 +267,7 @@ And to be able to purchase a storage, we should run [Archivist node with marketp
 
 #### Archivist node with marketplace support
 
-[Marketplace](/learn/architecture.md#marketplace-architecture) support permits to purchase the storage in Archivist network. Basically, we should add just a `persistence` sub-command and required [CLI options](#cli-options) to the [previous run](#archivist-node).
+[Marketplace](/learn/architecture.md#marketplace-architecture) support permits to purchase the storage in Archivist network. Basically, we should add just a `--persistence` argument and related [CLI options](#cli-options) to the [previous run](#archivist-node).
 
 1. For a daily use, we should consider to run a local blockchain node based on the [network](/networks/networks) you would like to join. That process is described in the [Join Archivist Testnet](/networks/testnet) guide, but for a quick start we can use a public RPC endpoint.
 
@@ -306,7 +302,7 @@ And to be able to purchase a storage, we should run [Archivist node with marketp
      --disc-port=8090 \
      --listen-addrs=/ip4/0.0.0.0/tcp/8070 \
      --api-cors-origin="*" \
-     persistence \
+     --persistence=true \
      --eth-provider=https://rpc.testnet.archivist.storage \
      --eth-private-key=eth.key
    ```
@@ -322,9 +318,9 @@ You also can use [Archivist App UI](https://app.archivist.storage) for storage p
 
 Archivist [storage node](architecture#network-architecture) should be run by storage providers or in case you would like to sell your local storage.
 
-For that, additionally to the [Archivist node with marketplace support](#archivist-node-with-marketplace-support) we should use `prover` sub-command and required [CLI options](#cli-options).
+For that, additionally to the [Archivist node with marketplace support](#archivist-node-with-marketplace-support) we should set `--prover=true` and related [CLI options](#cli-options).
 
-That sub-command will make Archivist to listen for a proof requests on the blockchain and answer them. To compute an answer for the proof request, Archivist will use stored data and circuit files generated by the code in the [archivist-storage-proofs-circuits](https://github.com/durability-labs/archivist-storage-proofs-circuits) repository.
+That argument will make Archivist to listen for a proof requests on the blockchain and answer them. To compute an answer for the proof request, Archivist will use stored data and circuit files generated by the code in the [archivist-storage-proofs-circuits](https://github.com/durability-labs/archivist-storage-proofs-circuits) repository.
 
 Every [network](/networks/networks) uses its own generated set of the files which are stored in the [archivist-contracts](https://github.com/durability-labs/archivist-contracts/tree/main/verifier/networks) repository and also uploaded to the CDN. Hash of the files set is also known by the [marketplace smart contract](/learn/architecture#smart-contract).
 
@@ -372,10 +368,10 @@ To download circuit files and make them available to Archivist app, we have a st
      --nat=any \
      --disc-port=8090 \
      --listen-addrs=/ip4/0.0.0.0/tcp/8070 \
-     persistence \
+     --persistence=true \
      --eth-provider=https://rpc.testnet.archivist.storage \
      --eth-private-key=eth.key \
-     prover \
+     --prover=true \
      --circuit-dir=datadir/circuits
    ```
 
@@ -546,7 +542,7 @@ We also ship Archivist in Docker containers, which can be run on `amd64` and `ar
 - `NAT_IP_AUTO` - when set to `true`, will set `ARCHIVIST_NAT` variable with container internal IP address. It also is useful for Kubernetes Pods configuration, when we perform automated tests.
 - `NAT_PUBLIC_IP_AUTO` - used to set `ARCHIVIST_NAT` to public IP address using lookup services, like [ip.archivist.storage](https://ip.archivist.storage). Can be used for Docker/Kubernetes to set public IP in auto mode.
 - `ETH_PRIVATE_KEY` - can be used to pass ethereum private key, which will be saved and passed as a value of the `ARCHIVIST_ETH_PRIVATE_KEY` variable. It should be considered as unsafe option and used for testing purposes only.
-- When we set `prover` sub-command, entrypoint will run `cirdl` tool to download ceremony files, required by [Archivist storage node](#archivist-storage-node).
+- When we set `ARCHIVIST_PROVER=true` variable, entrypoint will run `cirdl` tool to download ceremony files, required by [Archivist storage node](#archivist-storage-node). We also could set `SKIP_DOWNLOAD_CIRCUIT` to use a locally mounted circuit files.
 - `BOOTSTRAP_NODE_URL` - Archivist node API URL in form of `http://bootstrap:8080`, to be used to get it's SPR as a bootstrap node. That is useful for Docker and Kubernetes configuration.
 - `NETWORK` - is a helper variable to simply a specific network join. It helps to automate `BOOTSTRAP_NODE_FROM_URL` variable.
 - `BOOTSTRAP_NODE_FROM_URL` - can be used to pass SPR nodes from an URL like https://config.archivist.storage/testnet/spr.
@@ -612,10 +608,10 @@ docker run \
     --api-cors-origin="*" \
     --api-bindaddr=0.0.0.0 \
     --api-port=8080 \
-    persistence \
+    --persistence=true \
     --eth-provider=https://rpc.testnet.archivist.storage \
     --eth-private-key=/opt/eth.key \
-    prover \
+    --prover=true \
     --circuit-dir=/datadir/circuits
 ```
 
@@ -659,10 +655,6 @@ For Docker Compose, it is more suitable to use [environment variables](#environm
       archivist:
         image: durabilitylabs/archivist-node:latest
         container_name: archivist
-        command:
-          - archivist
-          - persistence
-          - prover
         environment:
           - ARCHIVIST_DATA_DIR=/datadir
           - NAT_PUBLIC_IP_AUTO=https://ip.archivist.storage
@@ -671,8 +663,10 @@ For Docker Compose, it is more suitable to use [environment variables](#environm
           - ARCHIVIST_API_CORS_ORIGIN="*"
           - ARCHIVIST_API_PORT=8080
           - ARCHIVIST_API_BINDADDR=0.0.0.0
+          - ARCHIVIST_PERSISTENCE=true
           - ARCHIVIST_ETH_PROVIDER=https://rpc.testnet.archivist.storage
           - ARCHIVIST_ETH_PRIVATE_KEY=/opt/eth.key
+          - ARCHIVIST_PROVER=true
           - ARCHIVIST_CIRCUIT_DIR=/datadir/circuits
           - BOOTSTRAP_NODE_FROM_URL=https://config.archivist.storage/testnet/spr
         ports:
@@ -759,4 +753,3 @@ ifconfig | grep "inet " | grep -v 127.0.0.1
 ## Known issues
 
 [^multivalue-env-var]: Environment variables like `ARCHIVIST_BOOTSTRAP_NODE` and `ARCHIVIST_LISTEN_ADDRS` does not support multiple values.
-[^sub-commands]: Sub-commands `persistence` and `persistence prover` can't be set via environment variables.

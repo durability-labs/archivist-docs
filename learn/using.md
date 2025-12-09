@@ -72,7 +72,7 @@ curl http://localhost:8080/api/archivist/v1/data \
 
 ### Create storage availability
 > [!WARNING]
-> This step requires that Archivist was started with the [`prover`](/learn/run#archivist-storage-node) option.
+> This step requires that Archivist was started with the [`--prover=true`](/learn/run#archivist-storage-node) option.
 
 In order to start selling storage space to the network, you must configure your node with the following command. Once configured, the node will monitor on-chain requests-for-storage and will automatically enter into contracts that meet these specifications. In order to enter and maintain storage contracts, your node is required to submit zero-knowledge storage proofs. The calculation of these proofs will increase the CPU and RAM usage of Archivist.
 
@@ -209,7 +209,7 @@ curl http://localhost:8080/api/archivist/v1/data
 
 ### Create storage availability {#create-storage-availability-windows}
 > [!WARNING]
-> This step requires that Archivist was started with the [`prover`](/learn/run#archivist-storage-node) option.
+> This step requires that Archivist was started with the [`--prover=true`](/learn/run#archivist-storage-node) option.
 
 In order to start selling storage space to the network, you must configure your node with the following command. Once configured, the node will monitor on-chain requests-for-storage and will automatically enter into contracts that meet these specifications. In order to enter and maintain storage contracts, your node is required to submit zero-knowledge storage proofs. The calculation of these proofs will increase the CPU and RAM usage of Archivist.
 
