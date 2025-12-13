@@ -21,13 +21,16 @@ features:
   - title: Learn
     details: Get more information about Archivist
     link: /learn/what-is-archivist
-    icon: 📚
+    icon:
+      src: /icons/book.svg
   - title: Networks
     details: Participate in Archivist network as a Storage operator or Buyer
     link: /networks/networks
-    icon: 🚦
+    icon:
+      src: /icons/network.svg
   - title: Developers
     details: Build Archivist
     link: /developers/api
-    icon: 🏗️
+    icon:
+      src: /icons/code.svg
 ---

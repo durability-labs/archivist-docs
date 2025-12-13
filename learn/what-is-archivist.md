@@ -2,10 +2,6 @@
 
 Archivist is a decentralised data storage protocol. Its primary features are strong censorship resistance and durability guarantees. It has a reference implementation by the same name, written in nim.
 
-<br/>
-
-<p><img src="/public/archivist-mark-primary-white-resized.png" alt="Archivist mark" width="560" height="315" loading="lazy" decoding="async" style="display:block;"></p>
-
 ### Motive
 
 The remote storage landscape is dominated by an increasingly small number of internet powerhouses—Google, Microsoft, Amazon, etc. While these services score highly in terms of user experience and convenience, centralised cloud data storage suffers from the following drawbacks:

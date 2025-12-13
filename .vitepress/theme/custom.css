@@ -1,4 +1,427 @@
-/**
- * Customize default theme styling by overriding CSS variables:
- * https://github.com/vuejs/vitepress/blob/main/src/client/theme-default/styles/vars.css
- */
+/* Terminal Aesthetic - Archivist Docs (Dark Mode Only) */
+
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
+/* ============================================
+   CSS Custom Properties (Design Tokens)
+   ============================================ */
+:root {
+  /* Terminal Aesthetic Colors */
+  --arch-term-black: #010302;
+  --arch-term-dark: #0a0f0c;
+  --arch-term-panel: #0f1a14;
+  --arch-term-border: #1a2f22;
+  --arch-term-muted: #2a4a38;
+  --arch-phosphor: #00ff41;
+  --arch-phosphor-dim: #00cc34;
+  --arch-ui-green: #4a7a5a;
+  --arch-term-text: #88aa99;
+  --arch-text-bright: #c0e0d0;
+  --arch-amber: #ffaa00;
+  --arch-amber-dim: #8a6a2a;
+  --arch-error: #ff4444;
+
+  /* Override VitePress theme colors */
+  --vp-c-brand-1: var(--arch-phosphor);
+  --vp-c-brand-2: var(--arch-ui-green);
+  --vp-c-brand-3: var(--arch-phosphor-dim);
+  --vp-c-brand-soft: rgba(0, 255, 65, 0.14);
+
+  /* Typography */
+  --vp-font-family-base: 'JetBrains Mono', monospace;
+  --vp-font-family-mono: 'JetBrains Mono', monospace;
+
+  /* Force dark mode colors on root */
+  --vp-c-bg: var(--arch-term-black);
+  --vp-c-bg-alt: var(--arch-term-dark);
+  --vp-c-bg-elv: var(--arch-term-panel);
+  --vp-c-bg-soft: var(--arch-term-panel);
+
+  --vp-c-border: var(--arch-term-border);
+  --vp-c-divider: var(--arch-term-border);
+  --vp-c-gutter: var(--arch-term-dark);
+
+  --vp-c-text-1: var(--arch-text-bright);
+  --vp-c-text-2: var(--arch-term-text);
+  --vp-c-text-3: var(--arch-term-muted);
+
+  --vp-c-default-1: var(--arch-term-text);
+  --vp-c-default-2: var(--arch-term-muted);
+  --vp-c-default-3: var(--arch-term-border);
+  --vp-c-default-soft: var(--arch-term-panel);
+
+  --vp-c-tip-1: var(--arch-phosphor);
+  --vp-c-tip-2: var(--arch-ui-green);
+  --vp-c-tip-3: var(--arch-term-muted);
+  --vp-c-tip-soft: rgba(0, 255, 65, 0.1);
+
+  --vp-c-warning-1: var(--arch-amber);
+  --vp-c-warning-2: var(--arch-amber-dim);
+  --vp-c-warning-soft: rgba(255, 170, 0, 0.1);
+
+  --vp-c-danger-1: var(--arch-error);
+  --vp-c-danger-soft: rgba(255, 68, 68, 0.1);
+
+  --vp-home-hero-name-color: var(--arch-phosphor);
+  --vp-home-hero-name-background: none;
+  --vp-home-hero-image-background-image: radial-gradient(ellipse at center, rgba(0, 255, 65, 0.15) 0%, transparent 60%);
+  --vp-home-hero-image-filter: none;
+
+  --vp-button-brand-border: var(--arch-ui-green);
+  --vp-button-brand-text: var(--arch-term-black);
+  --vp-button-brand-bg: var(--arch-ui-green);
+  --vp-button-brand-hover-border: var(--arch-phosphor);
+  --vp-button-brand-hover-text: var(--arch-term-black);
+  --vp-button-brand-hover-bg: var(--arch-phosphor);
+  --vp-button-brand-active-border: var(--arch-phosphor);
+  --vp-button-brand-active-text: var(--arch-term-black);
+  --vp-button-brand-active-bg: var(--arch-phosphor-dim);
+
+  --vp-button-alt-border: var(--arch-term-border);
+  --vp-button-alt-text: var(--arch-term-text);
+  --vp-button-alt-bg: var(--arch-term-panel);
+  --vp-button-alt-hover-border: var(--arch-ui-green);
+  --vp-button-alt-hover-text: var(--arch-phosphor);
+  --vp-button-alt-hover-bg: var(--arch-term-panel);
+
+  --vp-nav-bg: rgba(1, 3, 2, 0.9);
+  --vp-sidebar-bg: var(--arch-term-dark);
+
+  /* Force dark color scheme */
+  color-scheme: dark;
+}
+
+/* Force dark class on html */
+html {
+  color-scheme: dark;
+}
+
+/* ============================================
+   Global Styles
+   ============================================ */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'JetBrains Mono', monospace !important;
+  background: var(--arch-term-black);
+  color: var(--arch-term-text);
+}
+
+/* Glow effects */
+.glow {
+  text-shadow: 0 0 8px rgba(0, 255, 65, 0.3);
+}
+
+/* ============================================
+   Navigation
+   ============================================ */
+.VPNav {
+  background: rgba(1, 3, 2, 0.9) !important;
+}
+
+.VPNavBar {
+  border-bottom-color: var(--arch-term-border) !important;
+  /* Apply blur on the navbar itself to avoid breaking the mobile nav screen */
+  backdrop-filter: blur(8px);
+  background: rgba(1, 3, 2, 0.9) !important;
+}
+
+.VPNavBarTitle .title {
+  color: var(--arch-text-bright) !important;
+  font-weight: 700;
+}
+
+/* Constrain logo size in navbar */
+.VPNavBarTitle .logo {
+  height: 28px !important;
+  width: auto !important;
+}
+
+.VPNavBarTitle img {
+  height: 28px !important;
+  width: auto !important;
+}
+
+/* Nav menu links */
+.VPNavBarMenuLink {
+  color: var(--arch-term-text) !important;
+  transition: color 0.2s ease !important;
+}
+
+.VPNavBarMenuLink:hover {
+  color: var(--arch-phosphor) !important;
+}
+
+.VPNavBarMenuLink.active {
+  color: var(--arch-phosphor) !important;
+  text-shadow: 0 0 8px rgba(0, 255, 65, 0.3);
+}
+
+/* Hide theme toggle since we're dark-only */
+.VPNavBarAppearance,
+.VPSwitchAppearance {
+  display: none !important;
+}
+
+/* ============================================
+   Hero Section
+   ============================================ */
+.VPHero .name {
+  font-weight: 700 !important;
+  text-shadow: 0 0 30px rgba(0, 255, 65, 0.4);
+}
+
+.VPHero .text {
+  font-weight: 600;
+}
+
+.VPHero .tagline {
+  font-size: 1.1rem;
+  letter-spacing: 0.02em;
+}
+
+/* ============================================
+   Feature Cards
+   ============================================ */
+.VPFeature {
+  background: var(--arch-term-panel) !important;
+  border-color: var(--arch-term-border) !important;
+  transition: all 0.2s ease;
+}
+
+.VPFeature:hover {
+  border-color: var(--arch-ui-green) !important;
+  box-shadow: 0 0 20px rgba(0, 255, 65, 0.1);
+}
+
+.VPFeature .title {
+  font-weight: 600;
+}
+
+.VPFeature .icon {
+  color: var(--arch-ui-green);
+  transition: color 0.2s ease;
+}
+
+.VPFeature:hover .icon {
+  color: var(--arch-phosphor);
+}
+
+/* ============================================
+   Buttons
+   ============================================ */
+.VPButton {
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.VPButton.brand:hover {
+  box-shadow: 0 0 12px rgba(0, 255, 65, 0.4);
+}
+
+.VPButton.alt:hover {
+  box-shadow: 0 0 12px rgba(0, 255, 65, 0.2);
+}
+
+/* ============================================
+   Footer
+   ============================================ */
+.VPFooter {
+  border-top-color: var(--arch-term-border) !important;
+  background: var(--arch-term-dark) !important;
+}
+
+/* ============================================
+   Code Blocks
+   ============================================ */
+.vp-code-group .tabs label {
+  color: var(--arch-term-text);
+}
+
+.vp-code-group .tabs label.active {
+  color: var(--arch-phosphor);
+}
+
+div[class*='language-'] {
+  background: var(--arch-term-dark) !important;
+  border: 1px solid var(--arch-term-border);
+}
+
+div[class*='language-'] code {
+  color: var(--arch-term-text);
+}
+
+.line-numbers-wrapper {
+  border-right-color: var(--arch-term-border);
+  color: var(--arch-term-muted);
+}
+
+/* ============================================
+   Links
+   ============================================ */
+a {
+  transition: color 0.2s ease;
+}
+
+.VPLink:hover {
+  color: var(--arch-phosphor) !important;
+}
+
+/* ============================================
+   Sidebar
+   ============================================ */
+.VPSidebar {
+  background: var(--arch-term-dark) !important;
+  border-right-color: var(--arch-term-border) !important;
+}
+
+.VPSidebarItem.is-active > .item > .link > .text {
+  color: var(--arch-phosphor) !important;
+}
+
+.VPSidebarItem .text {
+  color: var(--arch-term-text);
+}
+
+.VPSidebarItem:hover .text {
+  color: var(--arch-text-bright);
+}
+
+/* ============================================
+   Doc Content
+   ============================================ */
+.VPContent {
+  background: var(--arch-term-black) !important;
+}
+
+.VPDoc {
+  background: var(--arch-term-black) !important;
+}
+
+.vp-doc h1,
+.vp-doc h2,
+.vp-doc h3,
+.vp-doc h4 {
+  color: var(--arch-text-bright);
+}
+
+.vp-doc h1 {
+  text-shadow: 0 0 20px rgba(0, 255, 65, 0.2);
+}
+
+.vp-doc a {
+  color: var(--arch-ui-green);
+}
+
+.vp-doc a:hover {
+  color: var(--arch-phosphor);
+}
+
+/* ============================================
+   Custom Containers (Tips, Warnings, etc.)
+   ============================================ */
+.custom-block.tip {
+  border-color: var(--arch-ui-green) !important;
+  background: rgba(0, 255, 65, 0.05) !important;
+}
+
+.custom-block.tip .custom-block-title {
+  color: var(--arch-phosphor) !important;
+}
+
+.custom-block.warning {
+  border-color: var(--arch-amber-dim) !important;
+  background: rgba(255, 170, 0, 0.05) !important;
+}
+
+.custom-block.warning .custom-block-title {
+  color: var(--arch-amber) !important;
+}
+
+.custom-block.danger {
+  border-color: var(--arch-error) !important;
+  background: rgba(255, 68, 68, 0.05) !important;
+}
+
+.custom-block.info {
+  border-color: var(--arch-term-border) !important;
+  background: var(--arch-term-panel) !important;
+}
+
+/* ============================================
+   Tables
+   ============================================ */
+.vp-doc table {
+  border-collapse: collapse;
+}
+
+.vp-doc tr {
+  border-color: var(--arch-term-border);
+}
+
+.vp-doc th,
+.vp-doc td {
+  border-color: var(--arch-term-border);
+}
+
+.vp-doc th {
+  background: var(--arch-term-panel);
+  color: var(--arch-text-bright);
+}
+
+.vp-doc tr:nth-child(2n) {
+  background: var(--arch-term-dark);
+}
+
+/* ============================================
+   Search
+   ============================================ */
+.VPLocalSearchBox {
+  background: var(--arch-term-dark) !important;
+}
+
+.DocSearch-Button {
+  background: var(--arch-term-panel) !important;
+  border-color: var(--arch-term-border) !important;
+}
+
+/* ============================================
+   Outline (Table of Contents)
+   ============================================ */
+.VPDocOutlineItem a {
+  color: var(--arch-term-text);
+}
+
+.VPDocOutlineItem a:hover,
+.VPDocOutlineItem a.active {
+  color: var(--arch-phosphor);
+}
+
+/* ============================================
+   Edit Link
+   ============================================ */
+.VPDocFooter .edit-link-button {
+  color: var(--arch-term-text);
+}
+
+.VPDocFooter .edit-link-button:hover {
+  color: var(--arch-phosphor);
+}
+
+/* ============================================
+   Last Updated
+   ============================================ */
+.VPLastUpdated {
+  color: var(--arch-term-muted);
+}
+
+/* ============================================
+   Mermaid Diagrams
+   ============================================ */
+.mermaid {
+  background: var(--arch-term-panel) !important;
+  border-radius: 8px;
+  padding: 1rem;
+}
