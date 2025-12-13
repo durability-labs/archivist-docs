@@ -132,6 +132,17 @@ body {
   font-weight: 700;
 }
 
+/* Constrain logo size in navbar */
+.VPNavBarTitle .logo {
+  height: 28px !important;
+  width: auto !important;
+}
+
+.VPNavBarTitle img {
+  height: 28px !important;
+  width: auto !important;
+}
+
 /* Nav menu links */
 .VPNavBarMenuLink {
   color: var(--arch-term-text) !important;
