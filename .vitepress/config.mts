@@ -11,7 +11,7 @@ export default withMermaid({
   lastUpdated: true,
   cleanUrls: true,
   ignoreDeadLinks: false,
-  appearance: true,
+  appearance: 'dark',
 
   markdown: {
     math: true,
@@ -74,12 +74,12 @@ export default withMermaid({
     },
 
     logo: {
-      alt: 'Archivist • Docs',
-      light: '/archivist-mark-primary-black-resized.png',
-      dark: '/archivist-mark-primary-white-resized.png',
+      alt: 'Archivist Docs',
+      light: '/logos/archivist-terminal.svg',
+      dark: '/logos/archivist-terminal.svg',
     },
 
-    siteTitle: 'Archivist • Docs',
+    siteTitle: 'Archivist Docs',
 
     logoLink: '/learn/what-is-archivist',
 

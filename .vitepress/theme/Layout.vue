@@ -1,4 +1,4 @@
-<!-- https://vitepress.dev/guide/extending-default-theme#layout-slots -->
+<!-- Terminal Aesthetic Layout for Archivist Docs -->
 <script setup>
 import DefaultTheme from 'vitepress/theme'
 </script>
@@ -7,13 +7,13 @@ import DefaultTheme from 'vitepress/theme'
   <DefaultTheme.Layout>
     <template #home-hero-image>
       <img
-        src="/public/archivist-mark-primary-white-resized.png"
-        alt="Archivist mark"
-        width="520"
-        height="315"
+        src="/logos/archivist-terminal.svg"
+        alt="Archivist"
+        width="280"
+        height="280"
         loading="lazy"
         decoding="async"
-        style="display:block;width:100%;height:auto;aspect-ratio:520/315;object-fit:contain;background:##1b1b1e;"
+        style="display:block;width:100%;max-width:280px;height:auto;margin:0 auto;filter:drop-shadow(0 0 30px rgba(0, 255, 65, 0.3));"
       />
     </template>
   </DefaultTheme.Layout>
