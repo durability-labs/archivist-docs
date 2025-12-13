@@ -118,13 +118,14 @@ body {
    Navigation
    ============================================ */
 .VPNav {
-  backdrop-filter: blur(8px);
   background: rgba(1, 3, 2, 0.9) !important;
 }
 
 .VPNavBar {
   border-bottom-color: var(--arch-term-border) !important;
-  background: transparent !important;
+  /* Apply blur on the navbar itself to avoid breaking the mobile nav screen */
+  backdrop-filter: blur(8px);
+  background: rgba(1, 3, 2, 0.9) !important;
 }
 
 .VPNavBarTitle .title {
