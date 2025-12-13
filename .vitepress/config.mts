@@ -35,9 +35,16 @@ export default withMermaid({
   },
 
   head: [
-    [
-      'link', { rel: 'icon', href: '/favicons/favicon.svg', type: 'image/svg+xml' }
-    ]
+    ['link', { rel: 'icon', href: '/favicons/favicon.svg', type: 'image/svg+xml' }],
+    ['meta', { property: 'og:title', content: 'Archivist Documentation' }],
+    ['meta', { property: 'og:description', content: 'Storage that can\'t be stopped. Learn how to use Archivist, the decentralized durability engine.' }],
+    ['meta', { property: 'og:image', content: '/assets/social/og-article.png' }],
+    ['meta', { property: 'og:type', content: 'website' }],
+    ['meta', { property: 'og:url', content: 'https://docs.archivist.storage' }],
+    ['meta', { name: 'twitter:card', content: 'summary_large_image' }],
+    ['meta', { name: 'twitter:title', content: 'Archivist Documentation' }],
+    ['meta', { name: 'twitter:description', content: 'Storage that can\'t be stopped. Learn how to use Archivist, the decentralized durability engine.' }],
+    ['meta', { name: 'twitter:image', content: '/assets/social/og-article.png' }]
   ],
 
   srcExclude: ['README.md'],
@@ -138,7 +145,7 @@ export default withMermaid({
 
     socialLinks: [
       { icon: 'github', link: 'https://github.com/durability-labs/archivist-docs' },
-      { icon: 'twitter', link: 'https://twitter.com/Archivist_storage' },
+      { icon: 'twitter', link: 'https://x.com/ArchivistStrg' },
       { icon: 'youtube', link: 'https://www.youtube.com/@ArchivistStorage' },
       { icon: 'discord', link: 'https://discord.gg/4yHFJErnCp' }
     ]
