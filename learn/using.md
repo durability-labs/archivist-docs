@@ -82,10 +82,9 @@ curl -X POST \
   -H 'Content-Type: application/json' \
   -w '\n' \
   -d '{
-    "totalSize": "8000000",
-    "duration": "7200",
-    "minPricePerBytePerSecond": "1000",
-    "totalCollateral": "80000000"
+    "maximumDuration": 7200,
+    "minimumPricePerBytePerSecond": "1000",
+    "maximumCollateralPerByte": "80000000"
   }'
 ```
 
@@ -217,7 +216,7 @@ In order to start selling storage space to the network, you must configure your 
 curl -X POST ^
   http://localhost:8080/api/archivist/v1/sales/availability ^
   -H "Content-Type: application/json" ^
-  -d "{""totalSize"": ""8000000"", ""duration"": ""7200"", ""minPricePerBytePerSecond"": ""1000"", ""totalCollateral"": ""80000000""}"
+  -d "{""maximumDuration"": 7200, ""minimumPricePerBytePerSecond"": ""1000"", ""maximumCollateralPerByte"": ""80000000""}"
 ```
 
 For descriptions of each parameter, please view the [spec](https://api.archivist.storage/#tag/Marketplace/operation/offerStorage).
