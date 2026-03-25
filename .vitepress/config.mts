@@ -209,7 +209,12 @@ export default withMermaid({
       { icon: 'twitter', link: 'https://x.com/ArchivistStrg' },
       { icon: 'youtube', link: 'https://www.youtube.com/@ArchivistStorage' },
       { icon: 'discord', link: 'https://discord.gg/4yHFJErnCp' }
-    ]
+    ],
+
+    footer: {
+      message: 'Storage that can\'t be stopped.',
+      copyright: '© 2026 <a href="https://github.com/durability-labs">Durability Labs</a>'
+    }
   },
 
   // Internationalization - https://vitepress.dev/guide/i18n
