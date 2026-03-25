@@ -3,6 +3,8 @@ import mdFootnote from 'markdown-it-footnote'
 import { withMermaid } from 'vitepress-plugin-mermaid'
 // const { BASE: base = '/' } = process.env;
 
+const HOSTNAME = 'https://docs.archivist.storage'
+
 // https://vitepress.dev/reference/site-config
 export default withMermaid({
   lang: 'en-US',
@@ -12,6 +14,8 @@ export default withMermaid({
   cleanUrls: true,
   ignoreDeadLinks: false,
   appearance: 'dark',
+
+  sitemap: { hostname: HOSTNAME },
 
   markdown: {
     math: true,
@@ -35,19 +39,76 @@ export default withMermaid({
   },
 
   head: [
+    // Favicons
     ['link', { rel: 'icon', href: '/favicons/favicon.svg', type: 'image/svg+xml' }],
-    ['meta', { property: 'og:title', content: 'Archivist Documentation' }],
-    ['meta', { property: 'og:description', content: 'Storage that can\'t be stopped. Learn how to use Archivist, the decentralized durability engine.' }],
-    ['meta', { property: 'og:image', content: '/assets/social/og-article.png' }],
-    ['meta', { property: 'og:type', content: 'website' }],
-    ['meta', { property: 'og:url', content: 'https://docs.archivist.storage' }],
+    // Meta description
+    ['meta', { name: 'description', content: 'Learn how to use Archivist, the decentralized durability engine. Guides, API reference, and architecture docs.' }],
+    // Open Graph (static defaults — title/desc/type set dynamically in transformHead)
+    ['meta', { property: 'og:image', content: `${HOSTNAME}/assets/social/og-article.png` }],
+    ['meta', { property: 'og:image:secure_url', content: `${HOSTNAME}/assets/social/og-article.png` }],
+    ['meta', { property: 'og:image:type', content: 'image/png' }],
+    ['meta', { property: 'og:image:width', content: '1200' }],
+    ['meta', { property: 'og:image:height', content: '630' }],
+    ['meta', { property: 'og:image:alt', content: 'Archivist Documentation - Decentralized Durability Engine' }],
+    ['meta', { property: 'og:site_name', content: 'Archivist Docs' }],
+    ['meta', { property: 'og:locale', content: 'en_US' }],
+    // Twitter/X (static defaults — title/desc set dynamically in transformHead)
     ['meta', { name: 'twitter:card', content: 'summary_large_image' }],
-    ['meta', { name: 'twitter:title', content: 'Archivist Documentation' }],
-    ['meta', { name: 'twitter:description', content: 'Storage that can\'t be stopped. Learn how to use Archivist, the decentralized durability engine.' }],
-    ['meta', { name: 'twitter:image', content: '/assets/social/og-article.png' }]
+    ['meta', { name: 'twitter:site', content: '@ArchivistStrg' }],
+    ['meta', { name: 'twitter:image', content: `${HOSTNAME}/assets/social/og-article.png` }],
+    ['meta', { name: 'twitter:image:alt', content: 'Archivist Documentation - Decentralized Durability Engine' }],
   ],
 
-  srcExclude: ['README.md'],
+  transformPageData(pageData) {
+    const path = pageData.relativePath
+      .replace(/index\.md$/, '')
+      .replace(/\.md$/, '')
+    const canonical = path ? `${HOSTNAME}/${path}` : HOSTNAME
+    pageData.frontmatter.head ??= []
+    pageData.frontmatter.head.push(
+      ['link', { rel: 'canonical', href: canonical }],
+      ['meta', { property: 'og:url', content: canonical }]
+    )
+  },
+
+  transformHead({ pageData }) {
+    const head: any[] = []
+    const path = pageData.relativePath
+      .replace(/index\.md$/, '')
+      .replace(/\.md$/, '')
+    const canonical = path ? `${HOSTNAME}/${path}` : HOSTNAME
+    const title = pageData.title || 'Archivist Documentation'
+    const description = pageData.description || pageData.frontmatter?.description || 'Archivist technical documentation'
+
+    // Dynamic OG + Twitter per page
+    head.push(
+      ['meta', { property: 'og:title', content: title }],
+      ['meta', { property: 'og:description', content: description }],
+      ['meta', { property: 'og:type', content: 'article' }],
+      ['meta', { name: 'twitter:title', content: title }],
+      ['meta', { name: 'twitter:description', content: description }]
+    )
+
+    head.push(['script', { type: 'application/ld+json' }, JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'TechArticle',
+      headline: title,
+      description,
+      url: canonical,
+      image: `${HOSTNAME}/assets/social/og-article.png`,
+      dateModified: pageData.lastUpdated ? new Date(pageData.lastUpdated).toISOString() : undefined,
+      author: { '@type': 'Organization', name: 'Durability Labs', url: 'https://archivist.storage' },
+      publisher: {
+        '@type': 'Organization',
+        name: 'Durability Labs',
+        logo: { '@type': 'ImageObject', url: 'https://archivist.storage/assets/logos/archivist-terminal.svg' }
+      },
+      mainEntityOfPage: { '@type': 'WebPage', '@id': canonical }
+    })])
+    return head
+  },
+
+  srcExclude: ['README.md', 'vendor/**'],
 
   outDir: './.vitepress/dist',
   assetsDir: 'assets',

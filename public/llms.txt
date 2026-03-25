@@ -1,0 +1,23 @@
+# Archivist Documentation
+
+> Technical documentation for Archivist, the decentralized durability engine. Guides for building, running, and using Archivist nodes.
+
+## Getting Started
+- [What is Archivist?](https://docs.archivist.storage/learn/what-is-archivist): Overview and core concepts
+- [Architecture](https://docs.archivist.storage/learn/architecture): System architecture
+- [Quick Start](https://docs.archivist.storage/learn/quick-start): Get running fast
+- [Build Archivist](https://docs.archivist.storage/learn/build): Building from source
+- [Run Archivist](https://docs.archivist.storage/learn/run): Running a node
+
+## Reference
+- [API](https://docs.archivist.storage/developers/api): REST API reference
+- [Whitepaper](https://docs.archivist.storage/learn/whitepaper): Technical whitepaper
+- [Tokenomics Litepaper](https://docs.archivist.storage/learn/tokenomics-litepaper): Token economics
+
+## Networks
+- [Devnet](https://docs.archivist.storage/networks/devnet): Development network
+- [Testnet](https://docs.archivist.storage/networks/testnet): Test network
+
+## Related
+- [Main Site](https://archivist.storage): Product overview
+- [Blog](https://blog.archivist.storage): Technical insights and research
