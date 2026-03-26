@@ -8,7 +8,7 @@ To run Archivist through this guide we would need to perform the following steps
 
 ## Get Archivist binary
 
-For quick a start we will use precompiled binaries from [GitHub release page](https://github.com/durability-labs/archivist-node/releases). If you prefer to compile from the sources, please check [Build Archivist](/learn/build).
+For a quick start we will use precompiled binaries from [GitHub release page](https://github.com/durability-labs/archivist-node/releases). If you prefer to compile from the sources, please check [Build Archivist](/learn/build).
 
 Please follow the steps for your OS from the list:
 - [Linux/macOS](#linux-macos)
@@ -140,7 +140,7 @@ Also, you can interact with Archivist using [Archivist API](/developers/api) and
 
 ## Stay in touch
 
-Want to stay up-date, or looking for further assistance? Try our [discord-server](https://discord.gg/4yHFJErnCp).
+Want to stay up to date, or looking for further assistance? Try our [discord-server](https://discord.gg/4yHFJErnCp).
 
 Ready to explore Archivist functionality? Please [Join Archivist Testnet](/networks/testnet).
 

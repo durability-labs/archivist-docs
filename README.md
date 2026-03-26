@@ -2,7 +2,7 @@
 
  Welcome to Archivist documentation.
 
- Archivist is a decentralized data storage platform that provides exceptionally strong censorship resistance and durability guarantees.
+ Archivist is a decentralized data storage platform with strong censorship resistance and durability guarantees.
 
 
 ## Run and build
