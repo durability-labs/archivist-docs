@@ -5,8 +5,8 @@ outline: [2, 3]
 
 This tutorial will teach you how to run a small Archivist network with the
 _storage marketplace_ enabled; i.e., the functionality in Archivist which
-allows participants to offer and buy storage in a market, ensuring that
-storage providers honor their part of the deal by means of cryptographic proofs.
+allows participants to offer and buy storage in a market, with cryptographic proofs
+to verify that storage providers honor their part of the deal.
 
 In this tutorial, you will:
 
@@ -659,8 +659,7 @@ Your request will be successful once `"state"` shows `"started"`.
 Anything other than that means the request has not been completely
 processed yet, and an `"error"` state other than `null` means it failed.
 
-Well, it was quite a journey, wasn't it? You can congratulate yourself for
-successfully finishing the archivist marketplace tutorial!
+That covers the full flow — from local blockchain to marketplace contract to buying and selling storage.
 
 [^1]: Archivist files get partitioned into pieces called "slots" and distributed
 to various storage providers. The collateral refers to one such slot,

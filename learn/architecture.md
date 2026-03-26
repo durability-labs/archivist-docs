@@ -123,7 +123,7 @@ flowchart TD
 When a client wants durable, provable storage across the network:
 
 1. The dataset is **erasure coded** — original blocks are expanded with parity blocks so any `k` of `n` slots can reconstruct the data
-2. A **verifiable manifest** is created — slot-level Merkle trees using Poseidon2 hashing, producing ZK-friendly commitment roots
+2. A **verifiable manifest** is created — slot-level Merkle trees using Poseidon2 hashing, with ZK-friendly commitment roots
 3. A **storage request** is posted to the Ethereum smart contract with parameters: CID, duration, number of slots, proof probability, price, and collateral requirements
 4. Storage providers discover the request, download the slot data, generate an initial proof, and fill the slot on-chain
 5. Throughout the contract duration, providers must respond to random proof challenges
@@ -140,30 +140,30 @@ flowchart TD
 
 ### Retrieval
 
-Data retrieval is straightforward:
+To retrieve data:
 
 1. A client requests data by manifest CID
 2. If blocks are available locally, they are served directly
 3. If not, the block exchange protocol fetches them from peers who have them
 4. For erasure-coded datasets, missing blocks can be reconstructed from available parity data
 
-The block exchange protocol maintains want-lists and block presence information across connected peers, allowing efficient discovery and transfer of needed blocks.
+The block exchange protocol maintains want-lists and block presence information across connected peers for efficient discovery and transfer of needed blocks.
 
 ### Repair
 
 When a storage provider fails — goes offline, loses data, or stops proving — the system self-heals:
 
 1. The smart contract detects missed proofs and marks the slot as failed
-2. The failed provider's collateral is partially slashed; a portion funds the repair
+2. The failed provider's collateral is slashed, partially funding the repair
 3. The slot becomes available for a new provider
 4. The new provider reconstructs the slot data from the remaining slots using erasure coding
 5. The new provider generates a valid proof and fills the slot
 
-This is the "lazy repair" mechanism: repair happens on demand when failure is detected, rather than through continuous background replication. Erasure coding makes this possible because any sufficient subset of slots contains enough information to reconstruct any individual slot.
+Archivist also supports a "lazy repair" optimization: rather than eagerly repairing every failure immediately, the system can tolerate multiple node failures before triggering repair. Parameters like erasure code rate and proof frequency control this threshold. This avoids costly repairs for transient failures and reduces the bandwidth overhead and churn typical of eager-repair systems. Erasure coding makes this safe because any `k` of the `n` slots is sufficient to reconstruct any failed slot.
 
 ## Erasure Coding
 
-Archivist uses Leopard Reed-Solomon coding. A dataset with `k` original blocks is expanded to `n = k + m` blocks, where any `k` blocks are sufficient to reconstruct the original data.
+Archivist uses [Leopard Reed-Solomon](https://github.com/catid/leopard) coding. A dataset with `k` original blocks is expanded to `n = k + m` blocks, where any `k` blocks are sufficient to reconstruct the original data.
 
 In the context of storage contracts:
 - A storage request specifies `nodes` (total slots) and `tolerance` (how many can be lost)
@@ -202,7 +202,7 @@ Archivist uses a two-level Merkle tree structure:
 
 ## Marketplace
 
-The marketplace is an Ethereum smart contract that facilitates matching between storage clients and providers. It is optional — nodes can run without Ethereum connectivity for local storage and peer-to-peer block exchange.
+The marketplace is an Ethereum smart contract that matches storage clients with providers. It is optional — nodes can run without Ethereum connectivity for local storage and peer-to-peer block exchange.
 
 ### Smart contract
 
@@ -215,7 +215,7 @@ The smart contract manages storage request lifecycle, slot allocation, proof ver
 - **Price per byte per second**: what the client pays
 - **Collateral per byte**: what each provider must stake
 
-Proof timing is stochastic — the contract determines when a provider must prove, ensuring providers cannot game the system by only keeping data around proof times.
+Proof timing is stochastic — the contract determines when a provider must prove, so providers cannot game the system by only keeping data around proof times.
 
 ### Purchasing module
 
@@ -288,7 +288,7 @@ When a node needs a block, it broadcasts the want to connected peers. Peers with
 
 ### DHT discovery
 
-Content and peer discovery uses the discv5 protocol (the same DHT protocol used by Ethereum's consensus layer). Nodes advertise which content they store, and other nodes can query the DHT to find providers for specific CIDs.
+Content and peer discovery currently uses the discv5 protocol (the same DHT protocol used by Ethereum's consensus layer). Nodes advertise which content they store, and other nodes can query the DHT to find providers for specific CIDs. Deeper discovery upgrades are planned for the future.
 
 ## REST API
 
