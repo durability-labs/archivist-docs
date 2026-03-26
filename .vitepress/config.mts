@@ -154,7 +154,7 @@ export default withMermaid({
 
     siteTitle: 'Archivist Docs',
 
-    logoLink: '/learn/what-is-archivist',
+    logoLink: '/',
 
     sidebar: [
       {
