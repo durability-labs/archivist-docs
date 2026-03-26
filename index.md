@@ -1,36 +1,21 @@
 ---
-# https://vitepress.dev/reference/default-theme-home-page
-layout: home
-
-hero:
-  name: Archivist
-  text: Decentralized data storage platform
-  tagline: Archivist is a durable, decentralized data storage protocol, created so the world community can preserve its most important knowledge without risk of censorship.
-  actions:
-    - theme: brand
-      text: What is Archivist?
-      link: /learn/what-is-archivist
-    - theme: alt
-      text: Quick start
-      link: /learn/quick-start
-    - theme: alt
-      text: Join Archivist Testnet
-      link: /networks/testnet
-
-features:
-  - title: Learn
-    details: Get more information about Archivist
-    link: /learn/what-is-archivist
-    icon:
-      src: /icons/book.svg
-  - title: Networks
-    details: Participate in Archivist network as a storage operator or buyer
-    link: /networks/networks
-    icon:
-      src: /icons/network.svg
-  - title: Developers
-    details: Build Archivist
-    link: /developers/api
-    icon:
-      src: /icons/code.svg
+layout: doc
+title: Archivist Docs
 ---
+
+# Archivist Documentation
+
+Archivist is a durable, decentralized storage network with cryptographic durability guarantees. These docs cover everything from high-level concepts to running your own node.
+
+## Getting Started
+
+- **[What is Archivist?](/learn/what-is-archivist)** — the problem, the approach, and how it works
+- **[Architecture](/learn/architecture)** — system design, proof pipeline, state machines
+- **[Quick Start](/learn/quick-start)** — install and run a node in minutes
+
+## Go Deeper
+
+- **[Whitepaper](/learn/whitepaper)** — formal protocol specification
+- **[Run Archivist](/learn/run)** — configuration, deployment, and operations
+- **[Join the Testnet](/networks/testnet)** — connect to the live test network
+- **[API Reference](https://api.archivist.storage)** — REST API documentation
