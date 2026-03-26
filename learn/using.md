@@ -140,13 +140,14 @@ curl "http://localhost:8080/api/archivist/v1/storage/purchases/${PURCHASE_ID}" \
 This will display state and error information for your purchase.
 | State     | Description                                                                                                                                                                                            |
 |-----------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Unknown   | Initial state before the purchase status is known.                                                                                                                                                     |
 | Pending   | Request is waiting for chain confirmation.                                                                                                                                                             |
 | Submitted | Request is on-chain. Hosts may now attempt to download the data.                                                                                                                                       |
 | Started   | Hosts have downloaded the data and provided proof-of-storage.                                                                                                                                          |
-| Failed    | The request was started, but (too many) hosts failed to provide proof-of-storage on time. While the data may still be available in the network, for the purpose of the purchase it is considered lost. |
 | Finished  | The request was started successfully and the duration has elapsed.                                                                                                                                     |
-| Expired   | (Not enough) hosts have submitted proof-of-storage before the request's expiry elapsed.                                                                                                                |
-| Errored   | An unfortunate state of affairs. The 'error' field should tell you more.                                                                                                                               |
+| Failed    | The request was started, but (too many) hosts failed to provide proof-of-storage on time. While the data may still be available in the network, for the purpose of the purchase it is considered lost. |
+| Cancelled | The request was cancelled before it could be started.                                                                                                                                                  |
+| Errored   | An unexpected error occurred. The 'error' field should tell you more.                                                                                                                                  |
 
 ## Windows
 
@@ -238,7 +239,7 @@ Next you can run:
 curl -X POST ^
   "http://localhost:8080/api/archivist/v1/storage/request/%CID%" ^
   -H "Content-Type: application/json" ^
-  -d "{""duration"": ""3600"",""pricePerBytePerSecond"": ""2000"", ""proofProbability"": ""5"", ""expiry"": ""1200"", ""nodes"": 5, ""tolerance"": 2, ""**collateralPerByte**"": ""1""}"
+  -d "{""duration"": ""3600"",""pricePerBytePerSecond"": ""2000"", ""proofProbability"": ""5"", ""expiry"": ""1200"", ""nodes"": 5, ""tolerance"": 2, ""collateralPerByte"": ""1""}"
 ```
 
 For descriptions of each parameter, please view the [spec](https://api.archivist.storage/#tag/Marketplace/operation/createStorageRequest).
@@ -262,10 +263,11 @@ curl "http://localhost:8080/api/archivist/v1/storage/purchases/%PURCHASE_ID%"
 This will display state and error information for your purchase.
 | State     | Description                                                                                                                                                                                            |
 |-----------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Unknown   | Initial state before the purchase status is known.                                                                                                                                                     |
 | Pending   | Request is waiting for chain confirmation.                                                                                                                                                             |
 | Submitted | Request is on-chain. Hosts may now attempt to download the data.                                                                                                                                       |
 | Started   | Hosts have downloaded the data and provided proof-of-storage.                                                                                                                                          |
-| Failed    | The request was started, but (too many) hosts failed to provide proof-of-storage on time. While the data may still be available in the network, for the purpose of the purchase it is considered lost. |
 | Finished  | The request was started successfully and the duration has elapsed.                                                                                                                                     |
-| Expired   | (Not enough) hosts have submitted proof-of-storage before the request's expiry elapsed.                                                                                                                |
-| Errored   | An unfortunate state of affairs. The 'error' field should tell you more.                                                                                                                               |
+| Failed    | The request was started, but (too many) hosts failed to provide proof-of-storage on time. While the data may still be available in the network, for the purpose of the purchase it is considered lost. |
+| Cancelled | The request was cancelled before it could be started.                                                                                                                                                  |
+| Errored   | An unexpected error occurred. The 'error' field should tell you more.                                                                                                                                  |

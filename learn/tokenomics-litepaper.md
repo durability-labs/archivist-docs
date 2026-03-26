@@ -1,6 +1,11 @@
 ---
 outline: [1, 3]
 ---
+
+::: warning Deprecation Notice
+The tokenomics described in this document are being redesigned. This litepaper is preserved for reference but should not be treated as current.
+:::
+
 # Archivist Tokenomics Litepaper - Testnet Version
 
 **Archivist: A Decentralized Storage Protocol for Durable Information**
@@ -119,7 +124,7 @@ Deals can not be automatically rolled forward or extended. If a **Client** desir
 
 The ARC token does not exist in the Testnet Phase. The description below refers to the mechanics of a Testnet token and not ARC itself and will be referred to as *ARC (Testnet token)* for this purpose.
 
-For the avoidance of doubt, the *ARC (Testnet token)* are virtual items with no value of any kind and they are not convertible to any other currency, token, or any other form of property. They are solely intended to be utilised for the purposes of enabling the tokenomics and facilitating the different roles in this Testnet Phase.
+For the avoidance of doubt, the *ARC (Testnet token)* are virtual items with no value of any kind and they are not convertible to any other currency, token, or any other form of property. They are solely intended to be utilized for the purposes of enabling the tokenomics and facilitating the different roles in this Testnet Phase.
 
 ## Roles
 

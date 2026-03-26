@@ -267,7 +267,7 @@ And to be able to purchase a storage, we should run [Archivist node with marketp
 
 #### Archivist node with marketplace support
 
-[Marketplace](/learn/architecture.md#marketplace-architecture) support permits to purchase the storage in Archivist network. Basically, we should add just a `--persistence` argument and related [CLI options](#cli-options) to the [previous run](#archivist-node).
+[Marketplace](/learn/architecture#marketplace) support permits to purchase the storage in Archivist network. Basically, we should add just a `--persistence` argument and related [CLI options](#cli-options) to the [previous run](#archivist-node).
 
 1. For a daily use, we should consider to run a local blockchain node based on the [network](/networks/networks) you would like to join. That process is described in the [Join Archivist Testnet](/networks/testnet) guide, but for a quick start we can use a public RPC endpoint.
 
@@ -316,7 +316,7 @@ You also can use [Archivist App UI](https://app.archivist.storage) for storage p
 
 #### Archivist storage node
 
-Archivist [storage node](architecture#network-architecture) should be run by storage providers or in case you would like to sell your local storage.
+Archivist [storage node](architecture#node-roles) should be run by storage providers or in case you would like to sell your local storage.
 
 For that, additionally to the [Archivist node with marketplace support](#archivist-node-with-marketplace-support) we should set `--prover=true` and related [CLI options](#cli-options).
 
@@ -715,7 +715,7 @@ Use the `--nat` CLI flag to specify how your archivist node should handle NAT tr
 ### Port Forwarding
 
 If you're running on a private network, you'll need to set up port forwarding to ensure seamless communication between the archivist node and its peers. It's also recommended to configure appropriate firewall rules for TCP and UDP traffic.
-While the specific steps required vary based on your router, they can be summarised as follows:
+While the specific steps required vary based on your router, they can be summarized as follows:
 1. Find your public IP address by either visiting [ip-archivist](https://ip.archivist.storage/) or running `curl ip.archivist.storage`
 2. Identify your [private](#determine-your-private-ip) IP address
 3. Access your router's settings by entering its IP address (typically [http://192.168.1.1](http://192.168.1.1/)) in your web browser

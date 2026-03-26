@@ -1,0 +1,509 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   viewBox="0 0 1380 870"
+   width="1380"
+   height="870"
+   version="1.1"
+   id="svg36"
+   sodipodi:docname="architecture.svg"
+   inkscape:version="1.4.3 (0d15f75, 2025-12-25)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview36"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="1.2964469"
+     inkscape:cx="428.4788"
+     inkscape:cy="45.12333"
+     inkscape:window-width="1728"
+     inkscape:window-height="1056"
+     inkscape:window-x="0"
+     inkscape:window-y="33"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="svg36"
+     showgrid="false" />
+  <defs
+     id="defs1">
+    <marker
+       id="ah"
+       markerWidth="10"
+       markerHeight="8"
+       refX="10"
+       refY="4"
+       orient="auto"
+       markerUnits="userSpaceOnUse">
+      <path
+         d="M0,0.5 L10,4 L0,7.5"
+         fill="none"
+         stroke="#fff"
+         stroke-width="1.3"
+         id="path1" />
+    </marker>
+    <style
+       id="style1">
+      text {
+        font-family: -apple-system, 'Helvetica Neue', Arial, sans-serif;
+        fill: #fff;
+      }
+      .lbl { font-size: 16px; }
+      .nlbl { font-size: 16px; }
+      .num { font-size: 12px; font-weight: 700; fill: #0f1a14 !important; }
+    </style>
+  </defs>
+  <rect
+     width="1380"
+     height="870"
+     fill="#0f1a14"
+     id="rect1"
+     x="0.80368423"
+     y="0.27554512" />
+  <circle
+     cx="654.53314"
+     cy="312.98022"
+     r="13"
+     fill="#ffffff"
+     id="circle20-8" />
+  <text
+     x="654.53314"
+     y="317.98022"
+     text-anchor="middle"
+     class="num"
+     id="text21-3"
+     style="font-weight:700;font-size:12px;font-family:'-apple-system', 'Helvetica Neue', Arial, sans-serif">7</text>
+  <text
+     x="674.53314"
+     y="317.98022"
+     class="lbl"
+     id="text22-0"
+     style="font-size:16px;font-family:'-apple-system', 'Helvetica Neue', Arial, sans-serif;fill:#ffffff">fill slot</text>
+  <!--
+    NODE CENTERS & RADII:
+    file:       (75, 260)   r=35
+    client:     (430, 260)  r=55
+    evm:        (520, 260)  r=38
+    blockchain: (950, 200)  r=155
+    p2p:        (600, 550)  r=115
+    storage:    (760, 720)  r=55
+
+    BADGE: r=13, label 20px right of badge center, label y = badge cy + 5
+  -->
+  <!-- ===== NODES ===== -->
+  <circle
+     cx="75"
+     cy="260"
+     r="35"
+     fill="none"
+     stroke="#fff"
+     stroke-width="1.5"
+     id="circle1" />
+  <text
+     x="75"
+     y="266"
+     text-anchor="middle"
+     class="nlbl"
+     id="text1">file</text>
+  <circle
+     cx="430"
+     cy="260"
+     r="55"
+     fill="none"
+     stroke="#fff"
+     stroke-width="1.5"
+     id="circle2" />
+  <text
+     x="430"
+     y="253"
+     text-anchor="middle"
+     class="nlbl"
+     id="text2">client</text>
+  <text
+     x="430"
+     y="275"
+     text-anchor="middle"
+     class="nlbl"
+     id="text3">node</text>
+  <circle
+     cx="520"
+     cy="260"
+     r="38"
+     fill="none"
+     stroke="#fff"
+     stroke-width="1.5"
+     id="circle3" />
+  <text
+     x="520"
+     y="253"
+     text-anchor="middle"
+     font-size="14"
+     id="text4">market-</text>
+  <text
+     x="520"
+     y="271"
+     text-anchor="middle"
+     font-size="14"
+     id="text5">place</text>
+  <circle
+     cx="950"
+     cy="200"
+     r="155"
+     fill="none"
+     stroke="#fff"
+     stroke-width="1.5"
+     stroke-dasharray="8,5"
+     id="circle5" />
+  <text
+     x="950"
+     y="193"
+     text-anchor="middle"
+     class="nlbl"
+     id="text6">EVM compatible</text>
+  <text
+     x="950"
+     y="215"
+     text-anchor="middle"
+     class="nlbl"
+     id="text7">blockchain</text>
+  <circle
+     cx="600"
+     cy="550"
+     r="115"
+     fill="none"
+     stroke="#fff"
+     stroke-width="1.5"
+     stroke-dasharray="8,5"
+     id="circle7" />
+  <text
+     x="600"
+     y="543"
+     text-anchor="middle"
+     class="nlbl"
+     id="text8">Archivist</text>
+  <text
+     x="600"
+     y="565"
+     text-anchor="middle"
+     class="nlbl"
+     id="text9">P2P Network</text>
+  <circle
+     cx="760"
+     cy="720"
+     r="55"
+     fill="none"
+     stroke="#fff"
+     stroke-width="1.5"
+     id="circle9" />
+  <text
+     x="760"
+     y="713"
+     text-anchor="middle"
+     class="nlbl"
+     id="text10">storage</text>
+  <text
+     x="760"
+     y="735"
+     text-anchor="middle"
+     class="nlbl"
+     id="text11">node</text>
+  <!-- ===== STEP 1: upload file ===== -->
+  <!-- file right(110,260) → client left(375,260), horizontal -->
+  <line
+     x1="110"
+     y1="260"
+     x2="372.57483"
+     y2="260"
+     stroke="#ffffff"
+     stroke-width="1.3"
+     marker-end="url(#ah)"
+     id="line11" />
+  <circle
+     cx="190"
+     cy="240"
+     r="13"
+     fill="#ffffff"
+     id="circle11" />
+  <text
+     x="190"
+     y="245"
+     text-anchor="middle"
+     class="num"
+     id="text12">1</text>
+  <text
+     x="155"
+     y="285"
+     class="lbl"
+     id="text13">upload file</text>
+  <!-- ===== STEP 2: request storage (self-loop on client) ===== -->
+  <!-- client at 140°(388,225) → arc up → client at 95°(425,205) -->
+  <path
+     d="M 375.91392,240.7119 C 292.30269,133.51752 435.1197,92.440149 425,205"
+     fill="none"
+     stroke="#ffffff"
+     stroke-width="1.3"
+     marker-end="url(#ah)"
+     id="path15"
+     sodipodi:nodetypes="cc" />
+  <circle
+     cx="320.42993"
+     cy="113.39937"
+     r="13"
+     fill="#ffffff"
+     id="circle15" />
+  <text
+     x="320.42993"
+     y="118.39937"
+     text-anchor="middle"
+     class="num"
+     id="text16">2</text>
+  <text
+     x="340.42993"
+     y="118.39937"
+     class="lbl"
+     id="text17">request storage</text>
+  <!-- ===== STEP 3: dataset setup (EC, commit, proof setup) ===== -->
+  <!-- client top(430,205) → upward -->
+  <line
+     x1="430.01761"
+     y1="204.81807"
+     x2="440.93881"
+     y2="157.17722"
+     stroke="#ffffff"
+     stroke-width="1.51859"
+     marker-end="url(#ah)"
+     id="line17" />
+  <circle
+     cx="445"
+     cy="143"
+     r="13"
+     fill="#fff"
+     id="circle17" />
+  <text
+     x="445"
+     y="148"
+     text-anchor="middle"
+     class="num"
+     id="text18">3</text>
+  <text
+     x="465"
+     y="143"
+     class="lbl"
+     id="text19">dataset setup</text>
+  <!-- ===== STEP 4: storage request ===== -->
+  <!-- evm right(558,255) → bc left(797,222) -->
+  <line
+     x1="557.7981"
+     y1="255.02164"
+     x2="793.56238"
+     y2="231.75041"
+     stroke="#ffffff"
+     stroke-width="1.08426"
+     marker-end="url(#ah)"
+     id="line22" />
+  <circle
+     cx="604"
+     cy="233"
+     r="13"
+     fill="#ffffff"
+     id="circle22" />
+  <text
+     x="604"
+     y="238"
+     text-anchor="middle"
+     class="num"
+     id="text23">4</text>
+  <text
+     x="624"
+     y="230"
+     class="lbl"
+     id="text24">storage request</text>
+  <!-- ===== STEP 5: offer storage ===== -->
+  <!-- storage at 325°(805,688) → bc at 145°(823,289) -->
+  <path
+     d="M 805 688 C 835 570, 840 420, 823 289"
+     fill="none"
+     stroke="#fff"
+     stroke-width="1.3"
+     marker-end="url(#ah)"
+     id="path26" />
+  <circle
+     cx="848"
+     cy="490"
+     r="13"
+     fill="#ffffff"
+     id="circle26" />
+  <text
+     x="848"
+     y="495"
+     text-anchor="middle"
+     class="num"
+     id="text27">5</text>
+  <text
+     x="868"
+     y="495"
+     class="lbl"
+     id="text28">offer storage</text>
+  <!-- ===== STEP 6: upload data ===== -->
+  <!-- client at 220°(388,295) → p2p at 160°(492,530) -->
+  <path
+     d="m 387.41727,294.97988 c -21.59935,93.6036 -7.51282,182.28069 97.66661,231.54574"
+     fill="none"
+     stroke="#ffffff"
+     stroke-width="1.3"
+     marker-end="url(#ah)"
+     id="path20" />
+  <circle
+     cx="362"
+     cy="465"
+     r="13"
+     fill="#fff"
+     id="circle20" />
+  <text
+     x="362"
+     y="470"
+     text-anchor="middle"
+     class="num"
+     id="text21">6</text>
+  <text
+     x="382"
+     y="470"
+     class="lbl"
+     id="text22">upload data</text>
+  <!-- ===== STEP 7: fill slot ===== -->
+  <!-- storage(760,720) arc right then up → marketplace(558,270), wide arc avoiding P2P network -->
+  <path
+     d="M 762.17913,660.45265 C 776.39505,369.57311 582.34543,290.82767 557.67755,275.76378"
+     fill="none"
+     stroke="#ffffff"
+     stroke-width="1.30602"
+     marker-end="url(#ah)"
+     id="path24"
+     sodipodi:nodetypes="cc" />
+  <text
+     x="1060"
+     y="565"
+     text-anchor="middle"
+     class="num"
+     id="text25">7</text>
+  <!-- ===== STEP 8: proof timing (self-loop on blockchain upper-right, dashed) ===== -->
+  <!-- bc at 310°(1050,81) → bc at 340°(1096,147) -->
+  <path
+     d="m 1049.9711,79.281306 c 60.0456,-47.201742 110.0835,-10.180768 46.0349,61.084604"
+     fill="none"
+     stroke="#ffffff"
+     stroke-width="1.3"
+     stroke-dasharray="8, 5"
+     marker-end="url(#ah)"
+     id="path28" />
+  <circle
+     cx="1120"
+     cy="60"
+     r="13"
+     fill="#fff"
+     id="circle28" />
+  <text
+     x="1121"
+     y="65"
+     text-anchor="middle"
+     class="num"
+     id="text29">8</text>
+  <text
+     x="1140"
+     y="65"
+     class="lbl"
+     id="text30">proof timing</text>
+  <!-- ===== STEP 9: challenge ===== -->
+  <!-- bc lower-right(990,345) → storage upper(808,692) -->
+  <path
+     d="M 989.51037,350.70852 C 1019.4313,463.82007 969.56306,601.52109 807.98983,692.01034"
+     fill="none"
+     stroke="#ffffff"
+     stroke-width="1.3"
+     marker-end="url(#ah)"
+     id="path30" />
+  <circle
+     cx="1002"
+     cy="490"
+     r="13"
+     fill="#ffffff"
+     id="circle30" />
+  <text
+     x="1001"
+     y="495"
+     text-anchor="middle"
+     class="num"
+     id="text31">9</text>
+  <text
+     x="1022"
+     y="495"
+     class="lbl"
+     id="text32">challenge</text>
+  <!-- ===== STEP 10: generate proof (self-loop below storage) ===== -->
+  <!-- storage at 240°(733,768) → storage at 300°(788,768) -->
+  <path
+     d="m 732.9743,769.01137 c -10.00868,48.63951 64.05556,48.63951 55.04775,0"
+     fill="none"
+     stroke="#ffffff"
+     stroke-width="1.3"
+     marker-end="url(#ah)"
+     id="path34" />
+  <circle
+     cx="760"
+     cy="808"
+     r="13"
+     fill="#fff"
+     id="circle34" />
+  <text
+     x="759"
+     y="813"
+     text-anchor="middle"
+     class="num"
+     id="text35">10</text>
+  <text
+     x="780"
+     y="813"
+     class="lbl"
+     id="text36">generate proof</text>
+  <!-- ===== STEP 11: submit proof ===== -->
+  <!-- storage at 10°(814,710) → bc at 0°(1105,200) -->
+  <path
+     d="M 814 710 C 990 690, 1190 490, 1105 200"
+     fill="none"
+     stroke="#fff"
+     stroke-width="1.3"
+     marker-end="url(#ah)"
+     id="path32" />
+  <circle
+     cx="1133"
+     cy="440"
+     r="13"
+     fill="#ffffff"
+     id="circle32" />
+  <text
+     x="1132"
+     y="445"
+     text-anchor="middle"
+     class="num"
+     id="text33">11</text>
+  <text
+     x="1153"
+     y="445"
+     class="lbl"
+     id="text34">submit proof</text>
+  <!-- ===== P2P → storage (dashed, unlabeled) ===== -->
+  <!-- p2p at 47°(678,634) → storage at 227°(722,680) -->
+  <path
+     d="m 677.98505,633.98441 c 19.32066,19.35017 30.91306,32.8953 42.50545,44.50541"
+     fill="none"
+     stroke="#ffffff"
+     stroke-width="1.3"
+     stroke-dasharray="8, 5"
+     marker-end="url(#ah)"
+     id="path36" />
+</svg>
