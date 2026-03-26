@@ -368,7 +368,7 @@ node ./mint-tokens.js $CONTRACT_DEPLOY_FULL/TestToken.json $GETH_SIGNER_ADDR 0x9
 If you get a message like
 
 ```bash
-Usage: mint-tokens.js <token-hardhat-deploy-json> <signer-account> <receiver-account> <token-ammount>
+Usage: mint-tokens.js <token-hardhat-deploy-json> <signer-account> <receiver-account> <token-amount>
 ```
 
 then you need to ensure you provided all the required arguments.
@@ -420,7 +420,7 @@ the address of the Marketplace contract.
 **Prover ceremony files.** The ceremony files are under the
 `archivist-node/vendor/archivist-contracts/verifier/networks/archivistdisttestnetwork`
 subdirectory. There are three of them: `proof_main.r1cs`, `proof_main.zkey`,
-and `prooof_main.wasm`. We will need all of them to start the Archivist storage node.
+and `proof_main.wasm`. We will need all of them to start the Archivist storage node.
 
 **Starting the storage node.** Let:
 
@@ -525,8 +525,8 @@ curl 'http://localhost:8000/api/archivist/v1/sales/availability' \
   --data '{
   "totalSize": "5000000",
   "duration": "3600",
-  "minPricePerBytePerSecond": "1000",
-  "totalCollateral": "50000000"
+  "pricePerBytePerSecond": "1000",
+  "collateralPerByte": "50000000"
 }'
 ```
 
@@ -600,8 +600,8 @@ The parameters under `--data` say that:
 
 1. we want to purchase storage for our file for $5$ minutes (`"duration": "600"`);
 2. we are willing to pay up to $2000$ tokens (wei) per slot per second
-   (`"pricePerBytePerSecond": "2000"`). It is then twice as much as
-   `minPricePerBytePerSecond`, which we set to $1000$ when creating the availability
+    (`"pricePerBytePerSecond": "2000"`). It is then twice as much as
+    `pricePerBytePerSecond`, which we set to $1000$ when creating the availability
    above.
 3. our file will be split into three pieces (`"nodes": 3`). 
    Because we set `"tolerance": 1` we only need two (`nodes - tolerance`)

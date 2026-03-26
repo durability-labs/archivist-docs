@@ -4,8 +4,8 @@ layout: home
 
 hero:
   name: Archivist
-  text: Decentralised data storage platform
-  tagline: Archivist is a durable, decentralised data storage protocol, created so the world community can preserve its most important knowledge without risk of censorship.
+  text: Decentralized data storage platform
+  tagline: Archivist is a durable, decentralized data storage protocol, created so the world community can preserve its most important knowledge without risk of censorship.
   actions:
     - theme: brand
       text: What is Archivist?
@@ -24,7 +24,7 @@ features:
     icon:
       src: /icons/book.svg
   - title: Networks
-    details: Participate in Archivist network as a Storage operator or Buyer
+    details: Participate in Archivist network as a storage operator or buyer
     link: /networks/networks
     icon:
       src: /icons/network.svg

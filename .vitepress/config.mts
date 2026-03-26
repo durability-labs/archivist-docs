@@ -9,7 +9,7 @@ const HOSTNAME = 'https://docs.archivist.storage'
 export default withMermaid({
   lang: 'en-US',
   title: 'Archivist Docs',
-  description: 'Decentralised data storage platform',
+  description: 'Decentralized data storage platform',
   lastUpdated: true,
   cleanUrls: true,
   ignoreDeadLinks: false,
@@ -27,6 +27,12 @@ export default withMermaid({
 
   mermaid:{
     //mermaidConfig !theme here works for light mode since dark theme is forced in dark mode
+  },
+
+  vite: {
+    build: {
+      chunkSizeWarningLimit: 800,
+    },
   },
 
   // lite-youtube-embed
@@ -121,7 +127,6 @@ export default withMermaid({
       {
         text: 'Archivist',
         items: [
-          { text: 'About', link: '/archivist/about' },
           { text: 'Security', link: '/archivist/security' },
           { text: 'Privacy Policy', link: '/archivist/privacy-policy' },
           { text: 'Terms of Use', link: '/archivist/terms-of-use' }
@@ -173,7 +178,6 @@ export default withMermaid({
           { text: 'Using Archivist', link: '/learn/using' },
           { text: 'Local Two Client Test', link: '/learn/local-two-client-test' },
           { text: 'Local Marketplace', link: '/learn/local-marketplace' },
-          { text: 'Download Flow', link: '/learn/download-flow' },
           { text: 'Troubleshoot', link: '/learn/troubleshoot' }
         ]
       },
@@ -196,7 +200,6 @@ export default withMermaid({
         text: 'Archivist',
         collapsed: false,
         items: [
-          { text: 'About', link: '/archivist/about' },
           { text: 'Security', link: '/archivist/security' },
           { text: 'Privacy Policy', link: '/archivist/privacy-policy' },
           { text: 'Terms of Use', link: '/archivist/terms-of-use' }

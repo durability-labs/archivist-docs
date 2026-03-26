@@ -1,34 +1,58 @@
 # What is Archivist?
 
-Archivist is a decentralised data storage protocol. Its primary features are strong censorship resistance and durability guarantees. It has a reference implementation by the same name, written in nim.
+Archivist is a durable, decentralized storage network — think BitTorrent with paid seeders and cryptographic durability guarantees. Data is encrypted locally, erasure-coded, dispersed across independent operators, verified by zero-knowledge proofs, and repaired automatically. No single point of failure.
 
-### Motive
+The protocol targets nine to eleven nines of durability, running on commodity hardware operated by anyone.
 
-The remote storage landscape is dominated by an increasingly small number of internet powerhouses—Google, Microsoft, Amazon, etc. While these services score highly in terms of user experience and convenience, centralised cloud data storage suffers from the following drawbacks:
+## The Problem
 
-- Censorship
+Most of your data lives on rented servers: subject to terms you didn't write, in jurisdictions you can't control, mediated by companies that can change their mind, change their policies, or disappear.
 
-- Lack of data ownership
+This is not hypothetical. Services get deplatformed, accounts get suspended, providers change terms or shut down. In custodial storage, you are a tenant — and tenants can be evicted.
 
-- Breaches and outages
+Encrypted cloud services (Mega, Proton Drive, Tresorit) improve on privacy but not on sovereignty. Encryption keeps people from reading your files, not from deleting your account. There is still a company to subpoena. Still a single point of failure.
 
-- High cost
+Self-hosting improves on this but introduces its own fragility. A single server is a single point of failure — one fire, one failed drive, one warrant, and the data is gone. Sovereignty requires distribution: geographic, jurisdictional, and administrative dispersal across independent operators.
 
-Centralised cloud storage providers have an established history of censoring data and, as de facto owners of said data, have the power to do so according to their own standards. Furthermore, centralised platforms have fallen victim to major data breaches and service outages on numerous occasions.
+## Why Decentralization
 
-Such incidents have created a gap in the market for a decentralised, censorship-resistant alternative. Existing peer-to-peer storage and file-sharing networks address some of these issues—such as robustness in the face of network disruptions, and desirable resistance to censorship. Yet without adequate incentives and strong data durability guarantees, they make for unsuitable foundations upon which to build truly unstoppable applications.
+Centralized systems will always win on speed and cost — that is what centralization is for. Decentralization is not a cost optimization. It is a hedge against censorship, jurisdictional risk, operator failure, and the slow grind of forgotten backups.
 
-Existing decentralised storage solutions purport to improve upon early P2P file-sharing platforms like eDonkey and Gnutella. However, the market still lacks a decentralised storage solution that is efficient in terms of storage and bandwidth usage, while offering performance and durability guarantees comparable to incumbents.
+If you want the fastest, cheapest storage and you trust the provider, use centralized storage — it is very good at what it does. If you need storage that no single entity can shut you off from, that requires a different architecture.
 
-<br/>
+## How Archivist Is Different
 
-### Decentralising data storage
+The difference from traditional peer-to-peer file sharing is not cosmetic — it's architectural:
 
-Archivist began in 2021 to address a need for a durable, decentralised storage layer for the web3 tech stack.
+| | File Sharing (BitTorrent, IPFS) | Decentralized Storage Network (Archivist) |
+|---|---|---|
+| **Core goal** | Opportunistic *distribution* of bytes | *Persistence* and *verifiability* of bytes |
+| **Data lifetime** | As long as someone seeds — no guarantees | Explicit durability budgets with automated repair |
+| **Trust model** | Best-effort, no liability for loss | Providers economically on the hook; cryptographic audits prove custody |
+| **Integrity** | Block-level hashing | ZK proofs of retrievability, erasure coding |
+| **Incentives** | Virtually none | Fee market, token-denominated SLAs, slashable collateral |
+| **Repair** | Hope someone re-seeds | Deterministic sampling, erasure-code repair |
 
-The name "Archivist" refers to an ancient form of book—an allusion to the data storage engine's extremely robust—99.99%—durability guarantees.
+File-sharing protocols optimize for speed and reach. Archivist optimizes for durability and accountability.
 
+## The Approach: R.A.P.I.D.
 
-### Testnet
+The protocol is built around five components that must work in tandem — remove any one and the durability guarantee breaks:
 
-Archivist is currently in the testnet phase. The client implementation is free and open software. If you're interested, we encourage you to try Archivist, connect to the testnet and experiment with its features. [Get started here](./quick-start.md)
+- **Redundancy** — erasure coding splits data so any subset of fragments can reconstruct the original
+- **Auditing** — zero-knowledge proofs verify data possession without downloading it
+- **Repair** — detect and correct loss automatically using erasure-coded redundancy
+- **Incentives** — collateral, slashing, and rewards align participant behavior
+- **Dispersal** — data is spread across independent operators so no single failure takes it down
+
+For the full technical treatment, see the [Architecture](./architecture) page and the [Whitepaper](./whitepaper).
+
+## Origins
+
+Archivist was established in 2025 by the original Codex architects — contributors to the Beacon Chain, PeerDAS, libp2p, and IPFS — building on five years of research and development.
+
+## Current State
+
+Archivist is in the testnet phase. The client implementation is free and open-source software written in Nim. If you're interested, [get started here](./quick-start).
+
+For the philosophical foundation behind the project, read [The Sovereign Storage Manifesto](https://blog.archivist.storage/manifesto).

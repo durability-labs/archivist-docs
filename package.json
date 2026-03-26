@@ -13,5 +13,8 @@
     "docs:preview": "vitepress preview",
     "docs:sync": "./scripts/sync-brand.sh",
     "docs:syncUnsafe": "./scripts/sync-brand.sh --force"
+  },
+  "dependencies": {
+    "svg-pan-zoom": "^3.6.2"
   }
 }

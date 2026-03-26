@@ -232,7 +232,7 @@ The way Archivist organizes its data as partitioned and erasure coded slots is l
 A key aspect of the Archivist proving system is that it attempts to be as lightweight as possible. The final goal is to be able to run it on simple computers equipped with inexpensive CPUs and modest amounts of RAM. Current requirements for home SPs are well around what a NUC or consumer laptop can provide, but those should drop even further as we optimize it. This is key as an efficient proving system means that:
     
 1. both non-storage hardware; e.g. CPUs and RAM, and electricity overhead costs for proofs should be small. This leads to better margins for SPs;
-2. minimal requirements are modest, which favours decentralization.
+2. minimal requirements are modest, which favors decentralization.
     
 ### 4.4. Publishing and Retrieving Data
 
@@ -444,7 +444,7 @@ Note however that we are still using $l_1=1$ in our model, i.e. a slot is consid
 
 ## 6. Conclusions and Future Work
 
-We have presented Archivist, a Decentralized Durability Engine which employs erasure coding and efficient proofs of storage to provide tunable durability guarantees and a favourable tradeoff in cost and complexity for storage providers. By having proofs that are lightweight, Archivist can keep the overhead spendings on hardware and electricity to a minimal. This is important both for fostering participation, as storage provider margins can be increased while prices for clients can decrease, and decentralization, as modest requirements are more likely to encourage a more diverse set of participants ranging from hobbyist home providers to larger players.
+We have presented Archivist, a Decentralized Durability Engine which employs erasure coding and efficient proofs of storage to provide tunable durability guarantees and a favorable tradeoff in cost and complexity for storage providers. By having proofs that are lightweight, Archivist can keep the overhead spendings on hardware and electricity to a minimal. This is important both for fostering participation, as storage provider margins can be increased while prices for clients can decrease, and decentralization, as modest requirements are more likely to encourage a more diverse set of participants ranging from hobbyist home providers to larger players.
 
 Despite our ambitious goals, Archivist is a work in progress. Ongoing efforts on improving it include:
 

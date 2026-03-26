@@ -424,4 +424,29 @@ a {
   background: var(--arch-term-panel) !important;
   border-radius: 8px;
   padding: 1rem;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+.mermaid svg {
+  display: block;
+  cursor: grab;
+}
+
+.mermaid svg:active {
+  cursor: grabbing;
+}
+
+/* svg-pan-zoom control icons */
+.mermaid .svg-pan-zoom-control {
+  fill: var(--arch-ui-green);
+  fill-opacity: 0.8;
+  cursor: pointer;
+}
+
+.mermaid .svg-pan-zoom-control:hover {
+  fill: var(--arch-phosphor);
+  fill-opacity: 1;
 }
