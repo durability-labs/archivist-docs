@@ -91,8 +91,74 @@
   color-scheme: dark;
 }
 
-/* Force dark class on html */
-html {
+.dark {
+  /* Override VitePress theme colors */
+  --vp-c-brand-1: var(--arch-phosphor);
+  --vp-c-brand-2: var(--arch-ui-green);
+  --vp-c-brand-3: var(--arch-phosphor-dim);
+  --vp-c-brand-soft: rgba(0, 255, 65, 0.14);
+
+  /* Typography */
+  --vp-font-family-base: 'JetBrains Mono', monospace;
+  --vp-font-family-mono: 'JetBrains Mono', monospace;
+
+  /* Force dark mode colors on root */
+  --vp-c-bg: var(--arch-term-black);
+  --vp-c-bg-alt: var(--arch-term-dark);
+  --vp-c-bg-elv: var(--arch-term-panel);
+  --vp-c-bg-soft: var(--arch-term-panel);
+
+  --vp-c-border: var(--arch-term-border);
+  --vp-c-divider: var(--arch-term-border);
+  --vp-c-gutter: var(--arch-term-dark);
+
+  --vp-c-text-1: var(--arch-text-bright);
+  --vp-c-text-2: var(--arch-term-text);
+  --vp-c-text-3: var(--arch-term-muted);
+
+  --vp-c-default-1: var(--arch-term-text);
+  --vp-c-default-2: var(--arch-term-muted);
+  --vp-c-default-3: var(--arch-term-border);
+  --vp-c-default-soft: var(--arch-term-panel);
+
+  --vp-c-tip-1: var(--arch-phosphor);
+  --vp-c-tip-2: var(--arch-ui-green);
+  --vp-c-tip-3: var(--arch-term-muted);
+  --vp-c-tip-soft: rgba(0, 255, 65, 0.1);
+
+  --vp-c-warning-1: var(--arch-amber);
+  --vp-c-warning-2: var(--arch-amber-dim);
+  --vp-c-warning-soft: rgba(255, 170, 0, 0.1);
+
+  --vp-c-danger-1: var(--arch-error);
+  --vp-c-danger-soft: rgba(255, 68, 68, 0.1);
+
+  --vp-home-hero-name-color: var(--arch-phosphor);
+  --vp-home-hero-name-background: none;
+  --vp-home-hero-image-background-image: radial-gradient(ellipse at center, rgba(0, 255, 65, 0.15) 0%, transparent 60%);
+  --vp-home-hero-image-filter: none;
+
+  --vp-button-brand-border: var(--arch-ui-green);
+  --vp-button-brand-text: var(--arch-term-black);
+  --vp-button-brand-bg: var(--arch-ui-green);
+  --vp-button-brand-hover-border: var(--arch-phosphor);
+  --vp-button-brand-hover-text: var(--arch-term-black);
+  --vp-button-brand-hover-bg: var(--arch-phosphor);
+  --vp-button-brand-active-border: var(--arch-phosphor);
+  --vp-button-brand-active-text: var(--arch-term-black);
+  --vp-button-brand-active-bg: var(--arch-phosphor-dim);
+
+  --vp-button-alt-border: var(--arch-term-border);
+  --vp-button-alt-text: var(--arch-term-text);
+  --vp-button-alt-bg: var(--arch-term-panel);
+  --vp-button-alt-hover-border: var(--arch-ui-green);
+  --vp-button-alt-hover-text: var(--arch-phosphor);
+  --vp-button-alt-hover-bg: var(--arch-term-panel);
+
+  --vp-nav-bg: rgba(1, 3, 2, 0.9);
+  --vp-sidebar-bg: var(--arch-term-dark);
+
+  /* Force dark color scheme */
   color-scheme: dark;
 }
 
