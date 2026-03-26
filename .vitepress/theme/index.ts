@@ -98,11 +98,7 @@ async function mountPanZoom() {
 const theme: Theme = {
   extends: DefaultTheme,
   Layout: Layout,
-  enhanceApp({ app }) {
-    if (typeof document !== 'undefined') {
-      document.documentElement.classList.add('dark')
-    }
-  },
+  enhanceApp() {},
   setup() {
     let observer: MutationObserver | undefined
 

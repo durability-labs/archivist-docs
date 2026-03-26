@@ -13,7 +13,7 @@ export default withMermaid({
   lastUpdated: true,
   cleanUrls: true,
   ignoreDeadLinks: false,
-  appearance: 'dark',
+  appearance: 'force-dark',
 
   sitemap: { hostname: HOSTNAME },
 
