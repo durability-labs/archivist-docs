@@ -46,7 +46,8 @@ export default withMermaid({
 
   head: [
     // Favicons
-    ['link', { rel: 'icon', href: '/favicons/favicon.svg', type: 'image/svg+xml' }],
+    ['link', { rel: 'icon', href: '/assets/icons/favicon-32x32.png', type: 'image/png', sizes: '32x32' }],
+    ['link', { rel: 'apple-touch-icon', href: '/assets/icons/apple-touch-icon.png', sizes: '180x180' }],
     // Meta description
     ['meta', { name: 'description', content: 'Learn how to use Archivist, the decentralized durability engine. Guides, API reference, and architecture docs.' }],
     // Open Graph (static defaults — title/desc/type set dynamically in transformHead)
