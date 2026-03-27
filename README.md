@@ -67,15 +67,16 @@
  Please check [VitePress documentation](https://vitepress.dev/) for more details about customizations.
 
  Process
- - Create a fork
- - Create a custom branch in your fork
- - Add your contribution
- - Make a PR to the upstream repository
+  - Create a fork
+  - Create a custom branch in your fork
+  - Add your contribution
+  - Make a PR to the upstream repository
 
  Project structure
- - `learn` - All information to learn about Archivist
- - `networks` - Archivist networks related information
- - `developers` - Archivist development process and guides
+  - `learn` - All information to learn about Archivist
+  - `networks` - Archivist networks related information
+  - `developers` - Archivist development process and guides
+  - `scripts` - contains helper scripts such as `sync-brand.sh` used by `npm run docs:sync` and `npm run docs:syncUnsafe`
 
 
 ## Internationalization
@@ -100,7 +101,7 @@
     └── networks
     ```
 
- 3. If you need to translate images, they are located inside a *public* folder. After translation, add a language suffix to the language specific file, for example *public/learn/architecture-`ko`.png*.
+  3. If you need to translate images, they are located inside a *public* folder. The architecture diagram is an SVG (`public/learn/architecture.svg`), so translate it and add a language suffix to the language specific file, for example *public/learn/architecture-`ko`.svg*.
 
     Then, update the docs to use a language specific image.
 
