@@ -55,4 +55,4 @@ Archivist was established in 2025 by the original Codex architects — contribut
 
 Archivist is in the testnet phase. The client implementation is free and open-source software written in Nim. If you're interested, [get started here](./quick-start).
 
-For the philosophical foundation behind the project, read [The Sovereign Storage Manifesto](https://blog.archivist.storage/manifesto).
+For the philosophical foundation behind the project, read [The Sovereign Storage Manifesto](https://manifesto.archivist.storage).
