@@ -1,3 +1,8 @@
+---
+title: "Decentralized Storage Architecture"
+description: "Archivist architecture: the RAPID durability framework, erasure coding, zero-knowledge proof system, decentralized storage request lifecycle, and peer-to-peer networking."
+---
+
 # Architecture
 
 Archivist is a decentralized durability engine. Data is encrypted locally, erasure-coded, dispersed across independent operators, verified by zero-knowledge proofs, and repaired automatically. No single point of failure.
