@@ -1,3 +1,8 @@
+---
+title: "Whitepaper: Decentralized Durable Storage"
+description: "The Archivist whitepaper: decentralized durable storage with erasure coding, cryptographic proofs, lazy repair, and verifiable data integrity."
+---
+
 <center>
     
 **Abstract** 

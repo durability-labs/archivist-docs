@@ -1,23 +1,28 @@
-# Archivist Documentation
+# Archivist Documentation — Decentralized Durable Storage Network
 
-> Technical documentation for Archivist, the decentralized durability engine. Guides for building, running, and using Archivist nodes.
+> Technical documentation for Archivist, a decentralized durable storage network. Archivist uses erasure coding, zero-knowledge proofs, and automatic repair to provide sovereign, censorship-resistant storage. Built on the RAPID durability framework.
 
-## Getting Started
-- [What is Archivist?](https://docs.archivist.storage/learn/what-is-archivist): Overview and core concepts
-- [Architecture](https://docs.archivist.storage/learn/architecture): System architecture
-- [Quick Start](https://docs.archivist.storage/learn/quick-start): Get running fast
-- [Build Archivist](https://docs.archivist.storage/learn/build): Building from source
-- [Run Archivist](https://docs.archivist.storage/learn/run): Running a node
+## Core Concepts
+- [What is Archivist?](https://docs.archivist.storage/learn/what-is-archivist): Overview of decentralized durable storage — the problem, approach, and RAPID framework
+- [Architecture](https://docs.archivist.storage/learn/architecture): Decentralized storage architecture — erasure coding, proof system, state machines, peer-to-peer networking
+- [Whitepaper](https://docs.archivist.storage/learn/whitepaper): Formal protocol specification — data durability proofs, repair mechanisms, economic model
+
+## Setup Guides
+- [Quick Start](https://docs.archivist.storage/learn/quick-start): Install and run a decentralized storage node in minutes
+- [Build Archivist](https://docs.archivist.storage/learn/build): Build from source on Linux, macOS, or Windows
+- [Run Archivist](https://docs.archivist.storage/learn/run): Node configuration, marketplace setup, Docker deployment
+- [Using Archivist](https://docs.archivist.storage/learn/using): REST API usage — upload, store, and retrieve data
 
 ## Reference
 - [API](https://docs.archivist.storage/developers/api): REST API reference
-- [Whitepaper](https://docs.archivist.storage/learn/whitepaper): Technical whitepaper
-- [Tokenomics Litepaper](https://docs.archivist.storage/learn/tokenomics-litepaper): Token economics
+- [Tokenomics Litepaper](https://docs.archivist.storage/learn/tokenomics-litepaper): Token economics (under revision)
 
 ## Networks
-- [Devnet](https://docs.archivist.storage/networks/devnet): Development network
-- [Testnet](https://docs.archivist.storage/networks/testnet): Test network
+- [Devnet](https://docs.archivist.storage/networks/devnet): Development network for testing
+- [Testnet](https://docs.archivist.storage/networks/testnet): Public test network — join with your node
 
 ## Related
-- [Main Site](https://archivist.storage): Product overview
-- [Blog](https://blog.archivist.storage): Technical insights and research
+- [Main Site](https://archivist.storage): Product overview and team
+- [Blog](https://blog.archivist.storage): Technical insights on decentralized storage
+- [Manifesto](https://manifesto.archivist.storage): The Sovereign Storage Manifesto
+- [GitHub](https://github.com/durability-labs): Source code

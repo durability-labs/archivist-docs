@@ -1,3 +1,7 @@
+---
+description: "What is Archivist? A decentralized durable storage network that encrypts, erasure-codes, and disperses data across independent operators. Sovereign storage verified by zero-knowledge proofs."
+---
+
 # What is Archivist?
 
 Archivist is a durable, decentralized storage network — think BitTorrent with paid seeders and cryptographic durability guarantees. Data is encrypted locally, erasure-coded, dispersed across independent operators, verified by zero-knowledge proofs, and repaired automatically. No single point of failure.
