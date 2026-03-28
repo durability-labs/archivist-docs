@@ -1,3 +1,8 @@
+---
+title: "Build Archivist from Source"
+description: "Build Archivist from source on Linux, macOS, or Windows. Prerequisites, compilation, and testing instructions."
+---
+
 # Build Archivist
 
 ## Table of Contents

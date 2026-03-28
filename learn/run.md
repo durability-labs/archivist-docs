@@ -1,5 +1,7 @@
 ---
 outline: [2, 4]
+title: "Run a Decentralized Storage Node"
+description: "How to run an Archivist node: configuration, marketplace setup, storage provider mode, Docker deployment, and network connectivity."
 ---
 # Run Archivist
 

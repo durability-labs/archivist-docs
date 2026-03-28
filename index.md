@@ -1,6 +1,7 @@
 ---
 layout: doc
 title: Archivist Docs
+description: "Archivist documentation: guides for the decentralized durable storage network. Setup, architecture, API reference, and network information."
 ---
 
 # Archivist Documentation

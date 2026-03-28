@@ -1,5 +1,7 @@
 ---
 outline: [2, 3]
+title: "Using the Decentralized Storage API"
+description: "Using the Archivist REST API: upload data, request decentralized storage, check purchase status, and download files."
 ---
 # Using Archivist
 
