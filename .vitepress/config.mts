@@ -9,7 +9,7 @@ const HOSTNAME = 'https://docs.archivist.storage'
 export default withMermaid({
   lang: 'en-US',
   title: 'Archivist Docs',
-  description: 'Decentralized data storage platform',
+  description: 'Documentation for Archivist, the decentralized durable storage network with erasure coding and zero-knowledge proofs',
   lastUpdated: true,
   cleanUrls: true,
   ignoreDeadLinks: false,
@@ -52,7 +52,8 @@ export default withMermaid({
     ['link', { rel: 'icon', href: '/assets/icons/favicon-32x32.png', type: 'image/png', sizes: '32x32' }],
     ['link', { rel: 'apple-touch-icon', href: '/assets/icons/apple-touch-icon.png', sizes: '180x180' }],
     // Meta description
-    ['meta', { name: 'description', content: 'Learn how to use Archivist, the decentralized durability engine. Guides, API reference, and architecture docs.' }],
+    ['meta', { name: 'description', content: 'Documentation for Archivist, the decentralized durable storage network. Guides on sovereign storage setup, erasure coding, zero-knowledge proofs, and the RAPID durability framework.' }],
+    ['meta', { name: 'keywords', content: 'decentralized storage, durable storage, sovereign storage, censorship resistant storage, erasure coding, zero-knowledge proofs, p2p storage, web3 storage, data sovereignty, decentralized durability engine, Archivist documentation' }],
     // Open Graph (static defaults — title/desc/type set dynamically in transformHead)
     ['meta', { property: 'og:image', content: `${HOSTNAME}/assets/social/og-article.png` }],
     ['meta', { property: 'og:image:secure_url', content: `${HOSTNAME}/assets/social/og-article.png` }],
@@ -88,7 +89,7 @@ export default withMermaid({
       .replace(/\.md$/, '')
     const canonical = path ? `${HOSTNAME}/${path}` : HOSTNAME
     const title = pageData.title || 'Archivist Documentation'
-    const description = pageData.description || pageData.frontmatter?.description || 'Archivist technical documentation'
+    const description = pageData.description || pageData.frontmatter?.description || 'Archivist decentralized storage documentation'
 
     // Dynamic OG + Twitter per page
     head.push(

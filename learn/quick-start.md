@@ -1,3 +1,8 @@
+---
+title: "Quick Start: Run a Decentralized Storage Node"
+description: "Quick start guide for Archivist, the decentralized storage node. Install, run, and interact with the network in minutes."
+---
+
 # Quick Start
 
 To run Archivist through this guide we would need to perform the following steps:
