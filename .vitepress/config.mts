@@ -214,9 +214,9 @@ export default withMermaid({
 
     socialLinks: [
       { icon: 'github', link: 'https://github.com/durability-labs/archivist-docs' },
-      { icon: 'twitter', link: 'https://x.com/ArchivistStrg' },
+      { icon: 'x', link: 'https://x.com/ArchivistStrg' },
       { icon: 'youtube', link: 'https://www.youtube.com/@ArchivistStorage' },
-      { icon: 'discord', link: 'https://discord.gg/4yHFJErnCp' }
+      { icon: 'discord', link: 'https://discord.archivist.storage/' }
     ],
 
     footer: {
