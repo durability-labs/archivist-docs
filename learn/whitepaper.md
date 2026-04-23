@@ -4,13 +4,13 @@ description: "The Archivist whitepaper: decentralized durable storage with erasu
 ---
 
 <center>
-    
-**Abstract** 
+
+**Abstract**
 </center>
-  
+
 <div style="display: flex; justify-content: center; align-items: center;">
 <div style="text-align: justify; width: 80%">
-The internet is becoming more and more centralized. As companies and individuals increasingly rely on centralized cloud providers for storage, critical concerns on privacy, censorship, and user control, as well as on the concentration of economic power in the hands of few entities become more pronounced. 
+The internet is becoming more and more centralized. As companies and individuals increasingly rely on centralized cloud providers for storage, critical concerns on privacy, censorship, and user control, as well as on the concentration of economic power in the hands of few entities become more pronounced.
 
 While there have been several attempts at providing alternatives, modern decentralized storage networks (DSNs) often fall short on basic aspects like having strong durability guarantees, being efficient to operate, or providing scalable proofs of storage. This in turn leads to solutions that are either: _i)_ not useful, as they can lose data; _ii)_ not friendly to decentralization, as they require specialized or expensive hardware, or; _iii)_ economically unfeasible, as they burden providers with too many costs beyond those of the storage hardware itself.
 
@@ -20,7 +20,7 @@ We describe the architecture and mechanisms of Archivist, including its marketpl
 </div>
 </div>
 
-## 1. Introduction 
+## 1. Introduction
 Data production has been growing at an astounding pace, with significant implications. Data is a critical asset for businesses, driving decision-making, strategic planning, and innovation. Individuals increasingly intertwine their physical lives with the digital world, meticulously documenting every aspect of their lives, taking pictures and videos, sharing their views and perspectives on current events, using digital means for communication and artistic expression, etc. Digital personas have become as important as their physical counterparts, and this tendency is only increasing.
 
 Yet, the current trend towards centralization on the web has led to a situation where users have little to no control over their personal data and how it is used. Large corporations collect, analyze, and monetize user data, often without consent or transparency. This lack of privacy leaves individuals vulnerable to targeted advertising, profiling, surveillance, and potential misuse of their personal information.
@@ -33,13 +33,13 @@ To address these issues, there is a growing need for decentralized technologies.
 
 Despite their potential benefits, however, the lack of efficient and reliable decentralized storage leaves a key gap that needs to be addressed before any notion of a decentralized technology stack can be seriously contemplated.
 
-In response to these challenges, we introduce Archivist: a novel Erasure Coded Decentralized Storage Network which relies on erasure coding for redundancy and efficient proofs of storage. This method provides unparalleled reliability and allows for the storage of large datasets, larger than any single node in the network, in a durable and secure fashion. Our compact and efficient proofs of storage can detect and prevent catastrophic data loss with great accuracy, while incurring relatively modest hardware and electricity requirements -- two preconditions for achieving true decentralization. In addition, we introduce and formalize in this paper the notion of durability in decentralized storage networks through a new concept we call the _Decentralized Durability Engine_ (DDE).
+In response to these challenges, we introduce Archivist: a novel Erasure Coded Decentralized Storage Network which relies on erasure coding for redundancy and efficient proofs of storage. This method provides unparalleled reliability and allows for the storage of large datasets, larger than any single node in the network, in a durable and secure fashion. Our compact and efficient proofs of storage can detect and prevent catastrophic data loss with great accuracy, while incurring relatively modest hardware and electricity requirements - two preconditions for achieving true decentralization. In addition, we introduce and formalize in this paper the notion of durability in decentralized storage networks through a new concept we call the _Decentralized Durability Engine_ (DDE).
 
-The remainder of this paper is organized as follows. First, we discuss the context on which Archivist is built (Sec. 2) by expanding on the issues of centralized cloud storage, and providing background on previous takes at decentralized alternatives -- namely, p2p networks, blockchains, and DSNs. Then, we  introduce the conceptual framework that underpins Archivist in Sec. 3 -- the Decentralized Durability Engine (DDE) -- followed by a more detailed descriptions of the mechanisms behind Archivist and how it materializes as a DDE in Sec. 4. Sec. 5 then presents a preliminary reliability analysis, which places Archivist's storage parameters alongside more formal durability guarantees. Finally, Sec. 6 provides conclusions and ongoing work.
+The remainder of this paper is organized as follows. First, we discuss the context on which Archivist is built (Sec. 2) by expanding on the issues of centralized cloud storage, and providing background on previous takes at decentralized alternatives - namely, p2p networks, blockchains, and DSNs. Then, we  introduce the conceptual framework that underpins Archivist in Sec. 3 - the Decentralized Durability Engine (DDE) - followed by a more detailed descriptions of the mechanisms behind Archivist and how it materializes as a DDE in Sec. 4. Sec. 5 then presents a preliminary reliability analysis, which places Archivist's storage parameters alongside more formal durability guarantees. Finally, Sec. 6 provides conclusions and ongoing work.
 
 ## 2. Background and Context
 
-Archivist aims at being a useful and decentralized alternative to centralized storage. In this section, we discuss the context in which this needs arises, as well as why past and current approaches to building and reasoning about decentralized storage were incomplete. This will set the stage for our introduction of the Decentralized Durability Engine -- our approach to reasoning about decentralized storage -- in Sec. 3.
+Archivist aims at being a useful and decentralized alternative to centralized storage. In this section, we discuss the context in which this needs arises, as well as why past and current approaches to building and reasoning about decentralized storage were incomplete. This will set the stage for our introduction of the Decentralized Durability Engine - our approach to reasoning about decentralized storage - in Sec. 3.
 
 ### 2.1. Centralized Cloud Storage
 Over the past two decades, centralized cloud storage has become the _de facto_ approach for storage services on the internet for both individuals and companies alike. Indeed, recent research places the percentage of businesses that rely on at least one cloud provider at $94\%$[^zippia_cloud_report], while most modern smartphones will backup their contents to a cloud storage provider by default.
@@ -56,7 +56,7 @@ Given the downsides of centralized cloud storage, it is natural to wonder if the
 
 **P2P Networks.** P2P networks have been around for over two decades. Their premise is that users can run client software on their own machines and form a self-organizing network that enables sharing of resources like bandwidth, compute, and storage to provide higher-level services like search or decentralized file sharing without the need for a centralized controlling actor.
 
-Early networks like BitTorrent[^cohen_01], however, only had rudimentary incentives based on a form of barter economy in which nodes providing blocks to other nodes would be rewarded with access to more blocks. This provides some basic incentives for nodes to exchange the data they hold, but whether or not a node decides to hold a given piece of data is contingent on whether or not the node operator was interested in that data to begin with; i.e., a node will likely not download a movie if they are not interested in watching it. 
+Early networks like BitTorrent[^cohen_01], however, only had rudimentary incentives based on a form of barter economy in which nodes providing blocks to other nodes would be rewarded with access to more blocks. This provides some basic incentives for nodes to exchange the data they hold, but whether or not a node decides to hold a given piece of data is contingent on whether or not the node operator was interested in that data to begin with; i.e., a node will likely not download a movie if they are not interested in watching it.
 
 Files which are not popular, therefore, tend to disappear from the network as no one is interested in them, and there is no way to incentivize nodes to do otherwise. This lack of even basic durability guarantees means BitTorrent and, in fact, most of the early p2p file-sharing networks, are suitable as distribution networks at best, but not as storage networks as data can, and probably will, be eventually lost. Even more recent attempts at decentralized file sharing like IPFS[^ipfs_website] suffer from similar shortcomings: by default, IPFS offers no durability guarantees, i.e., there is no way to punish a pinning service if it fails to keep data around.
 
@@ -66,7 +66,7 @@ This permanence allied to the fully replicated nature of blockchain means they p
 
 Blockchains represent nevertheless a game-changing addition to decentralized systems in that they allow system designers to build much stronger and complex incentive mechanisms based on monetary economies, and to implement key mechanisms like cryptoeconomic security[^chaudhry_24] through slashing, which were simply not possible before.
 
-**Decentralized Storage Networks (DSNs).** Decentralized Storage Networks (DSNs) represent a natural stepping stone in decentralized storage: by combining traditional P2P technology with the strong incentive mechanisms afforded by modern blockchains and new cryptographic primitives, they provide a much more credible take on decentralized storage. 
+**Decentralized Storage Networks (DSNs).** Decentralized Storage Networks (DSNs) represent a natural stepping stone in decentralized storage: by combining traditional P2P technology with the strong incentive mechanisms afforded by modern blockchains and new cryptographic primitives, they provide a much more credible take on decentralized storage.
 
 Like early P2P networks, DSNs consolidate storage capacities from various independent providers and orchestrate data storage and retrieval services for clients. Unlike early P2P networks, however, DSNs employ the much stronger mechanisms afforded by blockchains to incentivize correct operation. They typically employ remote auditing techniques like Zero-Knowledge proofs to hold participants accountable, coupled with staking/slashing mechanisms which inflict monetary losses on bad participants as they are caught.
 
@@ -83,12 +83,12 @@ While useful, we argue this definition is incomplete as it pushes a number of ke
 * remote auditing and repair protocols;
 * strategies for data redundancy and dispersal.
 
-Such elements are of particular importance as one attempts to reason about what would be required to construct a DSN that provides actual utility. As we set out to design Archivist and asked ourselves that question, we found that the key to useful DSNs is in _durability_; i.e., a storage system is only useful if it can provide durability guarantees that can be reasoned about. 
+Such elements are of particular importance as one attempts to reason about what would be required to construct a DSN that provides actual utility. As we set out to design Archivist and asked ourselves that question, we found that the key to useful DSNs is in _durability_; i.e., a storage system is only useful if it can provide durability guarantees that can be reasoned about.
 
 In the next section, we explore a construct we name Decentralized Durability Engines which, we argue, lead to a more principled approach to designing storage systems that provide utility.
-    
+
 ## 3. Decentralized Durability Engines (DDE)
-    
+
 A Decentralized Durability Engine is a tuple $\Gamma = \text{(R, A, P, I, D)}$ where:
 
 * $R$ is a set of redundancy mechanisms, such as erasure coding and replication, that ensure data availability and fault tolerance.
@@ -98,7 +98,7 @@ A Decentralized Durability Engine is a tuple $\Gamma = \text{(R, A, P, I, D)}$ w
 * $D$ is a set of data dispersal algorithms that strategically distribute data fragments across multiple nodes to minimize the risk of data loss due to localized failures and to improve data availability and accessibility.
 
 We argue that when designing a storage system that can keep data around, none of these elements are optional. Data needs to be redundant ($R$), there needs to be a way to detect failures and misbehavior ($A$), we must be able to repair data so it is not lost to accumulated failures $(P)$, misbehaving nodes must be penalized ($I$), and data must be placed so as fault correlation is understood ($D$).
-    
+
 This is a somewhat informal treatment for now, but the actual parameters that would be input into any reliability analysis of a storage system would be contingent on those choices. In a future publication, we will explore how durability is affected by the choice of each of these elements in a formal framework.
 
 ## 4. Archivist: A Decentralized Durability Engine
@@ -152,7 +152,7 @@ Once this process completes, we say that slot $S_i$ has been **filled**. Once al
 ### 4.3. Erasure Coding, Repair, and Storage Proofs
 
 Erasure coding plays two main roles in Archivist: _i)_ allowing data to be recovered following loss of one or more SPs and the slots that they hold (redundancy) and _ii)_ enabling cost-effective proofs of storage. We will go through each of these aspects separately.
-    
+
 **Erasure Coding for Redundancy.** As described before, a dataset $D$ is initially split into $k$ slots of size $s = \left\lceil \frac{b}{k} \right\rceil$ (Figure 1). Since $b$ may not actually be divisible by $k$, Archivist will add _padding blocks_ as required so that the number of blocks in $D$ is $b_p = s \times k$.
 
 <center>
@@ -160,7 +160,7 @@ Erasure coding plays two main roles in Archivist: _i)_ allowing data to be recov
 </center>
 
 **Figure 1.** A padded dataset $D$ split into $k$ slots.
-    
+
 Archivist then erasure-codes $D$ by _interleaving_ blocks taken from each slot (Figure 2), one at a time. The procedure runs $s$ interleaving steps, where $s$ is the number of blocks in a slot.
 
 <center>
@@ -168,43 +168,43 @@ Archivist then erasure-codes $D$ by _interleaving_ blocks taken from each slot (
 </center>
 
 **Figure 2.** Erasure-coded dataset $D_e$ with $k + m$ slots and interleaving process.
-    
+
 At each _interleaving step_, we collect $k$ blocks by selecting the $i^{th}$ block within each of the $k$ slots ($1 \leq i \leq s$), and feed those through the Reed-Solomon encoder. The encoder then outputs $m$ parity blocks, which get added as the $i^{th}$ block of $m$ new distinct _parity slots_. Since slots have $s$ blocks each we are left, at the end of this process, with $m$ parity slots of $s$ blocks each, or $m \times s$ new parity blocks.
-    
+
 The Archivist marketplace (Sec. 4.5) then employs mechanisms to ensure that each one of these slots are assigned to a different node so that failure probabilities for each slot are decorrelated. This is important as, bridging back to durability guarantees, assuming that we could know the probability $p_{\text{loss}}$ with which a given SP could fail over a one year period, this would bound the probability of data loss at $p_{\text{loss}} \leq \binom{k + m}{k} p_{\text{loss}}^k(1 - p_{\text{loss}})^{m}$. We say this is a bound because in practice repair would kick in earlier, so the probability of loss is actually a lot smaller than this. We will carry a more detailed analysis taking those aspects into account in Sec. 5.
-     
+
 **Erasure Coding for Storage Proofs.** The other, less obvious way in which Archivist employs erasure coding is _locally_ at each SP when generating storage proofs. This allows Archivist to be expedient in detecting both unintentional and malicious data loss with a high level of accuracy.
-    
+
 To understand how this works, imagine we had an SP that has promised to store some slot $S_i \in D_e$ until a certain time instant $t_b$. How do we ensure that the SP is indeed holding its promise? One way to approach this would be by having a verifier download the whole slot $S_i$ from the SP at random instants in time. This would ensure the data is still there, but would be costly.
 
-A smarter approach would be by _sampling_: instead of downloading the entire file, the verifier can ask for a random subset of the blocks in the file and their Merkle inclusion proofs. While this also works, the problem here is that the probability of detecting lost blocks is directly impacted by what fraction of blocks $l_i$ have been lost: if we ask the SP for $j$ samples, then the probability that we catch a missing block is $p_{\text{detect}} = 1 - (1 - l_i)^j$. 
-    
+A smarter approach would be by _sampling_: instead of downloading the entire file, the verifier can ask for a random subset of the blocks in the file and their Merkle inclusion proofs. While this also works, the problem here is that the probability of detecting lost blocks is directly impacted by what fraction of blocks $l_i$ have been lost: if we ask the SP for $j$ samples, then the probability that we catch a missing block is $p_{\text{detect}} = 1 - (1 - l_i)^j$.
+
 Although the decay is always geometric, the impact of having a loss fraction that is low (e.g. less than $1\%$) can be significant: as depicted in Figure 3, for $l_i = 0.01$ we  get a $p_{\text{detect}}$ that is smaller than $0.5$ even after drawing $50$ samples. If that does not sound too bad, consider an adversarial setting in which an SP purposefully drops a very small fraction of a large file, perhaps one single block out of a million. For fractions that small ($10^{-6}$), one would require hundreds of thousands of samples to get reasonable detection probabilities, e.g. $p_{\text{detect}} > 0.99$.
-    
+
 <center>
     <img src="/learn/whitepaper/p-detect-plot.png"/>
 </center>
-    
+
 **Figure 3.** Number of samples $j$ required by a verifier to assert data loss ($p_{\text{detect}}$) for various loss fractions ($l_i$).
-    
-The reason it is hard to detect loss is because we are attempting to find the perhaps single block that is missing out of $b$ blocks by random sampling. Erasure coding completely changes that dynamic in that _any_ $k$ out of $b$ blocks is enough to recover the data, so that only loss fractions that are larger than $k/b$ matter as any smaller fraction can be compensated by the erasure code. 
-    
+
+The reason it is hard to detect loss is because we are attempting to find the perhaps single block that is missing out of $b$ blocks by random sampling. Erasure coding completely changes that dynamic in that _any_ $k$ out of $b$ blocks is enough to recover the data, so that only loss fractions that are larger than $k/b$ matter as any smaller fraction can be compensated by the erasure code.
+
 If we require SPs to _locally encode_ slots with a code rate [^wikipedia_code_rate] that is higher than $0.5$ so that a dataset with $b$ blocks expands to $2b$ and any $b$ blocks out of those are enough to recover the data, this means that data will only be lost if _more than half of the blocks_ are dropped, i.e., when $l_i \geq 0.5$. From Figure 3, we can see that in this case we approach $p_{\text{detect}} = 1$ with a very small number of samples: indeed, by looking at only $10$ samples, we already get $p_{\text{detect}} > 0.99$. The actual implementation in Archivist borrows heavily from these ideas, though it requires SPs to use a somewhat more intrincate two-dimensional encoding structure for other technical reasons[^spanbroek_23].
-    
+
 The final step for Archivist proofs is that they need to be _publicly verifiable_. The actual proving mechanism in Archivist constructs a Groth16[^groth_16] proof so that it can be verified on-chain; i.e., the verifiers are the public blockchain nodes themselves. The implementation has therefore both an on-chain component, which contains the logic to determine when proofs are required and when they are overdue, and an off-chain component, which runs periodically to trigger those at the right instants.
-    
-Algorithm 1 depicts, in Python-pseudocode, the _proving loop_ that SPs must run for every slot $S_i$ that they fill. It starts by waiting for a period boundary (line $7$), which is a fixed time slice that is larger than the average time between consecutive blocks in the target blockchain; i.e., the loop in lines $6$ -- $15$ runs _at most once_ per block. 
-    
-It then asks the on-chain contract if a proof is required for this period (line $8$). The contract will then execute Algorithm 2 (on-chain), which checks if the current blockhash modulo a `frequency` parameter (lines $3$) amounts to zero. Since hash values are approximately random, that condition will turn out to be true, on average, at every `frequency` blocks. 
-    
-Going back to Algorithm 1, if a proof turns out to be required for the current period, the SP will then retrieve a random value from the contract (line $9$), which is also derived from the current blockhash. 
-    
+
+Algorithm 1 depicts, in Python-pseudocode, the _proving loop_ that SPs must run for every slot $S_i$ that they fill. It starts by waiting for a period boundary (line $7$), which is a fixed time slice that is larger than the average time between consecutive blocks in the target blockchain; i.e., the loop in lines $6$ - $15$ runs _at most once_ per block.
+
+It then asks the on-chain contract if a proof is required for this period (line $8$). The contract will then execute Algorithm 2 (on-chain), which checks if the current blockhash modulo a `frequency` parameter (lines $3$) amounts to zero. Since hash values are approximately random, that condition will turn out to be true, on average, at every `frequency` blocks.
+
+Going back to Algorithm 1, if a proof turns out to be required for the current period, the SP will then retrieve a random value from the contract (line $9$), which is also derived from the current blockhash.
+
 
 ```python=
 async def proving_loop(
     dataset_root: Poseidon2Hash,
     slot_root: Poseidon2Hash,
-    contract: StorageContract, 
+    contract: StorageContract,
     slot_index: int):
   while True:
     await contract.next_period()
@@ -227,7 +227,7 @@ def is_proof_required()
   return randomness % frequency == 0:
 ```
 **Algorithm 2.** Checking if a proof is required (ran on smart contract, on-chain).
-    
+
 Merkle trees for proof verification are built using $\text{Poseidon2}$ hashes[^grassi_23] as those are more efficient to compute inside arithmetic circuits than, say, SHA256, though this may change as we evolve the proving system.
 
 **Repair.** The redundancy and proof mechanisms outlined so far allow Archivist to _repair_ data in a relatively simple fashion: missing proofs signal lost slots, and are used as failure detectors. Whenever a threshold amount of slots are lost, a lazy repair process is triggered in which the lost slots are put back on sale. Providers are then allowed to fill such slots again but, instead of downloading the slot itself, they download enough blocks from other nodes so they can reconstruct the missing slot, say, $S_i$. They then proceed as before and submit a proof for $S_i$, causing that slot to be filled again.
@@ -235,14 +235,14 @@ Merkle trees for proof verification are built using $\text{Poseidon2}$ hashes[^g
 The way Archivist organizes its data as partitioned and erasure coded slots is largely inspired by HAIL[^bowers_09]. The use of local erasure coding and compact proofs is instead inspired by earlier work on PoRs[^juels_07] and PDPs[^ateniese_07], as well as compact PoRs[^schacham_08].
 
 A key aspect of the Archivist proving system is that it attempts to be as lightweight as possible. The final goal is to be able to run it on simple computers equipped with inexpensive CPUs and modest amounts of RAM. Current requirements for home SPs are well around what a NUC or consumer laptop can provide, but those should drop even further as we optimize it. This is key as an efficient proving system means that:
-    
+
 1. both non-storage hardware; e.g. CPUs and RAM, and electricity overhead costs for proofs should be small. This leads to better margins for SPs;
 2. minimal requirements are modest, which favors decentralization.
-    
+
 ### 4.4. Publishing and Retrieving Data
 
-Datasets stored in Archivist need to be advertised over a Distributed Hash Table (DHT), which is a flavour of the Kademlia DHT[^maymounkov_02], so they can be located and retrieved by other peers. At a basic level, the Archivist DHT maps _Content IDentifiers_ (CIDs)[^cid_spec], which identify data, onto _provider lists_, which identify peers holding that data. 
-    
+Datasets stored in Archivist need to be advertised over a Distributed Hash Table (DHT), which is a flavour of the Kademlia DHT[^maymounkov_02], so they can be located and retrieved by other peers. At a basic level, the Archivist DHT maps _Content IDentifiers_ (CIDs)[^cid_spec], which identify data, onto _provider lists_, which identify peers holding that data.
+
 A CID unequivocally identifies a piece of data by encoding a flavour of a hash of its content together with the type of hashing method used to compute it. In the case of a Archivist dataset $D_e$ (Figure 4), this hash is taken to be the root of the SHA256 Merkle tree constructed over its blocks $\{b_1, \cdots, b_{s \times (k + m)}\}$.
 
 <div style="display: flex; justify-content: center; padding: 0 0 15px 0">
@@ -250,18 +250,18 @@ A CID unequivocally identifies a piece of data by encoding a flavour of a hash o
 </div>
 
 **Figure 4.** CIDs for Archivist datasets.
-    
+
 Nodes that hold either part or the entirety of $D_e$ will periodically advertise a _Signed Peer Record_ (SPR) under $D_e$'s CID in the DHT to inform other peers that they are available to provide blocks for $D_e$. An SPR is a signed record[^signed_envelope_spec] which contains the peer's ID, its public key, and its supported network addresses as a list of multiaddresses[^multiaddress_spec].
-    
+
 This structure affords a great deal of flexibility in how peers choose to communicate and encode datasets, and is key in creating a p2p network which can support multiple concurrent p2p client versions and can therefore be upgraded seamlessly.
-    
+
 **Metadata.** Archivist stores dataset metadata in descriptors called **manifests**. Those are currently kept separate from the dataset itself, in a manner similar to BitTorrent's _torrent files_. They contain metadata on a number of attributes required to describe and properly process the dataset, such as the Merkle roots for both the content (SHA256) and proof ($\text{Poseidon2}$) trees, the number of blocks contained in the dataset, the block size, erasure coding parameters, and the datasets' MIME-type. Although the CID of a dataset is largely independent of its manifest, a dataset can neither be decoded nor properly verified without it.
-    
+
 Manifests are currently stored as content-addressable blocks in Archivist and treated similarly to datasets: nodes holding the manifest of a given dataset will advertise its CID onto the DHT, which is computed by taking a SHA256 hash of the manifest's contents. Since manifests are  stored separate from the dataset, however, they can also be exchanged out-of-band, like torrent files can.
 
 Other systems choose tighter coupling between the metadata and the dataset. IPFS and Swarm use cryptographic structures such as Merkle DAG and a Merkle Tree, where intermediate nodes are placed on the network and queried iteratively to retrieve the respective vertexes and leaves. Such design decisions have their own tradeoffs and advantages, for example an advantage of storing the metadata in a single addressable unit is that it eliminates intermediary network round trips, as opposed to a distributed cryptographic structure such as a tree or a DAG.
 
-**Retrieving data.** Data retrieval in Archivist follows a process similar to BitTorrent: a peer wishing to download a dataset $D_e$ must first acquire its manifest, either through Archivist itself by looking up the manifest's CID on the DHT and downloading it from peers providing it, or out-of-band. Once in posession of the manifest, the peer can learn the dataset's CID (constructed from its SHA256 Merkle root) and look that up over the DHT. This is depicted Figure 5a **(1)**. 
+**Retrieving data.** Data retrieval in Archivist follows a process similar to BitTorrent: a peer wishing to download a dataset $D_e$ must first acquire its manifest, either through Archivist itself by looking up the manifest's CID on the DHT and downloading it from peers providing it, or out-of-band. Once in posession of the manifest, the peer can learn the dataset's CID (constructed from its SHA256 Merkle root) and look that up over the DHT. This is depicted Figure 5a **(1)**.
 
 <div style="display: flex; justify-content: center;">
     <div style="text-align: center;">
@@ -277,17 +277,17 @@ Other systems choose tighter coupling between the metadata and the dataset. IPFS
 **Figure 5.** (a) DHT lookup and (b) download swarm.
 
 The nodes responsible for that CID will reply with a (randomized) subset of the providers for that CID (Figure 5a **(2)**). The peer can then contact these nodes to bootstrap itself into a download swarm (Figure 5b). Once part of the swarm, the peer will engage in an exchange protocol similar to BitSwap[^bitswap_spec] by advertising the blocks it wishes to download to neighbors, and receiving requests from neighbors in return. Dropped peers are replaced by querying the DHT again. Note that SPs always participate in the swarms for the datasets they host, acting as seeders. Since the mechanism is so similar to BitTorrent, we expect Archivist to scale at least as well.
-    
+
 Archivist right now relies on simple incentive mechanisms to ensure that peers share blocks. There is current ongoing work on _bandwidth incentives_ and, in future versions, peers will be able to purchase block transfers from each other.
-    
+
 ### 4.5. Archivist Marketplace
 
-The Archivist marketplace is the set of components that run both on-chain, as smart contracts, and off-chain, as part of both SCs and SPs. Its main goal is to define and enforce the set of rules which together enable: _i)_ orderly selling and purchasing of storage; _ii)_ verification of storage proofs; _iii)_ rules for penalizing faulty actors (slashing) and compensating SP repairs and SC data loss; and _iv)_ various other aspects of the system's economics, which  will be discussed as part of an upcoming Archivist tokenomics litepaper. 
+The Archivist marketplace is the set of components that run both on-chain, as smart contracts, and off-chain, as part of both SCs and SPs. Its main goal is to define and enforce the set of rules which together enable: _i)_ orderly selling and purchasing of storage; _ii)_ verification of storage proofs; _iii)_ rules for penalizing faulty actors (slashing) and compensating SP repairs and SC data loss; and _iv)_ various other aspects of the system's economics, which  will be discussed as part of an upcoming Archivist tokenomics litepaper.
 
 Archivist implements an ask/bid market in which SCs post **storage requests** on chain, and SPs can then act on those if they turn out to be profitable. This means that the request side; i.e., how much an SC is willing to pay, is always visible, whereas the bid side; i.e., at what price an SP is willing to sell, is not.
-    
+
 An SC that wishes Archivist to store a dataset $D_e$ needs to provide $5$ main parameters. Those are:
-    
+
 1. **Size in bytes.** Specifies how many storage bytes the SC wishes to purchase.
 2. **Duration.** Specifies for how long the SC wishes to purchase the storage bytes in (1); e.g. one year.
 3. **Number of slots.** Contains the number of slots in $D_e$. This is derived from the erasure coding parameters $k$ and $m$ discussed in Sec. 4.3.
@@ -301,9 +301,9 @@ As discussed in Sec. 5, these parameters may impact durability guarantees direct
 </center>
 
 **Figure 6.** Storage requests and their processing by SPs.
-    
+
 As depicted in Figure 6, every storage request posted by an SC gets recorded on-chain, and generates a blockchain event that SPs listen to. Internally, SPs will rank unfilled storage requests by their own criteria, typically profitability, and will attempt to fill the slots for requests that are most interesting to them first. As discussed in Sec. 4.2, filling a slot entails: _i)_ reserving the slot on-chain; _ii)_ downloading the data from the SC; _iii)_ providing an initial storage proof as well as the staking collateral.
-    
+
 **Ensuring diversity.** SPs compete for unfilled slots. If we allowed this competition to happen purely based on latency; i.e., the fastest provider to reserve a slot wins, we could easily end up with a system that is too centralized or, even worse, with multiple slots ending up at a single provider. The latter is particularly serious as failures within a provider may not be decorrelated, and we therefore want to ensure that the distribution of slots amongst providers is as randomized as possible.
 
 To help mitigate these issues, the Archivist marketplace implements a time-based, _expanding window_ mechanism to allow SPs to compete for slots. As depicted in Figure 7, each storage request is assigned a random position in a $z$-bit ID space by taking a hashing function $h$ and computing, for slot $S_i$, the value $h(u\,\|\, i)$, where $u$ is a random nonce. This will effectively disperse storage requests for slots approximately uniformly at random over the ID space.
@@ -311,19 +311,19 @@ To help mitigate these issues, the Archivist marketplace implements a time-based
 <div style="padding: 2rem 0 4rem 0">
     <img src="/learn/whitepaper/marketplace-slot-dispersal.png"/>
 </div>
-    
+
 **Figure 7.** Slots placed at random in a $z$-bit space.
-    
-We then allow only hosts whose blockchain IDs are within a certain "distance" of a slot to compete in filling it (Figure 8).   
+
+We then allow only hosts whose blockchain IDs are within a certain "distance" of a slot to compete in filling it (Figure 8).
 
 <div style="padding: 2rem 0 4rem 0">
     <img src="/learn/whitepaper/marketplace-expanding-window.png"/>
 </div>
 
 **Figure 8.** SP eligibility as a function of time and its distance to a slot.
-    
+
 This distance expands over time according to a _dispersal parameter_ $\mu$. Let $d: \{0,1\}^z \times \{0,1\}^z \longrightarrow [0, 2^z)$ be our distance function - we could for instance take the XOR of $a$ and $b$. A host with blockchain ID $b$ will only be allowed to fill a slot at position $a$ at time $t$ if:
-    
+
 $$
 \begin{equation}
      d(a, b) \leq \mu t
@@ -335,7 +335,7 @@ where $t = 0$ at the moment in which the storage request for $a$ is published. I
 ## 5. Reliability Analysis
 
 In this section, we provide an initial analysis of durability for Archivist. The main goal is investigating the values for $p_{\text{loss}}$, our probability of losing data over a 1-year period. In particular, we are interested in understanding what sorts of parameters are required for us to obtain very high levels of reliability (e.g. $p_{\text{loss}} = 10^{-9}$, or nine nines of availability).
-    
+
 Archivist, as a system, stores a large amount of datasets, each encoded, distributed, verified, and repaired according to the specific parameters set up in the respective storage contract. Since datasets are set up independently and operate (mostly) independently, we can model the system at the level of the dataset. We will later discuss correlation between various datasets stored in the system.
 
 In our first model, we use a Continuous Time Markov-Chain (CTMC) model to describe the state of the dataset at any time instance. The model considers the following aspects of Archivist:
@@ -344,10 +344,10 @@ In our first model, we use a Continuous Time Markov-Chain (CTMC) model to descri
 - the proving process;
 - dataset repair.
 
-Before discussing the state space and the rate matix of the CTMC model, lets describe these aspects of the system. 
-    
+Before discussing the state space and the rate matix of the CTMC model, lets describe these aspects of the system.
+
 As before, we assume a dataset $D$  split into $k$ disjoint partitions, and encoded into a new dataset $D_e$ with $n=k+m$ slots $\{S_1, \cdots, S_k , \cdots, S_{k+m}\}$. This encoding is often characterized by it's code expansion factor $e = n/k =1+m/k$, expressing the storage overhead due to code redundancy.
-    
+
 ### 5.1. Failure Model
 
 When discussing failures, we should differentiate between transient and permanent failures, as well as between catastrophic node failures (the slot data is entirely lost) and partial failures.
@@ -374,7 +374,7 @@ The actual repair time depends on a number of factors:
 - distributing repaired data to the allocated nodes.
 
 Overall, it is clearly not easy to come up with a reasonable distribution for the time of repair, not even the mean time of repair. While time to repair is most probably not an exponential distribution, we model it as such in a first approximation to allow Markov Chain based modeling.
-    
+
 ### 5.3. Triggering Reconstruction
 
 Reconstruction and re-allocation of slots can be triggered by the observed state, and our system "observes" state through the proving process. In our model, we assume that nodes are providing proofs according to a random process with an exponential distribution between proving times, with **MTBF** (Mean Time Between Proofs) mean, i.i.d. between nodes. Other distributions are also possible, but for the sake of modelling we start with an exponential distribution, which is also simple to implement in practice.
@@ -383,7 +383,7 @@ Reconstruction can be triggered based on the observed state in various ways:
 - if an individual node is missing a slot proof (or more generally, a series of proofs), reconstruction can start. The advantage of this option is that the consequences of failing a proof only depend on the node itself, and not on other nodes.
 -  reconstruction can also be triggered by the observed system state, i.e. the number of nodes that have missed the last proof (or more in general some of the last proofs). In fact, thanks to the properties of RS codes, whenever a slot is being repaired, all slot's data are regenerated. As a consequence, the cost of repair is independent of the number of slots being repaired, and by triggering repair only after multiple slots are observed lost (the so called "lazy repair"), we can drastically reduce the cost of repair.
 
-In our model, we assume reconstruction that uses a combination of the above two triggers. 
+In our model, we assume reconstruction that uses a combination of the above two triggers.
 - Reconstruction is triggered based on the observed system state, allowing for lazy repair, by triggering it when $l_0$ of the slots is considered lost.
 - A single slot is considered lost if it was missing the last $l_1$ proofs.
 
@@ -401,22 +401,22 @@ We model the system using a CTMC with a multi-dimensional state space representi
 - slot loss, $S_{l+1,f}$: slot loss is driven by MTTF, assuming i.i.d slot losses. Obviously, only available slots can be lost, so the transition probability also depends on $n-l$.
 - missing proofs, $S_{l,f+1}$: we are only interested in the event of observing the loss of a slot that we haven't seen before. Thus, the state transition probability depends on $f-l$.
 - repair, $S_{0,0}$: repair is only triggered once the number of observed losses reaches the lazy repair threshold $l_0$. In case of a successful repair, all slots are fully restored (even if the actual set of nodes storing the slots are changing).
-    
+
 States $S_{M+1,f}$ for each $f$ are absorbing states. By calculating the expected time of absorption, we can quantify the reliability of the system.
-    
+
 <center>
     <img src="/learn/whitepaper/ploss-vs-slots.png"/>
 </center>
 
 **Figure 9.** $p_{\text{loss}}$ (y axis) as a function of $n$ for various values of $l_0$ and expansion factors ($e$).
 
-    
+
 Figure 9 shows dataset reliability ($p_{\text{loss}}$) as a function of $n$, the number of slots, assuming an MTTF of 1 year and an MTTR of 24 hours. We set the repair frequency (MTBR) to 24 hours, and explore various options on the code expansion factor $e$ and the lazy repair threshold $l_0$. Clearly, adding more redundancy (using an RS code with a higher expansion factor) allows us to store a dataset on fewer SPs. As expected lazy repair requires the use of more SPs, but reduces repair cost by delaying repair.
 
 The figure also shows what $k$ and $m$ values are needed to reach a given reliability threshold under different expansion factors and lazy repair thresholds. For example, values for a failure probability in a year of $10^{-9}$, also called "nine nines" reliability, are summarized in Table 1.
 
 <center>
-    
+
 | Expansion ($e$) | Lazy repair ($l_0$) |Required k + m|
 |:---------------:|:-------------------:|:------------:|
 |   1.5           |   1                 |   18 +  9    |
@@ -426,13 +426,13 @@ The figure also shows what $k$ and $m$ values are needed to reach a given reliab
 |   2             |   5                 |   13 + 13    |
 |   2.5           |   5                 |    8 + 12    |
 
-</center> 
+</center>
 
 **Table 1.** Expansion, lazy repair, and required values for $k$ and $m$ to achieve $p_{\text{loss}} = 10^{-9}$
 
 ### 5.5 Proving frequency
 
-An important parameter to asses is the frequency of proofs, expressed in our model as MTBP, since it directly translates into proof generation and proof submission costs. If we could double MTBP, we could halve the associated costs. 
+An important parameter to asses is the frequency of proofs, expressed in our model as MTBP, since it directly translates into proof generation and proof submission costs. If we could double MTBP, we could halve the associated costs.
 
 <center>
     <img src="/learn/whitepaper/ploss-vs-proof-freq.png"/>
@@ -453,7 +453,7 @@ We have presented Archivist, a Decentralized Durability Engine which employs era
 
 Despite our ambitious goals, Archivist is a work in progress. Ongoing efforts on improving it include:
 
-* **Reduction of proving costs.** Verifying proofs on-chain is expensive. To bring down costs on the short-term, we are working on an in-node aggregation mechanism which allow providers to batch proofs over multiple slots. On a slightly longer time horizon, we also intend to build our own aggregation network, which will ultimately allow Archivist to go on-chain very infrequentely. Finally, at the level of individual proofs, we are working on more efficient proof systems which should bring down hardware requirements even more. 
+* **Reduction of proving costs.** Verifying proofs on-chain is expensive. To bring down costs on the short-term, we are working on an in-node aggregation mechanism which allow providers to batch proofs over multiple slots. On a slightly longer time horizon, we also intend to build our own aggregation network, which will ultimately allow Archivist to go on-chain very infrequentely. Finally, at the level of individual proofs, we are working on more efficient proof systems which should bring down hardware requirements even more.
 * **Bandwidth incentives.** Archivist is designed to provide strong incentives that favor durability. While incentivizing availability is harder as it is in general not possible to provide proofs for it[^bassam_18] we can still provide an effective, even if weaker, form of incentive by allowing providers to sell bandwidth. To that end, we are currently working on mechanisms to enable an efficient bandwidth market in Archivist which should complement the storage market.
 * **Privacy and encryption.** Archivist will, in the future, encrypt data by default so that SPs cannot ever know what they are storing. This should also offer SCs more privacy.
 * **P2P layer.** We are currently working on optimizing protocols so they scale and perform better. This includes improvements in block transfer latency and throughput, more efficient swarms and block discovery mechanism, as well as research into more secure protocols.
@@ -469,7 +469,7 @@ Archivist has the potential to support a wide range of use cases, from personal 
 Ultimately, the use case for Archivist is that of a durable and functional decentralized storage layer, without which no decentralized technology stack can be seriously contemplated. As the decentralized ecosystem continues to evolve, we expect Archivist’s DDE-based approach to storage to play a crucial role in enabling new types of applications and services that prioritize user control, privacy, and resilience.
 
 ## References
-              
+
 [^tanembaum]: A. S. Tanenbaum and M. van Steen, Distributed Systems: Principles and Paradigms, 2nd ed. Upper Saddle River, NJ, USA: Pearson Education, 2007.
 
 [^gcs]: Google Cloud Storage, "Google Cloud Storage," [Online]. Available: https://cloud.google.com/storage/docs. [Accessed: Aug. 27, 2024].
@@ -507,15 +507,15 @@ Ultimately, the use case for Archivist is that of a durable and functional decen
 [^protocol_17]: Protocol Labs, "Filecoin: A Decentralized Storage Network," Jul. 19, 2017. [Online]. Available: https://filecoin.io/filecoin.pdf
 
 [^bassam_18]: M. Al-Bassam, A. Sonnino, and V. Buterin, "Fraud and Data Availability Proofs: Maximising Light Client Security and Scaling Blockchains with Dishonest Majorities," arXiv:1809.09044 [cs.CR], May 2019
-    
+
 [^reed_60]: I. S. Reed and G. Solomon, "Polynomial Codes Over Certain Finite Fields," Journal of the Society for Industrial and Applied Mathematics, vol. 8, no. 2, pp. 300-304, 1960
 
 [^spanbroek_23]: M. Spanbroek, "Storage Proofs & Erasure Coding," https://github.com/durability-labs/archivist-research-old/blob/master/design/proof-erasure-coding.md (accessed Sep. 26, 2024).
-              
+
 [^wikipedia_code_rate]: "Code rate," Wikipedia. https://en.wikipedia.org/wiki/Code_rate (accessed Sep. 26, 2024).
-              
+
 [^groth_16]: J. Groth, "On the Size of Pairing-based Non-interactive Arguments," in Advances in Cryptology – EUROCRYPT 2016, M. Fischlin and J.-S. Coron, Eds. Berlin, Heidelberg: Springer Berlin Heidelberg, 2016, pp. 305-326.
-              
+
 [^ateniese_07]: G. Ateniese et al., "Provable data possession at untrusted stores," in Proceedings of the 14th ACM Conference on Computer and Communications Security (CCS '07), Alexandria, Virginia, USA, Oct. 2007, pp. 598-609.
 
 [^juels_07]: A. Juels et al., "Pors: proofs of retrievability for large files," in Proceedings of the 14th ACM Conference on Computer and Communications Security (CCS '07), Alexandria, Virginia, USA, Oct. 2007, pp. 584-597
@@ -527,15 +527,15 @@ Ultimately, the use case for Archivist is that of a durable and functional decen
 [^cid_spec]: Protocol Labs. "CID (Content IDentifier) Specification," https://github.com/multiformats/cid (accessed Sep. 26, 2024)
 
 [^signed_envelope_spec]: libp2p. "RPC 0003 - Routing Records," https://github.com/libp2p/specs/blob/master/RFC/0003-routing-records.md (accessed Sep. 26, 2024)
-       
+
 [^multiaddress_spec]: Protocol Labs. "Multiformats / Multiaddr," https://multiformats.io/multiaddr/ (accessed Sep. 26, 2024)
 
 [^maymounkov_02]: P. Maymounkov and D. Mazieres, "Kademlia: A peer-to-peer information system based on the XOR metric," in Proceedings of the First International Workshop on Peer-to-Peer Systems (IPTPS), Cambridge, MA, USA, Mar. 2002, pp. 53-65.
-       
+
 [^grassi_23]: L. Grassi, D. Khovratovich, and M. Schofnegger, "Poseidon2: A Faster Version of the Poseidon Hash Function," Cryptology ePrint Archive, Paper 2023/323, 2023. [Online]. Available: https://eprint.iacr.org/2023/323
-       
+
 [^bitswap_spec]: IPFS Standards. "Bitswap Protocol," https://specs.ipfs.tech/bitswap-protocol/ (accessed Sep. 27, 2024)
-    
+
 [^schroeder_07]: B. Schroeder and G. A. Gibson, "Disk Failures in the Real World: What Does an MTTF of 1,000,000 Hours Mean to You?," in Proceedings of the 5th USENIX Conference on File and Storage Technologies (FAST '07), San Jose, CA, USA, 2007
-    
+
 [^ipfs_website]: IPFS: An open system to manage data without a central server," IPFS, 2024. [Online]. Available: https://ipfs.tech/. [Accessed: Sep. 28, 2024].
